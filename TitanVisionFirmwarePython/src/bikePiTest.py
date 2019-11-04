@@ -2,7 +2,7 @@
 from __future__ import division, print_function
 
 from config import * # Import configuartion values
-from Osd2019_noError import Osd
+from Osd2019 import Osd
 
 import sys
 import time
@@ -50,6 +50,7 @@ try:
         perfPercentage = 10 #getPerformancePercentage(power,otherPower, speedKph / 3.6, distance)
 
         # Update displayed info
+
         osdModule.Display(
             speedKph,
             perfPercentage,
@@ -60,20 +61,20 @@ try:
             HR,
             temperature,
             humidity)
-        
+   
         # Sleep between updates
         duration = time.time() - start_iteration_time # Find how long it took to render frame
-        print(duration)
+        #print(duration)
         totalDuration = totalDuration + duration # Add to total
         updateCount = updateCount + 1
-        if duration < UPDATE_INTERVAL:
-            time.sleep(UPDATE_INTERVAL - duration)
-            
+#         if duration < UPDATE_INTERVAL:
+#             time.sleep(UPDATE_INTERVAL - duration)
+        
 
     osdModule.Turnoff() # Clear screen afterwards
         
     print('Total time rendering ovarlays: ' + str(totalDuration))
-    print(updateCount)
+    print('Updates made' + str(updateCount))
     print('Average update time was: ' + str(totalDuration / updateCount))
     
     

@@ -1,6 +1,19 @@
 import picamera
 import time
 import numpy
+import os # Used to pipe the errors from the update instruction to null
+
+fd = os.open('/dev/null',os.O_WRONLY) #Address for ignoring errors
+savefd = os.dup(2) #Normal error address
+'''
+Currently we are only ignoring errors around the overlay update function. This means
+we can see errors if they appear as a result of other code, however constanly switching
+back and forth where we output errors reduces performance by 20%, raising updates from
+~70 ms to ~90 ms.
+
+Once we are satisifed with all code we should ignore all errors if performance increase
+is needed/desired.
+'''
 from PIL import Image, ImageDraw, ImageFont
 
 #############
@@ -215,19 +228,25 @@ class Osd:
         self.RenderTemp(temperature)
         self.RenderHumidity(humidity)
 
-        #self.overlay.update(self.img.tobytes())
-        theTmpOverlay = self.camera.add_overlay(self.img.tobytes(), alpha=100, layer=self.mCurrentOverlayLayer)
+        os.dup2(fd,2) #Pipe errors to null
+        self.overlay.update(self.img.tobytes())
+        os.dup2(savefd,2) #Pipe errors back normally
 
-        self.mCurrentOverlayLayer = self.mCurrentOverlayLayer + 1
+# The following code was to try and avoid having errors output by my code.
+# It worked but had the side effect of occasionally cutting the video feed while also
+# being slower to update the overlay by about 50 ms (~130ms)
 
-        if self.mCurrentOverlayLayer > 7:
-            self.mCurrentOverlayLayer = 6
-                        
-        if self.mOverlay != None:
-            self.camera.remove_overlay(self.mOverlay)
-                
-        self.mOverlay = theTmpOverlay
-
+#         theTmpOverlay = self.camera.add_overlay(self.img.tobytes(), alpha=100, layer=self.mCurrentOverlayLayer)
+# 
+#         self.mCurrentOverlayLayer = self.mCurrentOverlayLayer + 1
+# 
+#         if self.mCurrentOverlayLayer > 7:
+#             self.mCurrentOverlayLayer = 6
+#                         
+#         if self.mOverlay != None:
+#             self.camera.remove_overlay(self.mOverlay)
+#                 
+#         self.mOverlay = theTmpOverlay
             
     def Turnoff(self):
         if self.RECORDING:
