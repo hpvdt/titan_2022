@@ -1,0 +1,7 @@
+This folder contains the C++ version of Titan's OSD.
+
+The intent of doing this in C++ is to reduce the overhead and processing needed for the OSD to operate. Leading to:
+- Higher OSD update rates
+- Higher video framerates allowed
+- Higher resolution video without sacrificing framerate
+- More resources/space for other features to be added in the future
