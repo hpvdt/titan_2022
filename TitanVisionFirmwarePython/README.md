@@ -3,4 +3,4 @@
 
 
 # Notes:
-* mount usb: `sudo mount /dev/sdb1 /mnt/usb` (from [here](https://www.raspberrypi.org/forums/viewtopic.php?t=48958)
+* mount usb: `sudo mount /dev/sdb1 /mnt/usb` (from [here](https://www.raspberrypi.org/forums/viewtopic.php?t=48958))
