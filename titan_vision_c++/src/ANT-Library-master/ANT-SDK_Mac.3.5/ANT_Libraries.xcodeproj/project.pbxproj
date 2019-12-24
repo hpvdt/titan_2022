@@ -1,0 +1,1042 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXAggregateTarget section */
+		5209696D1146FE7F0052AB0C /* All */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 5209697A1146FEB60052AB0C /* Build configuration list for PBXAggregateTarget "All" */;
+			buildPhases = (
+			);
+			dependencies = (
+				520969711146FE8E0052AB0C /* PBXTargetDependency */,
+				520969731146FE920052AB0C /* PBXTargetDependency */,
+				520969751146FE940052AB0C /* PBXTargetDependency */,
+				520969771146FE970052AB0C /* PBXTargetDependency */,
+			);
+			name = All;
+			productName = All;
+		};
+/* End PBXAggregateTarget section */
+
+/* Begin PBXBuildFile section */
+		520968761145BE680052AB0C /* ant.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5209684F1145BBA20052AB0C /* ant.cpp */; };
+		520968771145BE6C0052AB0C /* libantbase.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 52BFFF93112E06590093FB49 /* libantbase.a */; };
+		520968901145C2A10052AB0C /* demo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 520968861145C1620052AB0C /* demo.cpp */; };
+		520968D11145C5E90052AB0C /* demo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 520968CD1145C5E90052AB0C /* demo.cpp */; };
+		520968D21145C5E90052AB0C /* libant.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 520968CF1145C5E90052AB0C /* libant.cpp */; };
+		520969421146F74F0052AB0C /* libantbase.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 52BFFF93112E06590093FB49 /* libantbase.a */; settings = {ATTRIBUTES = (Required, ); }; };
+		52B85F8E134E34D100729A98 /* usb_device_handle_si_iokit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 52B85F8C134E34D100729A98 /* usb_device_handle_si_iokit.cpp */; };
+		52BF00E5112E108C0093FB49 /* antfs_directory.c in Sources */ = {isa = PBXBuildFile; fileRef = 52BFFE18112E02380093FB49 /* antfs_directory.c */; };
+		52BF00E7112E108C0093FB49 /* antfs_host.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 52BFFE1A112E02380093FB49 /* antfs_host.cpp */; };
+		52BF00EB112E108C0093FB49 /* checksum.c in Sources */ = {isa = PBXBuildFile; fileRef = 52BFFDFF112E02380093FB49 /* checksum.c */; };
+		52BF00EE112E108C0093FB49 /* crc.c in Sources */ = {isa = PBXBuildFile; fileRef = 52BFFE01112E02380093FB49 /* crc.c */; };
+		52BF00F1112E108C0093FB49 /* dsi_convert.c in Sources */ = {isa = PBXBuildFile; fileRef = 52BFFE31112E02380093FB49 /* dsi_convert.c */; };
+		52BF00F3112E108C0093FB49 /* dsi_debug.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 52BFFE34112E02380093FB49 /* dsi_debug.cpp */; };
+		52BF00F5112E108C0093FB49 /* dsi_framer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 52BFFE1F112E02380093FB49 /* dsi_framer.cpp */; };
+		52BF00F7112E108C0093FB49 /* dsi_framer_ant.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 52BFFE21112E02380093FB49 /* dsi_framer_ant.cpp */; };
+		52BF00F9112E108C0093FB49 /* dsi_serial.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 52BFFE23112E02380093FB49 /* dsi_serial.cpp */; };
+		52BF00FC112E108C0093FB49 /* dsi_serial_generic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 52BFFE26112E02380093FB49 /* dsi_serial_generic.cpp */; };
+		52BF00FE112E108C0093FB49 /* dsi_serial_iokit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 52BFFE28112E02380093FB49 /* dsi_serial_iokit.cpp */; };
+		52BF0101112E108C0093FB49 /* dsi_thread_posix.c in Sources */ = {isa = PBXBuildFile; fileRef = 52BFFE38112E02380093FB49 /* dsi_thread_posix.c */; };
+		52BF0102112E108C0093FB49 /* dsi_thread_win32.c in Sources */ = {isa = PBXBuildFile; fileRef = 52BFFE39112E02380093FB49 /* dsi_thread_win32.c */; };
+		52BF0103112E108C0093FB49 /* dsi_timer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 52BFFE3A112E02380093FB49 /* dsi_timer.cpp */; };
+		52BF0106112E108C0093FB49 /* dsi_vcp_si.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 52BFFE2E112E02380093FB49 /* dsi_vcp_si.cpp */; };
+		52BF0108112E108C0093FB49 /* iokit_device.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 52BFFE58112E02380093FB49 /* iokit_device.cpp */; };
+		52BF010A112E108C0093FB49 /* iokit_device_handle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 52BFFE5A112E02380093FB49 /* iokit_device_handle.cpp */; };
+		52BF010C112E108C0093FB49 /* iokit_device_list.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 52BFFE5C112E02380093FB49 /* iokit_device_list.cpp */; };
+		52BF010E112E108C0093FB49 /* iokit_interface.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 52BFFE5E112E02380093FB49 /* iokit_interface.cpp */; };
+		52BF0110112E108C0093FB49 /* iokit_transfer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 52BFFE60112E02380093FB49 /* iokit_transfer.cpp */; };
+		52BF0113112E108C0093FB49 /* macros.c in Sources */ = {isa = PBXBuildFile; fileRef = 52BFFE3D112E02380093FB49 /* macros.c */; };
+		52BF0116112E108C0093FB49 /* usb_device.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 52BFFE4D112E02380093FB49 /* usb_device.cpp */; };
+		52BF0119112E108C0093FB49 /* usb_device_handle_iokit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 52BFFE42112E02380093FB49 /* usb_device_handle_iokit.cpp */; };
+		52BF011B112E108C0093FB49 /* usb_device_handle_mac.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 52BFFE46112E02380093FB49 /* usb_device_handle_mac.cpp */; };
+		52BF011C112E108C0093FB49 /* usb_device_handle_vcp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 52BFFE49112E02380093FB49 /* usb_device_handle_vcp.cpp */; };
+		52BF011E112E108C0093FB49 /* usb_device_iokit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 52BFFE4F112E02380093FB49 /* usb_device_iokit.cpp */; };
+		52BF0122112E108C0093FB49 /* usb_device_vcp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 52BFFE55112E02380093FB49 /* usb_device_vcp.cpp */; };
+		6F3E056915D1BFB500FEC16C /* antfs_client_channel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6F3E056415D1BFB500FEC16C /* antfs_client_channel.cpp */; };
+		6F3E056A15D1BFB500FEC16C /* antfs_host_channel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6F3E056715D1BFB500FEC16C /* antfs_host_channel.cpp */; };
+		6F3E056C15D1BFEA00FEC16C /* dsi_framer_integrated_antfs_client.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6F3E056B15D1BFEA00FEC16C /* dsi_framer_integrated_antfs_client.cpp */; };
+		6F3E057215D1BFF800FEC16C /* dsi_ant_device.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6F3E056E15D1BFF800FEC16C /* dsi_ant_device.cpp */; };
+		90F98F981C4EA58800666542 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 90F98F941C4EA54200666542 /* CoreFoundation.framework */; };
+		90F98F991C4EA58F00666542 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 90F98F961C4EA56900666542 /* IOKit.framework */; };
+		90F98F9A1C4EA5C200666542 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 90F98F941C4EA54200666542 /* CoreFoundation.framework */; };
+		90F98F9B1C4EA5CE00666542 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 90F98F961C4EA56900666542 /* IOKit.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		520969031146BEA10052AB0C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 08FB7793FE84155DC02AAC07 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 52BFFF92112E06590093FB49;
+			remoteInfo = ant;
+		};
+		520969701146FE8E0052AB0C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 08FB7793FE84155DC02AAC07 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 52BFFF92112E06590093FB49;
+			remoteInfo = ant;
+		};
+		520969721146FE920052AB0C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 08FB7793FE84155DC02AAC07 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5209688A1145C24B0052AB0C;
+			remoteInfo = demo_lib;
+		};
+		520969741146FE940052AB0C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 08FB7793FE84155DC02AAC07 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 520968561145BCCB0052AB0C;
+			remoteInfo = libant;
+		};
+		520969761146FE970052AB0C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 08FB7793FE84155DC02AAC07 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 520968C21145C57C0052AB0C;
+			remoteInfo = demo_dylib;
+		};
+		52096B7011498C8C0052AB0C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 08FB7793FE84155DC02AAC07 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 52BFFF92112E06590093FB49;
+			remoteInfo = ant;
+		};
+		90F98FA01C4EBDC700666542 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 08FB7793FE84155DC02AAC07 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 520968561145BCCB0052AB0C;
+			remoteInfo = libant;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		5209684F1145BBA20052AB0C /* ant.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ant.cpp; sourceTree = "<group>"; };
+		520968501145BBA20052AB0C /* ant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ant.h; sourceTree = "<group>"; };
+		520968571145BCCB0052AB0C /* libant.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libant.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
+		520968861145C1620052AB0C /* demo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = demo.cpp; sourceTree = "<group>"; };
+		520968871145C1620052AB0C /* demo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = demo.h; sourceTree = "<group>"; };
+		5209688B1145C24B0052AB0C /* demo_lib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = demo_lib; sourceTree = BUILT_PRODUCTS_DIR; };
+		520968C31145C57C0052AB0C /* demo_dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = demo_dylib; sourceTree = BUILT_PRODUCTS_DIR; };
+		520968CD1145C5E90052AB0C /* demo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = demo.cpp; sourceTree = "<group>"; };
+		520968CE1145C5E90052AB0C /* demo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = demo.h; sourceTree = "<group>"; };
+		520968CF1145C5E90052AB0C /* libant.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = libant.cpp; sourceTree = "<group>"; };
+		520968D01145C5E90052AB0C /* libant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = libant.h; sourceTree = "<group>"; };
+		52096C2F114AA1860052AB0C /* defines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = defines.h; sourceTree = "<group>"; };
+		52B85F85134E344F00729A98 /* antfs_interface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = antfs_interface.h; sourceTree = "<group>"; };
+		52B85F88134E346300729A98 /* antfsmessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = antfsmessage.h; sourceTree = "<group>"; };
+		52B85F8C134E34D100729A98 /* usb_device_handle_si_iokit.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = usb_device_handle_si_iokit.cpp; sourceTree = "<group>"; };
+		52B85F8D134E34D100729A98 /* usb_device_handle_si_iokit.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = usb_device_handle_si_iokit.hpp; sourceTree = "<group>"; };
+		52BFFDFF112E02380093FB49 /* checksum.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = checksum.c; sourceTree = "<group>"; };
+		52BFFE00112E02380093FB49 /* checksum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = checksum.h; sourceTree = "<group>"; };
+		52BFFE01112E02380093FB49 /* crc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = crc.c; sourceTree = "<group>"; };
+		52BFFE02112E02380093FB49 /* crc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = crc.h; sourceTree = "<group>"; };
+		52BFFE04112E02380093FB49 /* antdefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = antdefines.h; sourceTree = "<group>"; };
+		52BFFE05112E02380093FB49 /* antmessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = antmessage.h; sourceTree = "<group>"; };
+		52BFFE07112E02380093FB49 /* types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = types.h; sourceTree = "<group>"; };
+		52BFFE08112E02380093FB49 /* version.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = version.h; sourceTree = "<group>"; };
+		52BFFE18112E02380093FB49 /* antfs_directory.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = antfs_directory.c; sourceTree = "<group>"; };
+		52BFFE19112E02380093FB49 /* antfs_directory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = antfs_directory.h; sourceTree = "<group>"; };
+		52BFFE1A112E02380093FB49 /* antfs_host.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = antfs_host.cpp; sourceTree = "<group>"; };
+		52BFFE1B112E02380093FB49 /* antfs_host.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = antfs_host.hpp; sourceTree = "<group>"; };
+		52BFFE1C112E02380093FB49 /* antfs_host_interface.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = antfs_host_interface.hpp; sourceTree = "<group>"; };
+		52BFFE1D112E02380093FB49 /* config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = config.h; sourceTree = "<group>"; };
+		52BFFE1F112E02380093FB49 /* dsi_framer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = dsi_framer.cpp; sourceTree = "<group>"; };
+		52BFFE20112E02380093FB49 /* dsi_framer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = dsi_framer.hpp; sourceTree = "<group>"; };
+		52BFFE21112E02380093FB49 /* dsi_framer_ant.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = dsi_framer_ant.cpp; sourceTree = "<group>"; };
+		52BFFE22112E02380093FB49 /* dsi_framer_ant.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = dsi_framer_ant.hpp; sourceTree = "<group>"; };
+		52BFFE23112E02380093FB49 /* dsi_serial.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = dsi_serial.cpp; sourceTree = "<group>"; };
+		52BFFE24112E02380093FB49 /* dsi_serial.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = dsi_serial.hpp; sourceTree = "<group>"; };
+		52BFFE25112E02380093FB49 /* dsi_serial_callback.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = dsi_serial_callback.hpp; sourceTree = "<group>"; };
+		52BFFE26112E02380093FB49 /* dsi_serial_generic.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = dsi_serial_generic.cpp; sourceTree = "<group>"; };
+		52BFFE27112E02380093FB49 /* dsi_serial_generic.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = dsi_serial_generic.hpp; sourceTree = "<group>"; };
+		52BFFE28112E02380093FB49 /* dsi_serial_iokit.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = dsi_serial_iokit.cpp; sourceTree = "<group>"; };
+		52BFFE29112E02380093FB49 /* dsi_serial_iokit.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = dsi_serial_iokit.hpp; sourceTree = "<group>"; };
+		52BFFE2E112E02380093FB49 /* dsi_vcp_si.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = dsi_vcp_si.cpp; sourceTree = "<group>"; };
+		52BFFE2F112E02380093FB49 /* dsi_vcp_si.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = dsi_vcp_si.hpp; sourceTree = "<group>"; };
+		52BFFE31112E02380093FB49 /* dsi_convert.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = dsi_convert.c; sourceTree = "<group>"; };
+		52BFFE32112E02380093FB49 /* dsi_convert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dsi_convert.h; sourceTree = "<group>"; };
+		52BFFE34112E02380093FB49 /* dsi_debug.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = dsi_debug.cpp; sourceTree = "<group>"; };
+		52BFFE36112E02380093FB49 /* dsi_debug.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = dsi_debug.hpp; sourceTree = "<group>"; };
+		52BFFE37112E02380093FB49 /* dsi_thread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dsi_thread.h; sourceTree = "<group>"; };
+		52BFFE38112E02380093FB49 /* dsi_thread_posix.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = dsi_thread_posix.c; sourceTree = "<group>"; };
+		52BFFE39112E02380093FB49 /* dsi_thread_win32.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = dsi_thread_win32.c; sourceTree = "<group>"; };
+		52BFFE3A112E02380093FB49 /* dsi_timer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = dsi_timer.cpp; sourceTree = "<group>"; };
+		52BFFE3B112E02380093FB49 /* dsi_timer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = dsi_timer.hpp; sourceTree = "<group>"; };
+		52BFFE3C112E02380093FB49 /* dsi_ts_queue.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = dsi_ts_queue.hpp; sourceTree = "<group>"; };
+		52BFFE3D112E02380093FB49 /* macros.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = macros.c; sourceTree = "<group>"; };
+		52BFFE3E112E02380093FB49 /* macros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = macros.h; sourceTree = "<group>"; };
+		52BFFE41112E02380093FB49 /* usb_device_handle.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = usb_device_handle.hpp; sourceTree = "<group>"; };
+		52BFFE42112E02380093FB49 /* usb_device_handle_iokit.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = usb_device_handle_iokit.cpp; sourceTree = "<group>"; };
+		52BFFE43112E02380093FB49 /* usb_device_handle_iokit.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = usb_device_handle_iokit.hpp; sourceTree = "<group>"; };
+		52BFFE46112E02380093FB49 /* usb_device_handle_mac.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = usb_device_handle_mac.cpp; sourceTree = "<group>"; };
+		52BFFE49112E02380093FB49 /* usb_device_handle_vcp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = usb_device_handle_vcp.cpp; sourceTree = "<group>"; };
+		52BFFE4A112E02380093FB49 /* usb_device_handle_vcp.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = usb_device_handle_vcp.hpp; sourceTree = "<group>"; };
+		52BFFE4D112E02380093FB49 /* usb_device.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = usb_device.cpp; sourceTree = "<group>"; };
+		52BFFE4E112E02380093FB49 /* usb_device.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = usb_device.hpp; sourceTree = "<group>"; };
+		52BFFE4F112E02380093FB49 /* usb_device_iokit.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = usb_device_iokit.cpp; sourceTree = "<group>"; };
+		52BFFE50112E02380093FB49 /* usb_device_iokit.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = usb_device_iokit.hpp; sourceTree = "<group>"; };
+		52BFFE55112E02380093FB49 /* usb_device_vcp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = usb_device_vcp.cpp; sourceTree = "<group>"; };
+		52BFFE56112E02380093FB49 /* usb_device_vcp.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = usb_device_vcp.hpp; sourceTree = "<group>"; };
+		52BFFE58112E02380093FB49 /* iokit_device.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = iokit_device.cpp; sourceTree = "<group>"; };
+		52BFFE59112E02380093FB49 /* iokit_device.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = iokit_device.hpp; sourceTree = "<group>"; };
+		52BFFE5A112E02380093FB49 /* iokit_device_handle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = iokit_device_handle.cpp; sourceTree = "<group>"; };
+		52BFFE5B112E02380093FB49 /* iokit_device_handle.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = iokit_device_handle.hpp; sourceTree = "<group>"; };
+		52BFFE5C112E02380093FB49 /* iokit_device_list.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = iokit_device_list.cpp; sourceTree = "<group>"; };
+		52BFFE5D112E02380093FB49 /* iokit_device_list.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = iokit_device_list.hpp; sourceTree = "<group>"; };
+		52BFFE5E112E02380093FB49 /* iokit_interface.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = iokit_interface.cpp; sourceTree = "<group>"; };
+		52BFFE5F112E02380093FB49 /* iokit_interface.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = iokit_interface.hpp; sourceTree = "<group>"; };
+		52BFFE60112E02380093FB49 /* iokit_transfer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = iokit_transfer.cpp; sourceTree = "<group>"; };
+		52BFFE61112E02380093FB49 /* iokit_transfer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = iokit_transfer.hpp; sourceTree = "<group>"; };
+		52BFFE62112E02380093FB49 /* iokit_types.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = iokit_types.hpp; sourceTree = "<group>"; };
+		52BFFE63112E02380093FB49 /* usb_device_list.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = usb_device_list.hpp; sourceTree = "<group>"; };
+		52BFFE64112E02380093FB49 /* usb_device_list_template.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = usb_device_list_template.hpp; sourceTree = "<group>"; };
+		52BFFE65112E02380093FB49 /* usb_standard_types.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = usb_standard_types.hpp; sourceTree = "<group>"; };
+		52BFFF93112E06590093FB49 /* libantbase.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libantbase.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		6F3E056415D1BFB500FEC16C /* antfs_client_channel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = antfs_client_channel.cpp; sourceTree = "<group>"; };
+		6F3E056515D1BFB500FEC16C /* antfs_client_channel.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = antfs_client_channel.hpp; sourceTree = "<group>"; };
+		6F3E056615D1BFB500FEC16C /* antfs_client_interface.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = antfs_client_interface.hpp; sourceTree = "<group>"; };
+		6F3E056715D1BFB500FEC16C /* antfs_host_channel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = antfs_host_channel.cpp; sourceTree = "<group>"; };
+		6F3E056815D1BFB500FEC16C /* antfs_host_channel.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = antfs_host_channel.hpp; sourceTree = "<group>"; };
+		6F3E056B15D1BFEA00FEC16C /* dsi_framer_integrated_antfs_client.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = dsi_framer_integrated_antfs_client.cpp; sourceTree = "<group>"; };
+		6F3E056E15D1BFF800FEC16C /* dsi_ant_device.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = dsi_ant_device.cpp; sourceTree = "<group>"; };
+		6F3E056F15D1BFF800FEC16C /* dsi_ant_device.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = dsi_ant_device.hpp; sourceTree = "<group>"; };
+		6F3E057015D1BFF800FEC16C /* dsi_ant_message_processor.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = dsi_ant_message_processor.hpp; sourceTree = "<group>"; };
+		6F3E057115D1BFF800FEC16C /* dsi_response_queue.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = dsi_response_queue.hpp; sourceTree = "<group>"; };
+		90F98F941C4EA54200666542 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/System/Library/Frameworks/CoreFoundation.framework; sourceTree = DEVELOPER_DIR; };
+		90F98F961C4EA56900666542 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/System/Library/Frameworks/IOKit.framework; sourceTree = DEVELOPER_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		520968551145BCCB0052AB0C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				90F98F991C4EA58F00666542 /* IOKit.framework in Frameworks */,
+				90F98F981C4EA58800666542 /* CoreFoundation.framework in Frameworks */,
+				520968771145BE6C0052AB0C /* libantbase.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		520968891145C24B0052AB0C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				90F98F9B1C4EA5CE00666542 /* IOKit.framework in Frameworks */,
+				90F98F9A1C4EA5C200666542 /* CoreFoundation.framework in Frameworks */,
+				520969421146F74F0052AB0C /* libantbase.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		520968C11145C57C0052AB0C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		52BFFF91112E06590093FB49 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		08FB7794FE84155DC02AAC07 /* ANT_Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				08FB7795FE84155DC02AAC07 /* Source */,
+				08FB779DFE84155DC02AAC07 /* Frameworks */,
+				C6859E96029091FE04C91782 /* Documentation */,
+				19C28FBDFE9D53C911CA2CBB /* Products */,
+			);
+			name = ANT_Libraries;
+			sourceTree = "<group>";
+		};
+		08FB7795FE84155DC02AAC07 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				520968CC1145C5E90052AB0C /* DEMO_DYLIB */,
+				520968851145C1620052AB0C /* DEMO_LIB */,
+				5209684E1145BBA20052AB0C /* ANT_DYLIB */,
+				52BFFDFD112E02380093FB49 /* ANT_LIB */,
+			);
+			name = Source;
+			sourceTree = "<group>";
+		};
+		08FB779DFE84155DC02AAC07 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				90F98F961C4EA56900666542 /* IOKit.framework */,
+				90F98F941C4EA54200666542 /* CoreFoundation.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		19C28FBDFE9D53C911CA2CBB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				52BFFF93112E06590093FB49 /* libantbase.a */,
+				520968571145BCCB0052AB0C /* libant.dylib */,
+				5209688B1145C24B0052AB0C /* demo_lib */,
+				520968C31145C57C0052AB0C /* demo_dylib */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		5209684E1145BBA20052AB0C /* ANT_DYLIB */ = {
+			isa = PBXGroup;
+			children = (
+				5209684F1145BBA20052AB0C /* ant.cpp */,
+				520968501145BBA20052AB0C /* ant.h */,
+			);
+			name = ANT_DYLIB;
+			path = ANT_DLL;
+			sourceTree = "<group>";
+		};
+		520968851145C1620052AB0C /* DEMO_LIB */ = {
+			isa = PBXGroup;
+			children = (
+				520968861145C1620052AB0C /* demo.cpp */,
+				520968871145C1620052AB0C /* demo.h */,
+			);
+			path = DEMO_LIB;
+			sourceTree = "<group>";
+		};
+		520968CC1145C5E90052AB0C /* DEMO_DYLIB */ = {
+			isa = PBXGroup;
+			children = (
+				520968CD1145C5E90052AB0C /* demo.cpp */,
+				520968CE1145C5E90052AB0C /* demo.h */,
+				520968CF1145C5E90052AB0C /* libant.cpp */,
+				520968D01145C5E90052AB0C /* libant.h */,
+			);
+			name = DEMO_DYLIB;
+			path = DEMO_DLL;
+			sourceTree = "<group>";
+		};
+		52BFFDFD112E02380093FB49 /* ANT_LIB */ = {
+			isa = PBXGroup;
+			children = (
+				52BFFDFE112E02380093FB49 /* common */,
+				52BFFE03112E02380093FB49 /* inc */,
+				52BFFE16112E02380093FB49 /* software */,
+			);
+			path = ANT_LIB;
+			sourceTree = "<group>";
+		};
+		52BFFDFE112E02380093FB49 /* common */ = {
+			isa = PBXGroup;
+			children = (
+				52BFFDFF112E02380093FB49 /* checksum.c */,
+				52BFFE00112E02380093FB49 /* checksum.h */,
+				52BFFE01112E02380093FB49 /* crc.c */,
+				52BFFE02112E02380093FB49 /* crc.h */,
+			);
+			path = common;
+			sourceTree = "<group>";
+		};
+		52BFFE03112E02380093FB49 /* inc */ = {
+			isa = PBXGroup;
+			children = (
+				52096C2F114AA1860052AB0C /* defines.h */,
+				52BFFE04112E02380093FB49 /* antdefines.h */,
+				52BFFE05112E02380093FB49 /* antmessage.h */,
+				52BFFE07112E02380093FB49 /* types.h */,
+				52BFFE08112E02380093FB49 /* version.h */,
+			);
+			path = inc;
+			sourceTree = "<group>";
+		};
+		52BFFE16112E02380093FB49 /* software */ = {
+			isa = PBXGroup;
+			children = (
+				52BFFE17112E02380093FB49 /* ANTFS */,
+				52BFFE1E112E02380093FB49 /* serial */,
+				52BFFE30112E02380093FB49 /* system */,
+				52BFFE3F112E02380093FB49 /* USB */,
+			);
+			path = software;
+			sourceTree = "<group>";
+		};
+		52BFFE17112E02380093FB49 /* ANTFS */ = {
+			isa = PBXGroup;
+			children = (
+				6F3E056415D1BFB500FEC16C /* antfs_client_channel.cpp */,
+				6F3E056515D1BFB500FEC16C /* antfs_client_channel.hpp */,
+				6F3E056615D1BFB500FEC16C /* antfs_client_interface.hpp */,
+				6F3E056715D1BFB500FEC16C /* antfs_host_channel.cpp */,
+				6F3E056815D1BFB500FEC16C /* antfs_host_channel.hpp */,
+				52B85F88134E346300729A98 /* antfsmessage.h */,
+				52B85F85134E344F00729A98 /* antfs_interface.h */,
+				52BFFE18112E02380093FB49 /* antfs_directory.c */,
+				52BFFE19112E02380093FB49 /* antfs_directory.h */,
+				52BFFE1A112E02380093FB49 /* antfs_host.cpp */,
+				52BFFE1B112E02380093FB49 /* antfs_host.hpp */,
+				52BFFE1C112E02380093FB49 /* antfs_host_interface.hpp */,
+				52BFFE1D112E02380093FB49 /* config.h */,
+			);
+			path = ANTFS;
+			sourceTree = "<group>";
+		};
+		52BFFE1E112E02380093FB49 /* serial */ = {
+			isa = PBXGroup;
+			children = (
+				6F3E056D15D1BFF800FEC16C /* device_management */,
+				6F3E056B15D1BFEA00FEC16C /* dsi_framer_integrated_antfs_client.cpp */,
+				52BFFE1F112E02380093FB49 /* dsi_framer.cpp */,
+				52BFFE20112E02380093FB49 /* dsi_framer.hpp */,
+				52BFFE21112E02380093FB49 /* dsi_framer_ant.cpp */,
+				52BFFE22112E02380093FB49 /* dsi_framer_ant.hpp */,
+				52BFFE23112E02380093FB49 /* dsi_serial.cpp */,
+				52BFFE24112E02380093FB49 /* dsi_serial.hpp */,
+				52BFFE25112E02380093FB49 /* dsi_serial_callback.hpp */,
+				52BFFE26112E02380093FB49 /* dsi_serial_generic.cpp */,
+				52BFFE27112E02380093FB49 /* dsi_serial_generic.hpp */,
+				52BFFE28112E02380093FB49 /* dsi_serial_iokit.cpp */,
+				52BFFE29112E02380093FB49 /* dsi_serial_iokit.hpp */,
+				52BFFE2E112E02380093FB49 /* dsi_vcp_si.cpp */,
+				52BFFE2F112E02380093FB49 /* dsi_vcp_si.hpp */,
+			);
+			path = serial;
+			sourceTree = "<group>";
+		};
+		52BFFE30112E02380093FB49 /* system */ = {
+			isa = PBXGroup;
+			children = (
+				52BFFE31112E02380093FB49 /* dsi_convert.c */,
+				52BFFE32112E02380093FB49 /* dsi_convert.h */,
+				52BFFE34112E02380093FB49 /* dsi_debug.cpp */,
+				52BFFE36112E02380093FB49 /* dsi_debug.hpp */,
+				52BFFE37112E02380093FB49 /* dsi_thread.h */,
+				52BFFE38112E02380093FB49 /* dsi_thread_posix.c */,
+				52BFFE39112E02380093FB49 /* dsi_thread_win32.c */,
+				52BFFE3A112E02380093FB49 /* dsi_timer.cpp */,
+				52BFFE3B112E02380093FB49 /* dsi_timer.hpp */,
+				52BFFE3C112E02380093FB49 /* dsi_ts_queue.hpp */,
+				52BFFE3D112E02380093FB49 /* macros.c */,
+				52BFFE3E112E02380093FB49 /* macros.h */,
+			);
+			path = system;
+			sourceTree = "<group>";
+		};
+		52BFFE3F112E02380093FB49 /* USB */ = {
+			isa = PBXGroup;
+			children = (
+				52BFFE40112E02380093FB49 /* device_handles */,
+				52BFFE4C112E02380093FB49 /* devices */,
+				52BFFE57112E02380093FB49 /* iokit_driver */,
+				52BFFE63112E02380093FB49 /* usb_device_list.hpp */,
+				52BFFE64112E02380093FB49 /* usb_device_list_template.hpp */,
+				52BFFE65112E02380093FB49 /* usb_standard_types.hpp */,
+			);
+			path = USB;
+			sourceTree = "<group>";
+		};
+		52BFFE40112E02380093FB49 /* device_handles */ = {
+			isa = PBXGroup;
+			children = (
+				52B85F8C134E34D100729A98 /* usb_device_handle_si_iokit.cpp */,
+				52B85F8D134E34D100729A98 /* usb_device_handle_si_iokit.hpp */,
+				52BFFE41112E02380093FB49 /* usb_device_handle.hpp */,
+				52BFFE42112E02380093FB49 /* usb_device_handle_iokit.cpp */,
+				52BFFE43112E02380093FB49 /* usb_device_handle_iokit.hpp */,
+				52BFFE46112E02380093FB49 /* usb_device_handle_mac.cpp */,
+				52BFFE49112E02380093FB49 /* usb_device_handle_vcp.cpp */,
+				52BFFE4A112E02380093FB49 /* usb_device_handle_vcp.hpp */,
+			);
+			path = device_handles;
+			sourceTree = "<group>";
+		};
+		52BFFE4C112E02380093FB49 /* devices */ = {
+			isa = PBXGroup;
+			children = (
+				52BFFE4D112E02380093FB49 /* usb_device.cpp */,
+				52BFFE4E112E02380093FB49 /* usb_device.hpp */,
+				52BFFE4F112E02380093FB49 /* usb_device_iokit.cpp */,
+				52BFFE50112E02380093FB49 /* usb_device_iokit.hpp */,
+				52BFFE55112E02380093FB49 /* usb_device_vcp.cpp */,
+				52BFFE56112E02380093FB49 /* usb_device_vcp.hpp */,
+			);
+			path = devices;
+			sourceTree = "<group>";
+		};
+		52BFFE57112E02380093FB49 /* iokit_driver */ = {
+			isa = PBXGroup;
+			children = (
+				52BFFE58112E02380093FB49 /* iokit_device.cpp */,
+				52BFFE59112E02380093FB49 /* iokit_device.hpp */,
+				52BFFE5A112E02380093FB49 /* iokit_device_handle.cpp */,
+				52BFFE5B112E02380093FB49 /* iokit_device_handle.hpp */,
+				52BFFE5C112E02380093FB49 /* iokit_device_list.cpp */,
+				52BFFE5D112E02380093FB49 /* iokit_device_list.hpp */,
+				52BFFE5E112E02380093FB49 /* iokit_interface.cpp */,
+				52BFFE5F112E02380093FB49 /* iokit_interface.hpp */,
+				52BFFE60112E02380093FB49 /* iokit_transfer.cpp */,
+				52BFFE61112E02380093FB49 /* iokit_transfer.hpp */,
+				52BFFE62112E02380093FB49 /* iokit_types.hpp */,
+			);
+			path = iokit_driver;
+			sourceTree = "<group>";
+		};
+		6F3E056D15D1BFF800FEC16C /* device_management */ = {
+			isa = PBXGroup;
+			children = (
+				6F3E056E15D1BFF800FEC16C /* dsi_ant_device.cpp */,
+				6F3E056F15D1BFF800FEC16C /* dsi_ant_device.hpp */,
+				6F3E057015D1BFF800FEC16C /* dsi_ant_message_processor.hpp */,
+				6F3E057115D1BFF800FEC16C /* dsi_response_queue.hpp */,
+			);
+			path = device_management;
+			sourceTree = "<group>";
+		};
+		C6859E96029091FE04C91782 /* Documentation */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Documentation;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		520968561145BCCB0052AB0C /* libant */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5209685A1145BCEA0052AB0C /* Build configuration list for PBXNativeTarget "libant" */;
+			buildPhases = (
+				520968541145BCCB0052AB0C /* Sources */,
+				520968551145BCCB0052AB0C /* Frameworks */,
+			);
+			buildRules = (
+			);
+			comments = "Based on the ANT library (ANT_LIB) this target defines a dynamic library interface for Mac OS X 10.3 and later. \nThe dynamic library may be imported into other languages that  support dynamic libraries. \nUse of the ANT dynamic library interface greatly simplifies Mac OS X application development with ANT.\nA binary release version of the ANT dynamic library, libant.dylib, is available in the BIN directory.";
+			dependencies = (
+				52096B7111498C8C0052AB0C /* PBXTargetDependency */,
+			);
+			name = libant;
+			productName = libant;
+			productReference = 520968571145BCCB0052AB0C /* libant.dylib */;
+			productType = "com.apple.product-type.library.dynamic";
+		};
+		5209688A1145C24B0052AB0C /* demo_lib */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5209688F1145C27F0052AB0C /* Build configuration list for PBXNativeTarget "demo_lib" */;
+			buildPhases = (
+				520968881145C24B0052AB0C /* Sources */,
+				520968891145C24B0052AB0C /* Frameworks */,
+			);
+			buildRules = (
+			);
+			comments = "A simple command line application built on top of the ANT library that demonstrates how to setup ANT channels and data messages.";
+			dependencies = (
+				520969041146BEA10052AB0C /* PBXTargetDependency */,
+			);
+			name = demo_lib;
+			productName = demo_lib;
+			productReference = 5209688B1145C24B0052AB0C /* demo_lib */;
+			productType = "com.apple.product-type.tool";
+		};
+		520968C21145C57C0052AB0C /* demo_dylib */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 520968CB1145C5A70052AB0C /* Build configuration list for PBXNativeTarget "demo_dylib" */;
+			buildPhases = (
+				520968C01145C57C0052AB0C /* Sources */,
+				520968C11145C57C0052AB0C /* Frameworks */,
+			);
+			buildRules = (
+			);
+			comments = "A simple command line application built on top of the ANT Dynamic Library that demonstrates how to load the dynamic library and setup ANT channels and data messages.";
+			dependencies = (
+				90F98FA11C4EBDC700666542 /* PBXTargetDependency */,
+			);
+			name = demo_dylib;
+			productName = demo_dylib;
+			productReference = 520968C31145C57C0052AB0C /* demo_dylib */;
+			productType = "com.apple.product-type.tool";
+		};
+		52BFFF92112E06590093FB49 /* antbase */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 52BFFF96112E06780093FB49 /* Build configuration list for PBXNativeTarget "antbase" */;
+			buildPhases = (
+				52BFFF90112E06590093FB49 /* Sources */,
+				52BFFF91112E06590093FB49 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			comments = "This is the main ANT library source code. It includes the low level serial communication with the USB stick as well as ANT message framing.\nThis target produces as output a static library, libantbase.a.";
+			dependencies = (
+			);
+			name = antbase;
+			productName = ant;
+			productReference = 52BFFF93112E06590093FB49 /* libantbase.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		08FB7793FE84155DC02AAC07 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0720;
+			};
+			buildConfigurationList = 1DEB924B08733DCA0010E9CD /* Build configuration list for PBXProject "ANT_Libraries" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 1;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 08FB7794FE84155DC02AAC07 /* ANT_Libraries */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				52BFFF92112E06590093FB49 /* antbase */,
+				520968561145BCCB0052AB0C /* libant */,
+				5209688A1145C24B0052AB0C /* demo_lib */,
+				520968C21145C57C0052AB0C /* demo_dylib */,
+				5209696D1146FE7F0052AB0C /* All */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		520968541145BCCB0052AB0C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				520968761145BE680052AB0C /* ant.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		520968881145C24B0052AB0C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				520968901145C2A10052AB0C /* demo.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		520968C01145C57C0052AB0C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				520968D11145C5E90052AB0C /* demo.cpp in Sources */,
+				520968D21145C5E90052AB0C /* libant.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		52BFFF90112E06590093FB49 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				52BF0110112E108C0093FB49 /* iokit_transfer.cpp in Sources */,
+				52BF010C112E108C0093FB49 /* iokit_device_list.cpp in Sources */,
+				52BF0108112E108C0093FB49 /* iokit_device.cpp in Sources */,
+				52BF010E112E108C0093FB49 /* iokit_interface.cpp in Sources */,
+				52BF010A112E108C0093FB49 /* iokit_device_handle.cpp in Sources */,
+				52BF0119112E108C0093FB49 /* usb_device_handle_iokit.cpp in Sources */,
+				52BF0116112E108C0093FB49 /* usb_device.cpp in Sources */,
+				52BF0122112E108C0093FB49 /* usb_device_vcp.cpp in Sources */,
+				52BF011E112E108C0093FB49 /* usb_device_iokit.cpp in Sources */,
+				52BF011C112E108C0093FB49 /* usb_device_handle_vcp.cpp in Sources */,
+				52BF011B112E108C0093FB49 /* usb_device_handle_mac.cpp in Sources */,
+				52BF0103112E108C0093FB49 /* dsi_timer.cpp in Sources */,
+				52BF00F5112E108C0093FB49 /* dsi_framer.cpp in Sources */,
+				52BF00E7112E108C0093FB49 /* antfs_host.cpp in Sources */,
+				52BF00EE112E108C0093FB49 /* crc.c in Sources */,
+				52BF00F1112E108C0093FB49 /* dsi_convert.c in Sources */,
+				52BF00F9112E108C0093FB49 /* dsi_serial.cpp in Sources */,
+				52BF00FC112E108C0093FB49 /* dsi_serial_generic.cpp in Sources */,
+				52BF0101112E108C0093FB49 /* dsi_thread_posix.c in Sources */,
+				52BF00E5112E108C0093FB49 /* antfs_directory.c in Sources */,
+				52BF0113112E108C0093FB49 /* macros.c in Sources */,
+				52BF00EB112E108C0093FB49 /* checksum.c in Sources */,
+				52BF00F3112E108C0093FB49 /* dsi_debug.cpp in Sources */,
+				52BF0106112E108C0093FB49 /* dsi_vcp_si.cpp in Sources */,
+				52BF00F7112E108C0093FB49 /* dsi_framer_ant.cpp in Sources */,
+				52BF0102112E108C0093FB49 /* dsi_thread_win32.c in Sources */,
+				52BF00FE112E108C0093FB49 /* dsi_serial_iokit.cpp in Sources */,
+				52B85F8E134E34D100729A98 /* usb_device_handle_si_iokit.cpp in Sources */,
+				6F3E056915D1BFB500FEC16C /* antfs_client_channel.cpp in Sources */,
+				6F3E056A15D1BFB500FEC16C /* antfs_host_channel.cpp in Sources */,
+				6F3E056C15D1BFEA00FEC16C /* dsi_framer_integrated_antfs_client.cpp in Sources */,
+				6F3E057215D1BFF800FEC16C /* dsi_ant_device.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		520969041146BEA10052AB0C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 52BFFF92112E06590093FB49 /* antbase */;
+			targetProxy = 520969031146BEA10052AB0C /* PBXContainerItemProxy */;
+		};
+		520969711146FE8E0052AB0C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 52BFFF92112E06590093FB49 /* antbase */;
+			targetProxy = 520969701146FE8E0052AB0C /* PBXContainerItemProxy */;
+		};
+		520969731146FE920052AB0C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5209688A1145C24B0052AB0C /* demo_lib */;
+			targetProxy = 520969721146FE920052AB0C /* PBXContainerItemProxy */;
+		};
+		520969751146FE940052AB0C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 520968561145BCCB0052AB0C /* libant */;
+			targetProxy = 520969741146FE940052AB0C /* PBXContainerItemProxy */;
+		};
+		520969771146FE970052AB0C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 520968C21145C57C0052AB0C /* demo_dylib */;
+			targetProxy = 520969761146FE970052AB0C /* PBXContainerItemProxy */;
+		};
+		52096B7111498C8C0052AB0C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 52BFFF92112E06590093FB49 /* antbase */;
+			targetProxy = 52096B7011498C8C0052AB0C /* PBXContainerItemProxy */;
+		};
+		90F98FA11C4EBDC700666542 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 520968561145BCCB0052AB0C /* libant */;
+			targetProxy = 90F98FA01C4EBDC700666542 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		1DEB924C08733DCA0010E9CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_TESTABILITY = YES;
+				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_SDK_DIR)/MacOSX10.11.sdk/**";
+				GCC_VERSION = "";
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = /usr/local/include;
+				INSTALL_PATH = "$(SRCROOT)/Bin/Debug";
+				LD_RUNPATH_SEARCH_PATHS = "$(SRCROOT)/Bin/Debug";
+				LIBRARY_SEARCH_PATHS = (
+					"$(SRCROOT)/Bin/Debug",
+					"$(inherit)",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				ONLY_ACTIVE_ARCH = YES;
+				PREBINDING = NO;
+				REEXPORTED_LIBRARY_PATHS = "";
+				SDKROOT = macosx;
+				USER_HEADER_SEARCH_PATHS = "$(inherited) common inc software/ANTFS software/Serial software/System";
+			};
+			name = Debug;
+		};
+		1DEB924D08733DCA0010E9CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)$(EFFECTIVE_PLATFORM_NAME)";
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_SDK_DIR)/MacOSX10.11.sdk/**";
+				GCC_VERSION = "";
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = /usr/local/include;
+				INSTALL_PATH = "$(SRCROOT)/Bin";
+				LD_RUNPATH_SEARCH_PATHS = "$(SRCROOT)/Bin";
+				LIBRARY_SEARCH_PATHS = (
+					"$(SRCROOT)/Bin",
+					"$(inherit)",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				ONLY_ACTIVE_ARCH = YES;
+				PREBINDING = NO;
+				REEXPORTED_LIBRARY_PATHS = "";
+				SDKROOT = macosx;
+				USER_HEADER_SEARCH_PATHS = "$(inherited) common inc software/ANTFS software/Serial software/System";
+			};
+			name = Release;
+		};
+		520968581145BCCC0052AB0C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 2.301;
+				DYLIB_CURRENT_VERSION = "";
+				EXECUTABLE_PREFIX = "";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = DEBUG_FILE;
+				GCC_VERSION = "";
+				INSTALL_PATH = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				PREBINDING = NO;
+				PRODUCT_NAME = libant;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		520968591145BCCC0052AB0C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = YES;
+				CURRENT_PROJECT_VERSION = 2.301;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DYLIB_CURRENT_VERSION = "";
+				EXECUTABLE_PREFIX = "";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_VERSION = "";
+				INSTALL_PATH = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				PREBINDING = NO;
+				PRODUCT_NAME = libant;
+				SDKROOT = macosx;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		5209688D1145C24C0052AB0C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = "";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = DEBUG_FILE;
+				GCC_VERSION = "";
+				INSTALL_PATH = "$(inherited)";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				OTHER_LDFLAGS = "";
+				PREBINDING = NO;
+				PRODUCT_NAME = demo_lib;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		5209688E1145C24C0052AB0C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_VERSION = "";
+				INSTALL_PATH = "$(inherited)";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				OTHER_LDFLAGS = "";
+				PREBINDING = NO;
+				PRODUCT_NAME = demo_lib;
+				SDKROOT = macosx;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		520968C51145C57D0052AB0C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_VERSION = "";
+				INSTALL_PATH = "$(inherited)";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				PREBINDING = NO;
+				PRELINK_LIBS = "";
+				PRODUCT_NAME = demo_dylib;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		520968C61145C57D0052AB0C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_VERSION = "";
+				INSTALL_PATH = "$(inherited)";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				PREBINDING = NO;
+				PRELINK_LIBS = "";
+				PRODUCT_NAME = demo_dylib;
+				SDKROOT = macosx;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		5209696E1146FE800052AB0C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				PRODUCT_NAME = All;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		5209696F1146FE800052AB0C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				PRODUCT_NAME = All;
+				SDKROOT = macosx;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		52BFFF94112E065A0093FB49 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 2.300;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(DEVELOPER_DIR)/SDKs/MacOSX10.11.sdk/System/Library/Frameworks\"",
+				);
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"_GLIBCXX_DEBUG=1",
+					"_GLIBCXX_DEBUG_PEDANTIC=1",
+					DEBUG_FILE,
+				);
+				GCC_VERSION = "";
+				INSTALL_PATH = "$(inherited)";
+				LD_DYLIB_INSTALL_NAME = libant;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/ANT/software/Serial",
+				);
+				PRODUCT_NAME = antbase;
+				SDKROOT = macosx;
+				ZERO_LINK = YES;
+			};
+			name = Debug;
+		};
+		52BFFF95112E065A0093FB49 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)";
+				CURRENT_PROJECT_VERSION = 2.300;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(DEVELOPER_DIR)/SDKs/MacOSX10.11.sdk/System/Library/Frameworks\"",
+				);
+				GCC_MODEL_TUNING = G5;
+				GCC_PREPROCESSOR_DEFINITIONS = DEBUG_FILE;
+				GCC_VERSION = "";
+				INSTALL_PATH = "$(inherited)";
+				LD_DYLIB_INSTALL_NAME = libant;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/ANT/software/Serial",
+				);
+				PRODUCT_NAME = antbase;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1DEB924B08733DCA0010E9CD /* Build configuration list for PBXProject "ANT_Libraries" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1DEB924C08733DCA0010E9CD /* Debug */,
+				1DEB924D08733DCA0010E9CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5209685A1145BCEA0052AB0C /* Build configuration list for PBXNativeTarget "libant" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				520968581145BCCC0052AB0C /* Debug */,
+				520968591145BCCC0052AB0C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5209688F1145C27F0052AB0C /* Build configuration list for PBXNativeTarget "demo_lib" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5209688D1145C24C0052AB0C /* Debug */,
+				5209688E1145C24C0052AB0C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		520968CB1145C5A70052AB0C /* Build configuration list for PBXNativeTarget "demo_dylib" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				520968C51145C57D0052AB0C /* Debug */,
+				520968C61145C57D0052AB0C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5209697A1146FEB60052AB0C /* Build configuration list for PBXAggregateTarget "All" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5209696E1146FE800052AB0C /* Debug */,
+				5209696F1146FE800052AB0C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		52BFFF96112E06780093FB49 /* Build configuration list for PBXNativeTarget "antbase" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				52BFFF94112E065A0093FB49 /* Debug */,
+				52BFFF95112E065A0093FB49 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 08FB7793FE84155DC02AAC07 /* Project object */;
+}

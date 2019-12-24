@@ -1,0 +1,28 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/media/pi/79BD-F729/HPVDT/titan/titan_vision_c++/src/bikePi.cpp
+iostream
+-
+bikePi.h
+/media/pi/79BD-F729/HPVDT/titan/titan_vision_c++/src/bikePi.h
+
+/media/pi/79BD-F729/HPVDT/titan/titan_vision_c++/src/bikePi.h
+
+/media/pi/79BD-F729/HPVDT/titan/titan_vision_c++/src/boot.cpp
+iostream
+-
+string
+-
+bikePi.h
+/media/pi/79BD-F729/HPVDT/titan/titan_vision_c++/src/bikePi.h
+config.h
+/media/pi/79BD-F729/HPVDT/titan/titan_vision_c++/src/config.h
+
+/media/pi/79BD-F729/HPVDT/titan/titan_vision_c++/src/config.h
+
