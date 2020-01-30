@@ -65,7 +65,7 @@ class Osd:
 
         self.canvas = Image.new("RGB", (self.VIDEO_WIDTH, self.VIDEO_HEIGHT))
         self.img = self.canvas.copy()
-        #self.overlay = camera.add_overlay(self.img.tobytes(), layer=3, alpha=100)
+        self.overlay = camera.add_overlay(self.img.tobytes(), layer=3, alpha=100)
 
     def _renderText(self, text, position, color=WHITE, size=40):
         font = ImageFont.truetype("/home/pi/Desktop/TitanVisionFirmware/res/consola.ttf", size)
