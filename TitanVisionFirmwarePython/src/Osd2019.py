@@ -68,7 +68,7 @@ class Osd:
         self.overlay = camera.add_overlay(self.img.tobytes(), layer=3, alpha=100)
 
     def _renderText(self, text, position, color=WHITE, size=40):
-        font = ImageFont.truetype("/home/pi/Desktop/TitanVisionFirmware/res/consola.ttf", size)
+        font = ImageFont.truetype("../res/consola.ttf", size)
         draw = ImageDraw.Draw(self.img)
         draw.text(position, text, color, font)
 
