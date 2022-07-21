@@ -1,4 +1,0 @@
-msgpack-python
-pyserial
-pyusb>=1.0.0b2
-six>=1.7.0
