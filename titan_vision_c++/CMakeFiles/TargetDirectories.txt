@@ -1,4 +1,0 @@
-/media/pi/79BD-F729/HPVDT/titan/titan_vision_c++/CMakeFiles/rebuild_cache.dir
-/media/pi/79BD-F729/HPVDT/titan/titan_vision_c++/CMakeFiles/edit_cache.dir
-/media/pi/79BD-F729/HPVDT/titan/titan_vision_c++/CMakeFiles/test.dir
-/media/pi/79BD-F729/HPVDT/titan/titan_vision_c++/CMakeFiles/bikeExecutables.dir
