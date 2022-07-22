@@ -131,7 +131,7 @@ void renderHumidity(float humidity){
         
 
 void startOverlay() {
-   //system("raspivid -t 0 -fps 60 &"); // Start preview. Preview will run indefinitely at 60 fps.
+   system("python ./camera.py &"); // Start camera script
    bcm_host_init();
    int s;
 
@@ -185,5 +185,5 @@ void renderTextAligned(char text[], int x, int y, int size, char foreground[], c
 void closeOverlay() {
    graphics_display_resource(overlayImg, 0, LAYER, 0, 0, GRAPHICS_RESOURCE_WIDTH, GRAPHICS_RESOURCE_HEIGHT, VC_DISPMAN_ROT0, 0);
    graphics_delete_resource(overlayImg);
-   system("sudo pkill raspivid"); // Kills the preview process
+   system("sudo pkill python"); // Kills the preview process (and any other python processes)
 }
