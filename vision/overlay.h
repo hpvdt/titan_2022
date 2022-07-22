@@ -12,7 +12,7 @@
 
 #include "revision.h"
 
-void updateOverlayTest(int iteration);
+void updateOverlayTest(int iteration, int pow, int cad, int hr);
 void updateOverlay(float spe, float dist, int pow, int cad, int hr, float temper, float humid, int batt);
 void renderBatteryPercentage(int battPer);
 void renderSpeed(float speed);

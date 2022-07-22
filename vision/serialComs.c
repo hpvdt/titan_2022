@@ -49,7 +49,8 @@ void sendData(int line, char type, char* data){
 	char buffer[30];
 	sprintf(buffer, "%c%c%s", type, length, data);
 	//printf("Sending data (%s)...", buffer);
-	int sentBytes = write(line, buffer, strlen(buffer));
+	//int sentBytes = write(line, buffer, strlen(buffer));
+	write(line, buffer, strlen(buffer));
 	tcdrain(line);
 	//printf("done sending %d bytes!\n", sentBytes);
 }

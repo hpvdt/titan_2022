@@ -29,9 +29,19 @@ float distance = 0.0;
 float temperature = 0.0;
 float humidity = 0.0;
 
-bool useSerial = true; // Use serial or not
+bool useSerial = false; // Use serial or not
 int serialLine = 0;
 
-int numberFrames = 10000; // Number of frames to render for testing
+int numberFrames = 100; // Number of frames to render for testing
+
+// ANT Configuration
+bool useANT = true; 	// Use ANT data from USB?
+
+const int dataFieldWidth = 4; // Include delimiter!
+const int numDataFields = 6;
+#define bufferLength 60
+
+char ANTBuffer[bufferLength];
+int ANTData[6];
 
 #endif

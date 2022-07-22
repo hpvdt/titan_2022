@@ -29,16 +29,16 @@ const float upperPerfLimit = 102;
 
 // Size 30 Text is 35 pixels tall. Size 50 is 56 pixels.
 
-void updateOverlayTest(int iteration) {
+void updateOverlayTest(int iteration, int pow, int cad, int hr) {
    graphics_resource_fill(overlayImg, 0, 0, widthOverlay, heightOverlay, GRAPHICS_RGBA32(0,0,0,0x00));
  
       
    renderSpeed(45);
    renderPerfPercentage(100);
-   renderCadence(48);
-   renderBatteryPercentage(97);
-   renderPower(iteration);
-   renderHR(98);
+   renderCadence(cad);
+   renderBatteryPercentage(iteration);
+   renderPower(pow);
+   renderHR(hr);
    renderTemp(30);
    renderHumidity(50);
         
@@ -131,7 +131,7 @@ void renderHumidity(float humidity){
         
 
 void startOverlay() {
-   system("raspivid -t 0 -fps 60 &"); // Start preview. Preview will run indefinitely at 60 fps.
+   //system("raspivid -t 0 -fps 60 &"); // Start preview. Preview will run indefinitely at 60 fps.
    bcm_host_init();
    int s;
 
