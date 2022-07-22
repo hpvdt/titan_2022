@@ -1,3 +1,7 @@
+**NOTE THAT THIS IS LARGELY OPUT OF DATE.** It should be fixed soon.
+
+***TODO: Fix this***
+
 # TITAN Video System Code
 
 This is the code that isn used to drive the electronics aboard TITAN, namely the "drive-by-video" system.
