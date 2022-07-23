@@ -1,15 +1,10 @@
 #include <TinyGPS.h>
 #include "DHT.h" // Used for temperature and humidity
 
-//                      RX    TX
-HardwareSerial FRONTSERIAL(PA10, PA9);
-HardwareSerial REARSERIAL(PA3, PA2);
-HardwareSerial GPSSERIAL(PB11, PB10);
-
-//#define FRONTSERIAL Serial1
-//#define REARSERIAL Serial2
-//#define GPSSERIAL Serial3
-#define DEBUGSERIAL Serial
+HardwareSerial frontSerial(PA10, PA9); //RX, TX
+HardwareSerial rearSerial(PA3, PA2);
+HardwareSerial gpsSerial(PB11, PB10);
+#define DEBUGSERIAL Serial // USB Connection
 
 /* Serial Pins
    PA9 - TX1
@@ -114,9 +109,9 @@ void setup() {
   // !!! VERIFY IF FALLING OR RISING !!!
 
   // Start each serial line
-  FRONTSERIAL.begin(rpiBaud);
-  REARSERIAL.begin(rpiBaud);
-  GPSSERIAL.begin(gpsBaud);
+  frontSerial.begin(rpiBaud);
+  rearSerial.begin(rpiBaud);
+  gpsSerial.begin(gpsBaud);
 
   // Debug timeout
   const int timeout = 2000; // Time out for debugger to be started if debugging
@@ -153,11 +148,11 @@ void setup() {
 }
 
 void loop() {
-  if (FRONTSERIAL.available()) {
+  if (frontSerial.available()) {
     // Data on front line
     processData('f');
   }
-  if (REARSERIAL.available()) {
+  if (rearSerial.available()) {
     // Data on rear line
     processData('r');
   }
@@ -193,7 +188,7 @@ void loop() {
 
   /////////////////////////////////////////
   // GPS code
-  if (GPSSERIAL.available()) {
+  if (gpsSerial.available()) {
     GPSCheck();
   }
   delayMicroseconds(500); // Regular delay

@@ -1,8 +1,8 @@
 void GPSCheck() {
   bool newData = false;
 
-  while (GPSSERIAL.available()) {
-    char c = GPSSERIAL.read();
+  while (gpsSerial.available()) {
+    char c = gpsSerial.read();
     // Serial.write(c); // uncomment this line if you want to see the GPS data flowing
     if (gps.encode(c)) newData = true; // Did a new valid sentence come in?
   }

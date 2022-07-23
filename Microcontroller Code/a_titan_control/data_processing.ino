@@ -35,10 +35,10 @@ void processData (const char line) {
   // Gets frame type from specific line
   switch (line) {
     case 'f':
-      frameType = FRONTSERIAL.read();
+      frameType = frontSerial.read();
       break;
     case 'r':
-      frameType = REARSERIAL.read();
+      frameType = rearSerial.read();
       break;
     case 'd':
       frameType = DEBUGSERIAL.read();
@@ -211,12 +211,12 @@ void sendMessage (String message, const char outputLine) {
   // Sends response to appropriate line
   switch (outputLine) {
     case 'f':
-      FRONTSERIAL.print(lengthChar);
-      FRONTSERIAL.print(message);
+      frontSerial.print(lengthChar);
+      frontSerial.print(message);
       break;
     case 'r':
-      REARSERIAL.print(lengthChar);
-      REARSERIAL.print(message);
+      rearSerial.print(lengthChar);
+      rearSerial.print(message);
       break;
     case 'd':
       DEBUGSERIAL.print(lengthChar);
@@ -243,22 +243,22 @@ String readInput (char inputLine) {
   // Goes to the right serial line, reads message length, then the message itself
   switch (inputLine) {
     case 'f':
-      while (FRONTSERIAL.available() == 0) {
+      while (frontSerial.available() == 0) {
         delayMicroseconds(10); // Wait for length character if needed
       }
-      messageLength = byte(FRONTSERIAL.read());
+      messageLength = byte(frontSerial.read());
       messageLength -= 31;
 
-      FRONTSERIAL.readBytes(temp, messageLength);
+      frontSerial.readBytes(temp, messageLength);
       break;
     case 'r':
-      while (REARSERIAL.available() == 0) {
+      while (rearSerial.available() == 0) {
         delayMicroseconds(10); // Wait for length character if needed
       }
-      messageLength = REARSERIAL.read();
+      messageLength = rearSerial.read();
       messageLength -= 31;
 
-      REARSERIAL.readBytes(temp, messageLength);
+      rearSerial.readBytes(temp, messageLength);
       break;
     case 'd':
       while (DEBUGSERIAL.available() == 0) {
