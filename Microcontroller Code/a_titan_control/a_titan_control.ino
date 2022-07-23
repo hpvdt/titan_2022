@@ -1,10 +1,16 @@
 #include <TinyGPS.h>
 #include "DHT.h" // Used for temperature and humidity
 
-#define FRONTSERIAL Serial1
-#define REARSERIAL Serial2
-#define GPSSERIAL Serial3
+//                      RX    TX
+HardwareSerial FRONTSERIAL(PA10, PA9);
+HardwareSerial REARSERIAL(PA3, PA2);
+HardwareSerial GPSSERIAL(PB11, PB10);
+
+//#define FRONTSERIAL Serial1
+//#define REARSERIAL Serial2
+//#define GPSSERIAL Serial3
 #define DEBUGSERIAL Serial
+
 /* Serial Pins
    PA9 - TX1
    PA10 - RX1
