@@ -11,7 +11,6 @@ void processData (const char line) {
 
      i - Front battery %
      j - Rear battery %
-     k - Backup system battery %
 
      h - Humidity (R.H.%)
      t - Temperature (C * 2 + 50)
@@ -106,12 +105,6 @@ void processData (const char line) {
       break;
     case 'J':
       RBatt = (readInput(line)).toInt();
-      break;
-    case 'k':
-      returnMessage = String(SBatt);
-      break;
-    case 'K':
-      SBatt = (readInput(line)).toInt();
       break;
 
     case 'h': // Humidity

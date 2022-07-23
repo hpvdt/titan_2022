@@ -5,7 +5,6 @@ byte batteryLevel (char line) {
   const float readingToV = 1241.2121; // Given by 4096 over measured voltage
   const float fFactor = 4.3739; // Resistor voltage division factor
   const float rFactor = 4.3087;
-  const float sFactor = 4.3072;
 
   // Get the voltage on whichever line
   float reading = 0.0;
@@ -19,11 +18,6 @@ byte batteryLevel (char line) {
       reading = float(analogRead(FBPin));
       reading /= readingToV;
       reading *= rFactor;
-      break;
-    case 's':
-      reading = float(analogRead(FBPin));
-      reading /= readingToV;
-      reading *= sFactor;
       break;
   }
 
@@ -61,24 +55,6 @@ byte batteryLevel (char line) {
     }
   }
   reading = constrain(reading, 0, 100); // Constrain it to reasonable values
-
-  // Control the LEDs on the spare board to indicate status
-  if (line == 's') {
-    if (reading > 50) {
-      digitalWrite(S50Pin, HIGH);
-      if (reading > 75) {
-        digitalWrite(S25Pin, HIGH);
-      }
-      else digitalWrite(S25Pin, LOW);
-    }
-    else {
-      digitalWrite(S50Pin, LOW);
-      if (reading > 25) {
-        digitalWrite(S25Pin, HIGH);
-      }
-      else digitalWrite(S25Pin, LOW);
-    }
-  }
   
   return (int(reading));
 }

@@ -35,7 +35,6 @@ int RPower = 10;
 
 int FBatt = 100;            // Front battery %
 int RBatt = 100;            // Rear battery %
-int SBatt = 100;            // Spare battery %
 
 byte humidity = 0;          // Humidity
 byte temperature = 50;      // Temperature
@@ -60,10 +59,7 @@ byte testZ = 0;             // Used solely for echo tests
 const byte DHTPin = PB5;  // DHT sensor pin (temperature and humidity)
 const byte FBPin = PA0;   // Front battery pin (ADC)
 const byte RBPin = PA1;   // Rear battery pin (ADC)
-const byte SBPin = PA4;   // Spare battery pin (ADC)
 const byte encoderPin = PB8;   // Encoder interrupt pin
-const byte S50Pin = PB1;
-const byte S25Pin = PB0;
 
 // Digital Humidity and Temperature setup
 DHT dht(DHTPin, DHT22); // Sets up sensor
@@ -98,10 +94,7 @@ void setup() {
   pinMode(LED_BUILTIN, OUTPUT); // Used for status indicator
   pinMode(FBPin, INPUT_ANALOG); // Battery pins
   pinMode(RBPin, INPUT_ANALOG);
-  pinMode(SBPin, INPUT_ANALOG);
   pinMode(encoderPin, INPUT_PULLUP); // Encoder interupt
-  pinMode(S50Pin, OUTPUT);
-  pinMode(S25Pin, OUTPUT);
 
   blinker(2000, 5); // Start-up blinking, gives delay for debugging to connect
 
@@ -173,7 +166,6 @@ void loop() {
   if (millis() > batteryTime) {
     FBatt = batteryLevel('f');
     RBatt = batteryLevel('r');
-    SBatt = batteryLevel('s');
 
     batteryTime = millis() + batteryPeriod; // Sets next check
   }
