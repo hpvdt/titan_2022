@@ -91,12 +91,9 @@ float previousSpeed = 0; // Stores speed for comparison
 void setup() {
   // Pin modes,
   // !!! verify if encode pin is meant to be pull up or down!!!!!
-  pinMode(LED_BUILTIN, OUTPUT); // Used for status indicator
   pinMode(FBPin, INPUT_ANALOG); // Battery pins
   pinMode(RBPin, INPUT_ANALOG);
   pinMode(encoderPin, INPUT_PULLUP); // Encoder interupt
-
-  blinker(2000, 5); // Start-up blinking, gives delay for debugging to connect
 
   attachInterrupt(encoderPin, encoderDetect, FALLING); // Encoder interupt
   // !!! VERIFY IF FALLING OR RISING !!!
@@ -126,7 +123,6 @@ void setup() {
 
     if (debugMode) {
       DEBUGSERIAL.println(F("DEBUGGING MODE")); // Print debug statement if no timeout
-      blinker(600, 3);
     }
   }
 
@@ -136,8 +132,6 @@ void setup() {
   for (byte i = 0; i < numberTicks; i++) {
     lastPass[i] = 0; // Reset all encoder tick values
   }
-
-  blinker(100, 10); // Blink a few times on successful startup
 }
 
 void loop() {
@@ -184,16 +178,4 @@ void loop() {
     GPSCheck();
   }
   delayMicroseconds(500); // Regular delay
-  digitalWrite(LED_BUILTIN, digitalRead(encoderPin));
-}
-
-void blinker (const int period, const byte repeats) {
-  // Blink LED a number of times for a given length
-  for (byte i = 0; i < repeats; i++) {
-    digitalWrite(LED_BUILTIN, LOW);
-    delay(period / 2);
-    digitalWrite(LED_BUILTIN, HIGH);
-    delay(period / 2);
-  }
-  // Note on STM32 LED is on when pin is LOW!
 }
