@@ -7,6 +7,8 @@
 #include <assert.h>
 #include <unistd.h>
 
+#include <stdbool.h>
+
 #include "bcm_host.h"
 #include "vgfont.h"
 
@@ -24,7 +26,7 @@ void renderTemp(float temperature);
 void renderHumidity(float humidity);
         
 
-void startOverlay();
+void startOverlay(bool cameraOn);
 
 void renderText (char text[], int x, int y, int size, char foreground[], char background[]);
 

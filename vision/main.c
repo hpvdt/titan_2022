@@ -1,7 +1,7 @@
 #include "main.h"
 
 int main() {
-   startOverlay(); 
+   startOverlay(false);  // Camera off
    
    time_t t,t2; // Realtime marks
    time(&t); // Get start time

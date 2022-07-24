@@ -130,8 +130,10 @@ void renderHumidity(float humidity){
 }
         
 
-void startOverlay() {
-   system("python ./camera.py &"); // Start camera script
+void startOverlay(bool cameraOn) {
+   
+   if (cameraOn) system("python ./camera.py &"); // Start camera script
+   
    bcm_host_init();
    int s;
 
