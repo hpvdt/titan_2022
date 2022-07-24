@@ -2,6 +2,7 @@ from ant.antplus.controller import AntPlusController
 from ant.antplus.pwr import PwrDevice
 from ant.antplus.hrm import HrmDevice
 from sys import stdout # Needed to pipe data to another process
+import errno
 import time
 
 '''
@@ -69,7 +70,6 @@ def stop():
     if controller:
         controller.close()
 
-
 try:
     # Print configuration (only seen if run like a normal script (not piped))
     
@@ -109,7 +109,11 @@ try:
             front_cur_hr, front_cur_cad, front_cur_pwr,
             rear_cur_hr, rear_cur_cad, rear_cur_pwr))
         
-        stdout.flush()
+        try:
+            stdout.flush()
+        except IOError as e:
+            if e.errno == errno.EPIPE:
+                pass # Don't let broken pipes cause issues
 except KeyboardInterrupt or BrokenPipeError:
     # Broken pipe implies OSD has malfunctioned/closed so also treat as exit
     print("\n\nEnding ANT Data Collection")
