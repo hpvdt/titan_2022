@@ -13,7 +13,7 @@
 #include <stdlib.h>	// Used to grab int and float from char arrays
 #include <errno.h>
 
-#define BAUDRATE B115200 // Baudrate to be used (needs to be prefixed with 'B')
+#define BAUDRATE B38400 // Baudrate to be used (needs to be prefixed with 'B')
 
 int openLine(char * line); // Used to open a specified serial line
 
