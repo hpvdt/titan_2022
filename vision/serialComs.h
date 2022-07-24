@@ -1,5 +1,5 @@
-#ifndef SERIALCOMS_H
-#define SERIALCOMS_H
+#ifndef SERIAL_COMS_H
+#define SERIAL_COMS_H
 
 #include <stdio.h>
 #include <unistd.h>			//Used for UART
@@ -11,6 +11,7 @@
 
 #include <string.h>
 #include <stdlib.h>	// Used to grab int and float from char arrays
+#include <errno.h>
 
 #define BAUDRATE B115200 // Baudrate to be used (needs to be prefixed with 'B')
 
@@ -29,5 +30,7 @@ void requestDataInt(int line, char type, int* data);
 void requestDataFloat(int line, char type, float* data);
 
 void closeLine (int line); // Used to close a serial line
+
+//#define SERIAL_DEBUG_MESSAGES // If defined print debug messages
 
 #endif

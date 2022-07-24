@@ -4,6 +4,7 @@ int openLine(char * line) {
 	// Open serial line
 	int outputLine = -1;
 	
+	
 	//OPEN THE UART
 	//The flags (defined in fcntl.h):
 	//	Access modes: O_RDWR - Open for reading and writing.
@@ -12,6 +13,10 @@ int openLine(char * line) {
 	if (outputLine == -1) {
 		//ERROR - CAN'T OPEN SERIAL PORT
 		printf("Error - Unable to open UART.  Ensure it is not in use by another application\n");
+		printf("UART is by default assigned to run the bluetooth, check this isn't the case.\n");
+		
+		printf("Error number is: %d\n", errno);
+		printf("Error description is: %s\n",strerror(errno));
 		return outputLine;
 	}
 	//printf("Successfully opened serial on %s.\n", line);
@@ -48,29 +53,40 @@ void sendData(int line, char type, char* data){
 	
 	char buffer[30];
 	sprintf(buffer, "%c%c%s", type, length, data);
-	//printf("Sending data (%s)...", buffer);
-	//int sentBytes = write(line, buffer, strlen(buffer));
+	
+#ifdef SERIAL_DEBUG_MESSAGES
+	printf("Sending data (%s)...", buffer);
+	int sentBytes = write(line, buffer, strlen(buffer));
+	tcdrain(line);
+	printf("done sending %d bytes!\n", sentBytes);
+#else
 	write(line, buffer, strlen(buffer));
 	tcdrain(line);
-	//printf("done sending %d bytes!\n", sentBytes);
+#endif
 }
 
 void requestData(int line, char type, char* data) {
 	// Requests data over serial, stores it to a char array that is passed
 	// into the function and refernced.
 	
-	//printf("Starting request...");
 	if (line == -1) return; // Return on no line
 	tcflush(line, TCIOFLUSH);
-	
+
+#ifdef SERIAL_DEBUG_MESSAGES
+	printf("Starting request...");
+#endif
+
 	// Send out request
 	int count = write(line, &type, 1);
 	if (count < 0){
-		//printf("UART TX error for request\n");
+		printf("UART TX error for request\n");
 		return;
 	}
 	tcdrain(line); // Wait for request to leave output buffer
-	//printf("done!. Sent %c.\n", type);
+	
+#ifdef SERIAL_DEBUG_MESSAGES
+	printf("done!. Sent %c.\n", type);
+#endif
 	
 	// Get back length of incoming data
 	unsigned char rxLength = 0;
@@ -79,13 +95,18 @@ void requestData(int line, char type, char* data) {
 	
 	int bytes = 0;
 	ioctl(line, FIONREAD, &bytes);
-	//printf("Length of return is %d, bytes waiting %d.\n", (int)rxLength, bytes);
+	
+#ifdef SERIAL_DEBUG_MESSAGES
+	printf("Length of return is %d, bytes waiting %d.\n", (int)rxLength, bytes);
+#endif
 	
 	// Read in data to the buffer passed into the function byte by byte
 	read(line, data, rxLength);
 	data[rxLength] = '\0'; // Terminate the string
-	
-	//printf("Recieved %s, (length of %d).\n", data, rxLength);
+
+#ifdef SERIAL_DEBUG_MESSAGES
+	printf("Recieved %s, (length of %d).\n", data, rxLength);
+#endif
 }
 void requestDataInt(int line, char type, int* data){
 	char temp[10]; // Temporary string
