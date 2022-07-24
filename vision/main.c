@@ -1,6 +1,34 @@
 #include "main.h"
 
+const int numberFrames = 100; // Number of frames to render for testing
+const float CIRCUMFERENCE = 2.104;
+
+// Serial variables
+const bool useSerial = true; // Use serial or not
+int serialLine = -1;
+
+// ANT Configuration
+const bool useANT = true; 	// Use ANT data from USB?
+const int dataFieldWidth = 4; // Include delimiter!
+const int numDataFields = 6;
+#define bufferLength 60
+
+char ANTBuffer[bufferLength];
+int ANTData[] = {0,0,0,0,0,0};
+
+
 int main() {
+   // Local variables
+   int cadence = 0; 
+   int power = 0;
+   int heartRate = 0;
+   int battery = 0;
+   int rotations = 0;
+   float speed = 0.0;
+   float distance = 0.0;
+   float temperature = 0.0;
+   float humidity = 0.0;
+
    startOverlay(false);  // Camera off
    
    time_t t,t2; // Realtime marks
