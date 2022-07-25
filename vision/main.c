@@ -32,16 +32,15 @@ int main() {
    // Open serial line
    if (useSerial == true) {
       serialLine = openLine("/dev/serial0");
+
+      if (serialLine != -1) printf("SUCCESSFULLY OPENED SERIAL LIN\n");
    }
-   else {
-      printf("NOT USING SERIAL DATA. JUST A TEST\n");
-   }
-   if (useANT == true) {
-      printf("EXPECTING ANT DATA PIPED IN\n");
-   }
-   else {
-      printf("NOT USING ANT DATA. JUST MAKING STUFF UP.\n");
-   }
+   else printf("NOT USING SERIAL DATA. JUST A TEST\n");
+
+   // Inform if ANT data is expected or not
+   if (useANT == true) printf("EXPECTING ANT DATA PIPED IN\n");
+   else printf("NOT USING ANT DATA. JUST MAKING STUFF UP.\n");
+
    
    for (int i = 0; i < numberFrames; i++) {    
       
