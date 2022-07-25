@@ -42,6 +42,8 @@ int main() {
    if (useANT == true) printf("EXPECTING ANT DATA PIPED IN\n");
    else printf("NOT USING ANT DATA. JUST MAKING STUFF UP.\n");
    
+   fcntl(0, F_SETFL, O_NONBLOCK); // Set stdin (0) to be non-blocking
+   
    for (int i = 0; i < numberFrames; i++) {    
       
       // ANT data
@@ -72,15 +74,13 @@ int main() {
          
          distance = rotations * CIRCUMFERENCE;
          
-         temperature = 25.5;//requestDataFloat(serialLine, 't', &temperature); 
-         humidity = 60.0;//requestDataFloat(serialLine, 'h', &humidity); 
-         startTrial();
-         requestDataInt(serialLine, 'i', &battery); 
-         endTrialIgnore("battery", 40);
+         //startTrial(); requestDataFloat(serialLine, 't', &temperature); endTrialIgnore("temperature", 40);
+         //startTrial(); requestDataFloat(serialLine, 'h', &humidity); endTrialIgnore("humidity", 40);
+         startTrial(); requestDataInt(serialLine, 'i', &battery); endTrialIgnore("battery", 40);
       
          startTrial();
          updateOverlay(speed, distance, power, cadence, heartRate, temperature, humidity, i);
-         endTrialIgnore("overlay", 50);
+         endTrialIgnore("overlay", 100);
       }
       else {
          // Just test the overlay
@@ -96,9 +96,9 @@ int main() {
    float overallDelta = (tSystemEnd.tv_sec - tSystemStart.tv_sec) + ((tSystemEnd.tv_nsec - tSystemStart.tv_nsec) / 1000000000.0);
    
    printf("\nIt took %2.3f processor seconds, %.3f realtime seconds for %d frames.\n", secondsElapsed, overallDelta, numberFrames);
+   printf("An average of %.3f realtime seconds for each frame (%.2f fps).\n", overallDelta / numberFrames, numberFrames / overallDelta);
    
    closeOverlay();
-   
    
    return 0;
 }

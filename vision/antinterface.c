@@ -1,5 +1,4 @@
 #include "antInterface.h"
-#include "timetrial.h"
 
 //#define ANT_DEBUG_MESSAGES // Define for debug messages
 
@@ -10,8 +9,9 @@ const int numANTDataFields = 6;
 char ANTBuffer[antBufferLength];
 
 bool getANTData(int *dataOut, int serialLn) {
+	// Check if there is data available or stdin isn't broken
 	if (fgets(ANTBuffer, antBufferLength, stdin) != NULL) {
-
+		
 		// Check if it is text and skip
 		// Numeric data should start with a number
 		if ((ANTBuffer[0] < '0') || (ANTBuffer[0] > '9')) {
@@ -52,7 +52,9 @@ bool getANTData(int *dataOut, int serialLn) {
 		return(0);
 	}
 	else {
-		printf("Couldn't read any data from stdin for ANT.\n");
+#ifdef ANT_DEBUG_MESSAGES
+		printf("No data on stdin for ANT or it is broken.\n");
+#endif
 		return(-1);
 	}
 }
