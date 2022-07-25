@@ -10,6 +10,9 @@ int serialLine = -1;
 // ANT Configuration
 const bool useANT = true; 	// Use ANT data from USB?
 
+// Logging configuration
+const bool enableLogging = true;
+
 int main() {
    // Local variables
    int cadence = 0; 
@@ -43,6 +46,9 @@ int main() {
    else printf("NOT USING ANT DATA. JUST MAKING STUFF UP.\n");
    
    fcntl(0, F_SETFL, O_NONBLOCK); // Set stdin (0) to be non-blocking
+   
+   // Start logging
+   if (enableLogging == true) startLogging();
    
    for (int i = 0; i < numberFrames; i++) {    
       
@@ -81,6 +87,11 @@ int main() {
          startTrial();
          updateOverlay(speed, distance, power, cadence, heartRate, temperature, humidity, i);
          endTrialIgnore("overlay", 100);
+         
+         // Log data
+         if (enableLogging == true) updateLog(speed, distance, ANTData[0], ANTData[5], 
+                                             ANTData[1], ANTData[4], ANTData[0], ANTData[3], 
+                                             temperature, humidity, battery, battery);
       }
       else {
          // Just test the overlay
