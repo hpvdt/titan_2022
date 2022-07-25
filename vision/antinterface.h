@@ -14,6 +14,6 @@
 
 extern const int numANTDataFields;
 
-bool getANTData(int *dataOut, int serialLn, bool useSer);
+bool getANTData(int *dataOut, int serialLn);
 
 #endif

@@ -6,7 +6,7 @@ const int numANTDataFields = 6;
 
 char ANTBuffer[antBufferLength];
 
-bool getANTData(int *dataOut, int serialLn, bool useSer) {
+bool getANTData(int *dataOut, int serialLn) {
 	if (fgets(ANTBuffer, antBufferLength, stdin) != NULL) {
 
 		// Check if it is text and skip
@@ -33,7 +33,7 @@ bool getANTData(int *dataOut, int serialLn, bool useSer) {
 			dataOut[i] = atoi(tempBuffer);
 
 			// Can we update the system over serial?		
-			if (useSer == true) {
+			if (serialLn != -1) {
 				if (i == 0) sendData(serialLn, 'A', tempBuffer);       // Front heart rate
 				else if (i == 1) sendData(serialLn, 'C', tempBuffer);  // Front cadence
 				else if (i == 2) sendData(serialLn, 'E', tempBuffer);  // Front power

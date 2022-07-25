@@ -46,7 +46,7 @@ int main() {
       
       // ANT data
       if (useANT == true) {
-         getANTData(ANTData, serialLine, useSerial);
+         getANTData(ANTData, serialLine);
          
          // Use data for front
          heartRate = ANTData[0];
