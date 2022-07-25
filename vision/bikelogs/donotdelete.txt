@@ -1,0 +1,1 @@
+NOTE: This folder is needed so logging has somewhere to put its logs. The code DOES NOT make this directory itself.
