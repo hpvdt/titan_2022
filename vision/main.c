@@ -9,13 +9,6 @@ int serialLine = -1;
 
 // ANT Configuration
 const bool useANT = true; 	// Use ANT data from USB?
-const int dataFieldWidth = 4; // Include delimiter!
-const int numDataFields = 6;
-#define bufferLength 60
-
-char ANTBuffer[bufferLength];
-int ANTData[] = {0,0,0,0,0,0};
-
 
 int main() {
    // Local variables
@@ -28,6 +21,7 @@ int main() {
    float distance = 0.0;
    float temperature = 0.0;
    float humidity = 0.0;
+   int ANTData[] = {0,0,0,0,0,0};
 
    startOverlay(false);  // Camera off
    
@@ -52,45 +46,13 @@ int main() {
    for (int i = 0; i < numberFrames; i++) {    
       
       // ANT data
-      // Checks for data, then if it is likely valid before reading
       if (useANT == true) {
-         if (fgets(ANTBuffer, bufferLength, stdin) != NULL) {
-
-            // Check if it is text and skip
-            // Numeric data should start with a number
-            if ((ANTBuffer[0] < '0') || (ANTBuffer[0] > '9')) {
-               continue;
-            }
-            
-            // Data is always set in a set length
-            for (int i = 0; i < numDataFields; i++) {
-               int temp = 0;
-               
-               // TODO: Make a loop based on dataFieldWidth?
-               char tempBuffer[dataFieldWidth];
-               tempBuffer[0] = ANTBuffer[(i * dataFieldWidth)];
-               tempBuffer[1] = ANTBuffer[(i * dataFieldWidth) + 1];
-               tempBuffer[2] = ANTBuffer[(i * dataFieldWidth) + 2];
-               
-               ANTData[i] = atoi(tempBuffer);
-               
-               // Can we update the system over serial?
-               if (useSerial == true) {
-                  // Prepare to send new data over serial
-                  sprintf("%d",tempBuffer , ANTData[i]);
-                  
-                  if (i == 0) sendData(serialLine, 'A', tempBuffer);       // Front heart rate
-                  else if (i == 1) sendData(serialLine, 'C', tempBuffer);  // Front cadence
-                  else if (i == 2) sendData(serialLine, 'E', tempBuffer);  // Front power
-                  else if (i == 3) sendData(serialLine, 'B', tempBuffer);  // Rear heart rate
-                  else if (i == 4) sendData(serialLine, 'D', tempBuffer);  // Rear cadence
-                  else if (i == 5) sendData(serialLine, 'F', tempBuffer);  // Rear power
-               }
-            }
-            heartRate = ANTData[0];
-            cadence = ANTData[1];
-            power = ANTData[2];
-         }
+         getANTData(ANTData, serialLine, useSerial);
+         
+         // Use data for front
+         heartRate = ANTData[0];
+         cadence = ANTData[1];
+         power = ANTData[2];
       }
       
       
@@ -99,6 +61,7 @@ int main() {
          // Request data
          // Actual bike running
          if (useANT == false) {
+            // Check with microcontroller (in case it is being fed test data)
             requestDataInt(serialLine, 'a', &heartRate); 
             requestDataInt(serialLine, 'c', &cadence);
             requestDataInt(serialLine, 'e', &power);
@@ -115,9 +78,7 @@ int main() {
       }
       else {
          // Just test the overlay
-         if (useANT == true) updateOverlayTest(i, power, cadence, heartRate);
-         else updateOverlayTest(i, 75, 48, 97);
-         
+         updateOverlayTest(i, power, cadence, heartRate);
       }
    }
    c = clock() - c; // Get run time
