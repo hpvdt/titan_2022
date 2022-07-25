@@ -31,6 +31,4 @@ void requestDataFloat(int line, char type, float* data);
 
 void closeLine (int line); // Used to close a serial line
 
-//#define SERIAL_DEBUG_MESSAGES // If defined print debug messages
-
 #endif

@@ -1,5 +1,7 @@
 #include "serialComs.h"
 
+//#define SERIAL_DEBUG_MESSAGES // If defined print debug messages
+
 int openLine(char * line) {
 	// Open serial line
 	int outputLine = -1;
