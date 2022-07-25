@@ -34,7 +34,7 @@ bool getANTData(int *dataOut, int serialLn) {
 			tempBuffer[0] = ANTBuffer[(i * dataFieldWidth)];
 			tempBuffer[1] = ANTBuffer[(i * dataFieldWidth) + 1];
 			tempBuffer[2] = ANTBuffer[(i * dataFieldWidth) + 2];
-			tempBuffer[dataFieldWidth] = NULL;
+			tempBuffer[dataFieldWidth] = '\0';
 			
 			dataOut[i] = atoi(tempBuffer);
 
