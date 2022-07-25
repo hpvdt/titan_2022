@@ -1,6 +1,6 @@
 #include "main.h"
 
-const int numberFrames = 10; // Number of frames to render for testing
+const int numberFrames = 100; // Number of frames to render for testing
 const float CIRCUMFERENCE = 2.104;
 
 // Serial configuration
@@ -9,10 +9,6 @@ int serialLine = -1;
 
 // ANT Configuration
 const bool useANT = true; 	// Use ANT data from USB?
-
-// Variables used for time trials
-struct timespec tStart,tEnd;  // Realtime marks
-clock_t processClock;         // Process clock
 
 int main() {
    // Local variables
@@ -51,8 +47,11 @@ int main() {
       // ANT data
       // Checks for data, then if it is likely valid before reading
       if (useANT == true) {
-
+         
+         startTrial();
          getANTData(ANTData, serialLine);
+         endTrial("ANT");
+         
          
          // Use data for front
          heartRate = ANTData[0];
@@ -72,18 +71,20 @@ int main() {
             requestDataInt(serialLine, 'e', &power);
          }
          
-         requestDataFloat(serialLine, 's', &speed); 
-         requestDataInt(serialLine, 'q', &rotations);
+         startTrial(); requestDataFloat(serialLine, 's', &speed);  endTrialIgnore("speed", 40);
+         startTrial(); requestDataInt(serialLine, 'q', &rotations); endTrialIgnore("rotations", 40);
+         
          distance = rotations * CIRCUMFERENCE;
          
          temperature = 25.5;//requestDataFloat(serialLine, 't', &temperature); 
          humidity = 60.0;//requestDataFloat(serialLine, 'h', &humidity); 
          startTrial();
          requestDataInt(serialLine, 'i', &battery); 
-         endTrial();
-         
+         endTrialIgnore("battery", 40);
+      
+         startTrial();
          updateOverlay(speed, distance, power, cadence, heartRate, temperature, humidity, i);
-         
+         endTrialIgnore("overlay", 50);
       }
       else {
          // Just test the overlay
@@ -104,18 +105,4 @@ int main() {
    
    
    return 0;
-}
-
-void startTrial() {
-   clock_gettime(CLOCK_MONOTONIC, &tStart); // Get start time
-   processClock = clock(); // Get start processor time
-}
-
-void endTrial() {
-   processClock = clock() - processClock; // Get run time
-   clock_gettime(CLOCK_MONOTONIC, &tEnd); // Get end time
-   float secondsElapsed2 = ((float) 1000.0 * processClock)/CLOCKS_PER_SEC;
-   
-   uint64_t delta = ((tEnd.tv_sec - tStart.tv_sec) * 1000) + ((tEnd.tv_nsec - tStart.tv_nsec) / 1000000);
-   printf("It took %4.3f processor milliseconds, %lld realtime milliseconds for that trial.\n", secondsElapsed2, delta);
 }

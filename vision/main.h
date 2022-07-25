@@ -18,7 +18,6 @@
 #include "antInterface.h"
 #include <time.h>
 
-void startTrial();
-void endTrial();
+#include "timetrial.h"
 
 #endif
