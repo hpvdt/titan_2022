@@ -1,4 +1,5 @@
 #include "antInterface.h"
+#include "timetrial.h"
 
 //#define ANT_DEBUG_MESSAGES // Define for debug messages
 
@@ -37,17 +38,14 @@ bool getANTData(int *dataOut, int serialLn) {
 			tempBuffer[dataFieldWidth-1] = '\0';
 			
 			dataOut[i] = atoi(tempBuffer);
-
-			// Can we update the system over serial?		
-			if (serialLn != -1) {
-				if (i == 0) sendData(serialLn, 'A', tempBuffer);       // Front heart rate
-				else if (i == 1) sendData(serialLn, 'C', tempBuffer);  // Front cadence
-				else if (i == 2) sendData(serialLn, 'E', tempBuffer);  // Front power
-				else if (i == 3) sendData(serialLn, 'B', tempBuffer);  // Rear heart rate
-				else if (i == 4) sendData(serialLn, 'D', tempBuffer);  // Rear cadence
-				else if (i == 5) sendData(serialLn, 'F', tempBuffer);  // Rear power
-			}
 		}
+		
+		if (serialLn != -1) { 
+			// Send everthing at once
+			sprintf(ANTBuffer, "%03d,%03d,%03d,%03d,%03d,%03d", dataOut[0], dataOut[3], dataOut[1], dataOut[4], dataOut[2], dataOut[5]);
+			sendData(serialLn, 'G', ANTBuffer);
+		}
+		
 #ifdef ANT_DEBUG_MESSAGES
 		printf("ANT DATA IN: %03d,%03d,%03d|%03d,%03d,%03d\n", dataOut[0], dataOut[1], dataOut[2], dataOut[3], dataOut[4], dataOut[5]);
 #endif

@@ -47,11 +47,7 @@ int main() {
       // ANT data
       // Checks for data, then if it is likely valid before reading
       if (useANT == true) {
-         
-         startTrial();
          getANTData(ANTData, serialLine);
-         endTrial("ANT");
-         
          
          // Use data for front
          heartRate = ANTData[0];

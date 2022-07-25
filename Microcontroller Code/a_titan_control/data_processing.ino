@@ -8,6 +8,7 @@ void processData (const char line) {
      d - Cadence (rear) (RPM)
      e - Power (front) (W)
      f - Power (rear) (W)
+     g - All ANT data (delimited, in order a-f)
 
      i - Front battery %
      j - Rear battery %
@@ -92,6 +93,30 @@ void processData (const char line) {
       break;
     case 'F':
       RPower = readInput(line).toInt();
+      break;
+    case 'g':
+      returnMessage = String(String(FHR) + "," + String(RHR) 
+                            + "," + String(FCadence) + "," + String(RCadence) 
+                            + "," + String(FPower) + "," + String(RPower));
+      break;
+    case 'G':
+      returnMessage = readInput(line); // Use return string temporarily
+
+      for (byte i = 0; i < 6; i++) {
+        int temporaryANT;
+        temporaryANT = 100 * (returnMessage[i * 4] - '0');
+        temporaryANT += 10 * (returnMessage[i * 4 + 1] - '0');
+        temporaryANT += returnMessage[i * 4 + 2] - '0';
+        
+        if (i == 0) FHR = temporaryANT;
+        else if (i == 1) RHR = temporaryANT;
+        else if (i == 2) FCadence = temporaryANT;
+        else if (i == 3) RCadence = temporaryANT;
+        else if (i == 4) FPower = temporaryANT;
+        else if (i == 5) RPower = temporaryANT;
+      }
+      
+      returnMessage = ""; //Clear it to not send it back
       break;
 
     case 'i': // Batteries
