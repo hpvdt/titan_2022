@@ -1,14 +1,18 @@
 #include "main.h"
 
-const int numberFrames = 100; // Number of frames to render for testing
+const int numberFrames = 10; // Number of frames to render for testing
 const float CIRCUMFERENCE = 2.104;
 
-// Serial variables
+// Serial configuration
 const bool useSerial = true; // Use serial or not
 int serialLine = -1;
 
 // ANT Configuration
 const bool useANT = true; 	// Use ANT data from USB?
+
+// Variables used for time trials
+struct timespec tStart,tEnd;  // Realtime marks
+clock_t processClock;         // Process clock
 
 int main() {
    // Local variables
@@ -22,30 +26,32 @@ int main() {
    float temperature = 0.0;
    float humidity = 0.0;
    int ANTData[] = {0,0,0,0,0,0};
-
+   
    startOverlay(false);  // Camera off
    
-   time_t t,t2; // Realtime marks
-   time(&t); // Get start time
-   clock_t c = clock(); // Get start processor time
+   // Timing the entire process
+   struct timespec tSystemStart,tSystemEnd;
+   clock_gettime(CLOCK_MONOTONIC, &tSystemStart); // Get start time
+   clock_t titanProcessClock = clock(); // Get start processor time
    
    // Open serial line
    if (useSerial == true) {
       serialLine = openLine("/dev/serial0");
-
-      if (serialLine != -1) printf("SUCCESSFULLY OPENED SERIAL LIN\n");
+      
+      if (serialLine != -1) printf("SUCCESSFULLY OPENED SERIAL LINE\n");
    }
-   else printf("NOT USING SERIAL DATA. JUST A TEST\n");
-
+   else printf("NOT USING SERIAL DATA. JUST A TEST..\n");
+   
    // Inform if ANT data is expected or not
    if (useANT == true) printf("EXPECTING ANT DATA PIPED IN\n");
    else printf("NOT USING ANT DATA. JUST MAKING STUFF UP.\n");
-
    
    for (int i = 0; i < numberFrames; i++) {    
       
       // ANT data
+      // Checks for data, then if it is likely valid before reading
       if (useANT == true) {
+
          getANTData(ANTData, serialLine);
          
          // Use data for front
@@ -65,29 +71,51 @@ int main() {
             requestDataInt(serialLine, 'c', &cadence);
             requestDataInt(serialLine, 'e', &power);
          }
+         
          requestDataFloat(serialLine, 's', &speed); 
          requestDataInt(serialLine, 'q', &rotations);
          distance = rotations * CIRCUMFERENCE;
          
-         requestDataFloat(serialLine, 't', &temperature); 
-         requestDataFloat(serialLine, 'h', &humidity); 
+         temperature = 25.5;//requestDataFloat(serialLine, 't', &temperature); 
+         humidity = 60.0;//requestDataFloat(serialLine, 'h', &humidity); 
+         startTrial();
          requestDataInt(serialLine, 'i', &battery); 
+         endTrial();
          
-         updateOverlay(speed, distance, i, cadence, heartRate, temperature, humidity, battery);
+         updateOverlay(speed, distance, power, cadence, heartRate, temperature, humidity, i);
+         
       }
       else {
          // Just test the overlay
          updateOverlayTest(i, power, cadence, heartRate);
       }
    }
-   c = clock() - c; // Get run time
-   time(&t2); // Get end time
+   
+   // Overal time
+   titanProcessClock = clock() - titanProcessClock; // Get run time
+   clock_gettime(CLOCK_MONOTONIC, &tSystemEnd); // Get end time
+   float secondsElapsed = ((float) titanProcessClock)/CLOCKS_PER_SEC;
+   
+   float overallDelta = (tSystemEnd.tv_sec - tSystemStart.tv_sec) + ((tSystemEnd.tv_nsec - tSystemStart.tv_nsec) / 1000000000.0);
+   
+   printf("\nIt took %2.3f processor seconds, %.3f realtime seconds for %d frames.\n", secondsElapsed, overallDelta, numberFrames);
    
    closeOverlay();
    
-   float secondsElapsed = ((float) c)/CLOCKS_PER_SEC;
    
-   printf("\nIt took %f processor seconds, %.f realtime seconds for %d frames.\n", secondsElapsed, difftime(t2,t), numberFrames);
    return 0;
 }
 
+void startTrial() {
+   clock_gettime(CLOCK_MONOTONIC, &tStart); // Get start time
+   processClock = clock(); // Get start processor time
+}
+
+void endTrial() {
+   processClock = clock() - processClock; // Get run time
+   clock_gettime(CLOCK_MONOTONIC, &tEnd); // Get end time
+   float secondsElapsed2 = ((float) 1000.0 * processClock)/CLOCKS_PER_SEC;
+   
+   uint64_t delta = ((tEnd.tv_sec - tStart.tv_sec) * 1000) + ((tEnd.tv_nsec - tStart.tv_nsec) / 1000000);
+   printf("It took %4.3f processor milliseconds, %lld realtime milliseconds for that trial.\n", secondsElapsed2, delta);
+}

@@ -15,6 +15,10 @@
 
 #include "serialComs.h"
 #include "overlay.h"
+#include "antInterface.h"
 #include <time.h>
+
+void startTrial();
+void endTrial();
 
 #endif

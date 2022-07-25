@@ -17,7 +17,7 @@ bool getANTData(int *dataOut, int serialLn) {
 #ifdef ANT_DEBUG_MESSAGES
 			printf("ANT data didn't begin with a number. Contents until a number:\n");
 #endif
-
+			
 			do {
 #ifdef ANT_DEBUG_MESSAGES
 				printf("\t%s", ANTBuffer);
@@ -48,7 +48,6 @@ bool getANTData(int *dataOut, int serialLn) {
 				else if (i == 5) sendData(serialLn, 'F', tempBuffer);  // Rear power
 			}
 		}
-
 #ifdef ANT_DEBUG_MESSAGES
 		printf("ANT DATA IN: %03d,%03d,%03d|%03d,%03d,%03d\n", dataOut[0], dataOut[1], dataOut[2], dataOut[3], dataOut[4], dataOut[5]);
 #endif
