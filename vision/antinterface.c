@@ -1,5 +1,7 @@
 #include "antInterface.h"
 
+//#define ANT_DEBUG_MESSAGES // Define for debug messages
+
 const int dataFieldWidth = 4; // Include delimiter!
 const int numANTDataFields = 6;
 #define antBufferLength 60
@@ -12,10 +14,14 @@ bool getANTData(int *dataOut, int serialLn) {
 		// Check if it is text and skip
 		// Numeric data should start with a number
 		if ((ANTBuffer[0] < '0') || (ANTBuffer[0] > '9')) {
+#ifdef ANT_DEBUG_MESSAGES
 			printf("ANT data didn't begin with a number. Contents until a number:\n");
-			
+#endif
+
 			do {
+#ifdef ANT_DEBUG_MESSAGES
 				printf("\t%s", ANTBuffer);
+#endif
 				if (fgets(ANTBuffer, antBufferLength, stdin) == NULL) return(-1);
 			} while ((ANTBuffer[0] < '0') || (ANTBuffer[0] > '9'));
 		}
@@ -43,12 +49,13 @@ bool getANTData(int *dataOut, int serialLn) {
 			}
 		}
 
+#ifdef ANT_DEBUG_MESSAGES
 		printf("ANT DATA IN: %03d,%03d,%03d|%03d,%03d,%03d\n", dataOut[0], dataOut[1], dataOut[2], dataOut[3], dataOut[4], dataOut[5]);
-		
+#endif
 		return(0);
 	}
 	else {
-		printf("Couldn't read any data from stdin.\n");
+		printf("Couldn't read any data from stdin for ANT.\n");
 		return(-1);
 	}
 }
