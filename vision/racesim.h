@@ -6,7 +6,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 
-void RaceSimV3_WHPSC_complete(float xpStart, bool recordSimulation); // Runs the entire simulation
+void RaceSimV3_WHPSC_complete(float initialSpeed, bool recordSimulation); // Runs the entire simulation
 void setupRaceSim(); // Used to set all the values
 
 #endif

@@ -106,7 +106,7 @@ float PFcn(float dist) {
 bool raceSimHasBeenSetup = false; // Keeps track of if variables have been set up
 
 float slopePolynomial(float distance) {
-    distance = distance / 1000.0;
+    distance = distance / 1000.0; // Reduce differences in orders to keep things accurate
     float slope = -4.87E-06*pow(distance,4) + 0.0000643*pow(distance,3) - 0.0000185*pow(distance,2) - 0.0015*distance - 0.00427;
     return slope;
 }
@@ -159,7 +159,7 @@ void setupRaceSim() {
     raceSimHasBeenSetup = true; // Record setup
 }
 
-void RaceSimV3_WHPSC_complete(float xpStart, bool recordSimulation) {
+void RaceSimV3_WHPSC_complete(float initialSpeed, bool recordSimulation) {
 
     // Ensure proper input and other constants
     const float stepDuration = 0.005;
@@ -168,7 +168,7 @@ void RaceSimV3_WHPSC_complete(float xpStart, bool recordSimulation) {
     
     // Run time-marching algorithm
     // initialize X
-    float currX[] = {0, xpStart}; // displacement velocity
+    float currX[] = {0, initialSpeed}; // displacement velocity
     int step = 0; //keep track of steps
     
     FILE * logFile;
