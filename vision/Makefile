@@ -1,4 +1,4 @@
-OBJS=main.o overlay.o timetrial.o antInterface.o serialComs.o logging.o
+OBJS=main.o overlay.o timetrial.o antInterface.o serialComs.o logging.o racesim.o
 BIN=bike.bin
 
 LDFLAGS+=-lvgfont -lfreetype -lz -lrevision
