@@ -40,17 +40,21 @@ void processData (const char line) {
     case 'r':
       frameType = rearSerial.read();
       break;
+#ifdef ALLOW_DEBUG_SERIAL
     case 'd':
       frameType = DEBUGSERIAL.read();
       break;
+#endif
   }
 
+#ifdef ALLOW_DEBUG_SERIAL
   if (debugMode) {
     DEBUGSERIAL.print(F("Frame type : "));
     DEBUGSERIAL.print(frameType);
     DEBUGSERIAL.print(F(" on line "));
     DEBUGSERIAL.println(line);
   }
+#endif
 
   // Process data depending on type
   String returnMessage = ""; // Stores return message
@@ -236,12 +240,15 @@ void sendMessage (String message, const char outputLine) {
       rearSerial.print(lengthChar);
       rearSerial.print(message);
       break;
+#ifdef ALLOW_DEBUG_SERIAL
     case 'd':
       DEBUGSERIAL.print(lengthChar);
       DEBUGSERIAL.print(message);
       break;
+#endif
   }
 
+#ifdef ALLOW_DEBUG_SERIAL
   if (debugMode) {
     DEBUGSERIAL.print(F("Sent : "));
     DEBUGSERIAL.print(message.length());
@@ -250,6 +257,7 @@ void sendMessage (String message, const char outputLine) {
     DEBUGSERIAL.print(F(" on line "));
     DEBUGSERIAL.println(outputLine);
   }
+#endif
 }
 
 String readInput (char inputLine) {
@@ -278,6 +286,7 @@ String readInput (char inputLine) {
 
       rearSerial.readBytes(temp, messageLength);
       break;
+#ifdef ALLOW_DEBUG_SERIAL
     case 'd':
       while (DEBUGSERIAL.available() == 0) {
         delayMicroseconds(10); // Wait for length character if needed
@@ -287,12 +296,14 @@ String readInput (char inputLine) {
 
       DEBUGSERIAL.readBytes(temp, messageLength);
       break;
+#endif
   }
 
   // Copy message to string and trim the useless end
   message = String(temp);
   message.remove(messageLength, 50 - messageLength);
 
+#ifdef ALLOW_DEBUG_SERIAL
   if (debugMode) {
     DEBUGSERIAL.print(F("Recieved: "));
     DEBUGSERIAL.print(messageLength);
@@ -301,6 +312,6 @@ String readInput (char inputLine) {
     DEBUGSERIAL.print(F(" on line "));
     DEBUGSERIAL.println(inputLine);
   }
-
+#endif
   return (message);
 }

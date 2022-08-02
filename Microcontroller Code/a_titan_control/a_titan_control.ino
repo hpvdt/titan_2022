@@ -1,10 +1,20 @@
 #include <TinyGPS.h>
-#include "DHT.h" // Used for temperature and humidity
+#include "DHT.h" // Used for temperature and humidity (Adafruit DHT library)
 
 HardwareSerial frontSerial(PA10, PA9); //RX, TX
 HardwareSerial rearSerial(PA3, PA2);
 HardwareSerial gpsSerial(PB11, PB10);
+
+// Ensure that 'Serial' is connected to USB if USB is enabled.
+#if defined (USBCON) && !(defined(USBD_USE_CDC))
+#error "Generic CDC is not superceding UART for 'Serial'. Check and correct USB build settings." 
+#endif
+
+// If build options enable USB and it is main 'Serial', automatically allow debugging
+#if defined (USBCON) && defined(USBD_USE_CDC)
+#define ALLOW_DEBUG_SERIAL // Enables debug code to be included in compilation
 #define DEBUGSERIAL Serial // USB Connection
+#endif
 
 /* Serial Pins
    PA9 - TX1
@@ -107,6 +117,7 @@ void setup() {
   const int timeout = 2000; // Time out for debugger to be started if debugging
   unsigned long endTime = millis() + timeout; // End time for scanning
 
+#ifdef ALLOW_DEBUG_SERIAL
   if (debugMode) {
     // Set up debugging mode (USB connection)
     DEBUGSERIAL.begin(debugBaud);
@@ -125,6 +136,7 @@ void setup() {
       DEBUGSERIAL.println(F("DEBUGGING MODE")); // Print debug statement if no timeout
     }
   }
+#endif
 
   // Sensor setup
   dht.begin(); // Starts digital humidity and temperature sensor
@@ -143,11 +155,12 @@ void loop() {
     // Data on rear line
     processData('r');
   }
+#ifdef ALLOW_DEBUG_SERIAL
   if (DEBUGSERIAL.available()) {
     // Data on debugging line
     processData('d');
   }
-
+#endif
   // Periodic DHT measurement
   if (millis() > dhtTime) {
     humidity = dht.readHumidity() * 2;            // Humidity reading
