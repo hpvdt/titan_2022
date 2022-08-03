@@ -40,6 +40,12 @@ void processData (const char line) {
     case 'r':
       frameType = rearSerial.read();
       break;
+    
+    // Telemetry
+    case 't':
+      frameType = radioMessage[0];
+      break;
+      
 #ifdef ALLOW_DEBUG_SERIAL
     case 'd':
       frameType = DEBUGSERIAL.read();
@@ -240,6 +246,11 @@ void sendMessage (String message, const char outputLine) {
       rearSerial.print(lengthChar);
       rearSerial.print(message);
       break;
+
+    // Telemetry
+    case 't':
+      radioSend(String(String(lengthChar) + message));
+      break;
 #ifdef ALLOW_DEBUG_SERIAL
     case 'd':
       DEBUGSERIAL.print(lengthChar);
@@ -285,6 +296,16 @@ String readInput (char inputLine) {
       messageLength -= 31;
 
       rearSerial.readBytes(temp, messageLength);
+      break;
+
+    // Telemetry
+    case 't':
+      messageLength = byte(radioMessage[1]);
+      messageLength -= 31;
+
+      for (byte i = 0; i < messageLength; i++) {
+        temp[i] = radioMessage[i + 2];
+      }
       break;
 #ifdef ALLOW_DEBUG_SERIAL
     case 'd':

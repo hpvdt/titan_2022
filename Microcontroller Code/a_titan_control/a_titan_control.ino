@@ -1,6 +1,8 @@
 #include <TinyGPS.h>
 #include "DHT.h" // Used for temperature and humidity (Adafruit DHT library)
 
+#include "telemetry.h"
+
 HardwareSerial frontSerial(PA10, PA9); //RX, TX
 HardwareSerial rearSerial(PA3, PA2);
 HardwareSerial gpsSerial(PB11, PB10);
@@ -14,6 +16,7 @@ HardwareSerial gpsSerial(PB11, PB10);
 #if defined (USBCON) && defined(USBD_USE_CDC)
 #define ALLOW_DEBUG_SERIAL // Enables debug code to be included in compilation
 #define DEBUGSERIAL Serial // USB Connection
+const long debugBaud = 38400;  // Baudrate for debugging line
 #endif
 
 /* Serial Pins
@@ -32,7 +35,6 @@ bool debugMode = true;      // In debug mode or not (copies all messages to debu
 
 const long rpiBaud = 38400;  // Baudrate used with rpis
 const long gpsBaud = 9600;    // Baudrate used with GPS
-const long debugBaud = 38400;  // Baudrate for debugging line
 
 /////////////////////////////////////////////////
 // Variables
@@ -144,6 +146,9 @@ void setup() {
   for (byte i = 0; i < numberTicks; i++) {
     lastPass[i] = 0; // Reset all encoder tick values
   }
+
+  // Radio Setup
+  radioSetup();
 }
 
 void loop() {
@@ -161,6 +166,19 @@ void loop() {
     processData('d');
   }
 #endif
+
+  // Telemetry Check
+  if(recievedMessage) {
+    radioRecieved();
+    recievedMessage = false;
+    processData('t');
+#ifdef ALLOW_DEBUG_SERIAL
+  if (debugMode) {
+    DEBUGSERIAL.println("Sent back message on telemetry");
+  }
+#endif
+  }
+
   // Periodic DHT measurement
   if (millis() > dhtTime) {
     humidity = dht.readHumidity() * 2;            // Humidity reading
