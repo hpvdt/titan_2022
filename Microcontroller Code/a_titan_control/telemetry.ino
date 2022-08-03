@@ -1,7 +1,22 @@
 #include "telemetry.h"
 
 void radioSetup() {
+  
+    // Start radio system
   radio.begin();
+
+  // Check for chip, alert user and don't bother setting up if missing
+  if (radio.isChipConnected() == false) {
+#ifdef ALLOW_DEBUG_SERIAL
+    if (debugMode) {
+      DEBUGSERIAL.println("!!! nRF24L01 NOT DETECTED !!!");
+    }
+#endif
+    recievedRadioData = false; // Ensure this is false
+    return;
+  }
+
+  // Set up radio if present
   radio.setPALevel(RF24_PA_MIN);          // Low power, raise if a decoupling capacitor is added
   radio.setDataRate(RF24_250KBPS);
   radio.setAutoAck(1);                    // Ensure autoACK is disabled
