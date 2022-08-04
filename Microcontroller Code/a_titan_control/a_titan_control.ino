@@ -19,17 +19,6 @@ HardwareSerial gpsSerial(PB11, PB10);
 const long debugBaud = 38400;  // Baudrate for debugging line
 #endif
 
-/* Serial Pins
-   PA9 - TX1
-   PA10 - RX1
-
-   PA2 - TX2
-   PA3 - RX2
-
-   PB10 - TX3
-   PB11 - RX3
-*/
-
 // DEBUGGING MODE
 bool debugMode = true;      // In debug mode or not (copies all messages to debug serial line
 
