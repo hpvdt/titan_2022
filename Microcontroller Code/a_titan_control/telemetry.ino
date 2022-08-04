@@ -12,7 +12,7 @@ void radioSetup() {
       DEBUGSERIAL.println("!!! nRF24L01 NOT DETECTED !!!");
     }
 #endif
-    recievedRadioData = false; // Ensure this is false
+    recievedMessage = false; // Ensure this is false
     return;
   }
 
