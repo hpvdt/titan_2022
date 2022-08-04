@@ -1,6 +1,18 @@
 void setupRadio() {
-    // Set up the radio
+  
+  // Start radio system
   radio.begin();
+
+  // Check for chip
+  if (radio.isChipConnected() == false) {
+    if (debugMode == true) {
+      Serial.println("!!! nRF24L01 NOT DETECTED !!!");
+    }
+    recievedRadioData = false; // Ensure this is false
+    return;
+  }
+
+  // Set up the radio if present
   radio.setPALevel(RF24_PA_MIN);          // Low power, raise if a decoupling capacitor is added
   radio.setDataRate(RF24_250KBPS);
   radio.setAutoAck(1);                    // Ensure autoACK is disabled
