@@ -1,4 +1,4 @@
-#include <TinyGPS.h>
+#include <TinyGPS.h> // GPS data parsing library by Mikal Hart
 #include "DHT.h" // Used for temperature and humidity (Adafruit DHT library)
 
 #include "telemetry.h"

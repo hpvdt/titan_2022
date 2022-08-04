@@ -3,7 +3,11 @@ void GPSCheck() {
 
   while (gpsSerial.available()) {
     char c = gpsSerial.read();
-    // Serial.write(c); // uncomment this line if you want to see the GPS data flowing
+#ifdef ALLOW_DEBUG_SERIAL
+  if (debugMode) {
+    //DEBUGSERIAL.write(c); // See the GPS data flowing
+  }
+#endif
     if (gps.encode(c)) newData = true; // Did a new valid sentence come in?
   }
   if (newData) {
@@ -17,5 +21,20 @@ void GPSCheck() {
     speedGPS = gps.f_speed_kmph();
     // Get the distance in KM from current to start point
     distanceGPS = (latitude == TinyGPS::GPS_INVALID_F_ANGLE ? 1000 : (unsigned long)TinyGPS::distance_between(latitude, longitude, startLat, startLong) / 1000);
+    
+#ifdef ALLOW_DEBUG_SERIAL
+  if (debugMode) {
+    DEBUGSERIAL.print("NEW GPS DATA: LAT: ");
+    DEBUGSERIAL.print(latitude, 4);
+    DEBUGSERIAL.print(" LONG: ");
+    DEBUGSERIAL.print(longitude, 4);
+    DEBUGSERIAL.print(" ALT: ");
+    DEBUGSERIAL.print(altitudeGPS, 1);
+    DEBUGSERIAL.print(" SPEED (KM/H): ");
+    DEBUGSERIAL.print(speedGPS, 1);
+    DEBUGSERIAL.print(" DIST TO START: ");
+    DEBUGSERIAL.println(distanceGPS, 3);
+  }
+#endif
   }
 }
