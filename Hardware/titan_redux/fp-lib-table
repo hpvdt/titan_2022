@@ -1,0 +1,4 @@
+(fp_lib_table
+  (lib (name 2172034-1)(type KiCad)(uri ${KIPRJMOD}/2172034-1)(options "")(descr ""))
+  (lib (name ultimate_gps)(type KiCad)(uri ${KIPRJMOD}/ultimate_gps.pretty)(options "")(descr ""))
+)

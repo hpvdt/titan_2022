@@ -1,0 +1,5 @@
+(sym_lib_table
+  (lib (name titan_redux-rescue)(type Legacy)(uri ${KIPRJMOD}/titan_redux-rescue.lib)(options "")(descr ""))
+  (lib (name ultimate_gps)(type Legacy)(uri ${KIPRJMOD}/ultimate_gps.lib)(options "")(descr ""))
+  (lib (name AP63300)(type Legacy)(uri ${KIPRJMOD}/AP63300.lib)(options "")(descr ""))
+)
