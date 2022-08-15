@@ -1,0 +1,3 @@
+(fp_lib_table
+  (lib (name "TCRT5000")(type "KiCad")(uri "${KIPRJMOD}/TCRT5000")(options "")(descr ""))
+)

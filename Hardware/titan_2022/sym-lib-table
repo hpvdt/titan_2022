@@ -1,0 +1,4 @@
+(sym_lib_table
+  (lib (name "AP62301WU")(type "KiCad")(uri "${KIPRJMOD}/AP62301WU.kicad_sym")(options "")(descr ""))
+  (lib (name "ultimate_gps")(type "KiCad")(uri "${KIPRJMOD}/ultimate_gps.kicad_sym")(options "")(descr ""))
+)
