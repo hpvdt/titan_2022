@@ -6,7 +6,7 @@
 #include <time.h>
 
 void startLogging();
-void updateLog(float spd, float dist, int fpwr, int rpwr, int fcad, int rcad, int fhr, int rhr, float temperature, float hum, float fbat, float rbat);
+void updateLog(float spd, float dist, int fpwr, int rpwr, int fcad, int rcad, int fhr, int rhr, float temperature, float hum, float fbat, float rbat, float fbrk, float rbrk, int CO2, float perf);
 
 
 #endif

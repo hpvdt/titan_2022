@@ -7,7 +7,7 @@ const float CIRCUMFERENCE = 2.104;
 bool useSerial = true; // Use serial or not
 int serialLine = -1;
 
-bool collectANT = true; 	      // Use ANT data from USB?
+bool collectANT = true; 	// Use ANT data from USB?
 bool enableLogging = true; // Logging configuration
 bool enableCamera = true;  // Camera
 bool isFront = true;       // Is front or not
@@ -55,13 +55,16 @@ int main(int argc, char *argv[]) {
    int cadence = 0; 
    int power = 0;
    int heartRate = 0;
-   int battery = 0;
+   int rearBattery = 0, frontBattery = 0;
    int rotations = 0;
    float speed = 0.0;
    float distance = 0.0;
    float temperature = 0.0;
    float humidity = 0.0;
    int ANTData[] = {0,0,0,0,0,0};
+   float performanceFactor = 0.0;
+   float frontBrakeTemp = 0.0, rearBrakeTemp = 0.0;
+   int ppmCO2 = 0;
    
    // Open serial line
    if (useSerial == true) {
@@ -127,6 +130,7 @@ int main(int argc, char *argv[]) {
          requestDataInt(serialLine, 'b', &ANTData[3]); 
          requestDataInt(serialLine, 'd', &ANTData[4]);
          requestDataInt(serialLine, 'f', &ANTData[5]);
+         // TODO: Change this to use the call for all ANT data 'g'
          
          // Record relevant local data
          if (isFront == true) {
@@ -147,19 +151,21 @@ int main(int argc, char *argv[]) {
       }
       
       
-      // Collect other data from STM32 over serial
-      if (useSerial == true) {
-         // Request data
-         // Actual bike running
-         
+      // Get bike data
+      if (useSerial == true) { // Collect bike data from STM32 over serial      
          startTrial(); requestDataFloat(serialLine, 's', &speed);  endTrialIgnore("speed", 40);
          startTrial(); requestDataInt(serialLine, 'q', &rotations); endTrialIgnore("rotations", 40);
          
          distance = rotations * CIRCUMFERENCE;
          
-         //startTrial(); requestDataFloat(serialLine, 't', &temperature); endTrialIgnore("temperature", 40);
-         //startTrial(); requestDataFloat(serialLine, 'h', &humidity); endTrialIgnore("humidity", 40);
-         startTrial(); requestDataInt(serialLine, 'i', &battery); endTrialIgnore("battery", 40);
+         startTrial(); requestDataFloat(serialLine, 't', &temperature); endTrialIgnore("temperature", 40);
+         startTrial(); requestDataFloat(serialLine, 'h', &humidity); endTrialIgnore("humidity", 40);
+         startTrial(); requestDataInt(serialLine, 'i', &frontBattery); endTrialIgnore("front battery", 40);
+         startTrial(); requestDataInt(serialLine, 'j', &rearBattery); endTrialIgnore("rear battery", 40);
+         
+         startTrial(); requestDataFloat(serialLine, 'w', &frontBrakeTemp); endTrialIgnore("front brake temperature", 40);
+         startTrial(); requestDataFloat(serialLine, 'x', &rearBrakeTemp); endTrialIgnore("rear brake temperature", 40);
+         startTrial(); requestDataInt(serialLine, 'k', &ppmCO2); endTrialIgnore("CO2", 40);
       }
 
       
@@ -179,7 +185,8 @@ int main(int argc, char *argv[]) {
       // Logging
       if (enableLogging == true) updateLog(speed, distance, ANTData[0], ANTData[5], 
                                              ANTData[1], ANTData[4], ANTData[0], ANTData[3], 
-                                             temperature, humidity, battery, battery);
+                                             temperature, humidity, frontBattery, rearBattery,
+                                             frontBrakeTemp, rearBrakeTemp, ppmCO2, performanceFactor);
       
       // Count down number of frames if there was a limit stated
       if (numberFrames > 0) framesRemaining--;
