@@ -63,7 +63,7 @@ int main(int argc, char *argv[]) {
    float humidity = 0.0;
    int ANTData[] = {0,0,0,0,0,0};
    float performanceFactor = 0.0;
-   float frontBrakeTemp = 0.0, rearBrakeTemp = 0.0;
+   float frontBrakeTemp = 200.0, rearBrakeTemp = 200.0;
    int ppmCO2 = 0;
    
    // Open serial line
@@ -172,13 +172,13 @@ int main(int argc, char *argv[]) {
       // Overlays
       if (isFront == true) { // Front overlay
          startTrial();
-         updateOverlay(speed, distance, power, cadence, heartRate, temperature, humidity, framesRemaining);
-         endTrialIgnore("overlay", 100);
+         updateOverlayFront(speed, distance, power, cadence, heartRate, performanceFactor, frontBrakeTemp, frontBattery);
+         endTrialIgnore("front overlay", 100);
       }
       else { // Rear overlay
          startTrial();
-         updateOverlay(speed, distance, power, cadence, heartRate, temperature, humidity, framesRemaining);
-         endTrialIgnore("overlay", 100);
+         updateOverlayRear(speed, distance, power, ANTData[2], cadence, heartRate, frontBrakeTemp, rearBrakeTemp, rearBattery, performanceFactor, ppmCO2);
+         endTrialIgnore("rear overlay", 100);
       }
       
       

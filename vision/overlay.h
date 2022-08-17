@@ -14,23 +14,10 @@
 
 #include "revision.h"
 
-void updateOverlayTest(int iteration, int pow, int cad, int hr);
-void updateOverlay(float spe, float dist, int pow, int cad, int hr, float temper, float humid, int batt);
-void renderBatteryPercentage(int battPer);
-void renderSpeed(float speed);
-void renderPerfPercentage(float perfPer);
-void renderCadence(int cadence);
-void renderPower(int power);
-void renderHR(int heartRate);
-void renderTemp(float temperature);
-void renderHumidity(float humidity);
-        
+void updateOverlayFront(float spe, float dist, int pow, int cad, int hr, float perf, float fbrake, int batt);
+void updateOverlayRear(float spe, float dist, int rpow, int fpow, int cad, int hr, float fbrake, float rbrake, int batt, float perf, int CO2);
 
 void startOverlay(bool cameraOn);
-
-void renderText (char text[], int x, int y, int size, char foreground[], char background[]);
-
-void renderTextAligned(char text[], int x, int y, int size, char foreground[], char background[], char horizontal, char vertical);
 
 void closeOverlay();
 
