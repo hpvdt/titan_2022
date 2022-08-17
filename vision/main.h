@@ -19,6 +19,6 @@
 #include <time.h>
 
 #include "timetrial.h"
-#include "racesim.h"
+#include "logging.h"
 
 #endif
