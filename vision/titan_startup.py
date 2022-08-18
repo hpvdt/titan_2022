@@ -22,7 +22,7 @@ print('!!!!!!!!!!!!!!!!!!!!!!!!!\n\nSTARTING UP TITAN SYSTEMS\n\n!!!!!!!!!!!!!!!
 
 
 os.system('python ./power_off.py &')
-print('Process set to look for safe shut down signal.\n')
+print('Started looking for safe shut down signal')
 
 
 # Determine if it is main unit or not based on the presence of the ANT stick
@@ -53,9 +53,11 @@ if isFront == True:
     print('ANT Stick detected, this is the front (main) RPi!\n')
     
     # Run front bike code with ANT piping data in
-    os.system('python ./titanant.py | ./bike.bin') 
+    # Bike.bin arguments = front, camera, ANT piped in, serial enabled, logging
+    os.system('python ./titanant.py | ./bike.bin fcasl') 
 else:
     print('No ANT Stick detected, this is the rear (secondary) RPi!\n')
     
     # Run rear camera system
-    os.system('./bike.bin')
+    # Bike.bin arguments = rear, camera, serial enabled
+    os.system('./bike.bin rcs')
