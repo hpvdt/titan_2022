@@ -1,8 +1,19 @@
 #include "overlay.h"
 
+// Thresholds
+const int lowerBattLimit = 30;
+const int upperBattLimit = 50;
+
+const float lowerPerfLimit = 50.0;
+const float upperPerfLimit = 75.0;
+
+const float lowerBrakeLimit = 40.0;
+const float upperBrakeLimit = 70.0;
+
 // Local functions
 void renderText (char text[], int x, int y, int size, char foreground[], char background[]);
 void renderTextAligned(char text[], int x, int y, int size, char foreground[], char background[], char horizontal, char vertical);
+char *colourByValue(float value, float lower, float upper, char low[], char mid[], char high[]);
 
 void renderRBatteryPercentage(int battPer);
 void renderRSpeed(float speed);
@@ -31,10 +42,10 @@ uint32_t widthOverlay, heightOverlay;
 
 const int LAYER=6; // RPi camera preview is in layer 3, so this must be higher
 
-// Colour constants
-char RED[] = {0xff,0x00,0x00,0xff};
+// Colour constants (B,G,R,A)
+char RED[] = {0x00,0x00,0xff,0xff};
 char GREEN[] = {0x00,0xff,0x00,0xff};
-char BLUE[] = {0x00,0x00,0xff,0xff};
+char BLUE[] = {0xff,0x00,0x00,0xff};
 char WHITE[] = {0xff,0xff,0xff,0xff};
 char YELLOW[] = {0x00,0xff,0xff,0xff};
 char CYAN[] = {0xff,0xff,0x00,0xff};
@@ -42,13 +53,6 @@ char MAGENTA[] = {0xff,0x00,0xff,0xff};
 
 char GREY_BG[] = {0x00,0x00,0x00,0x80};
 char CLEAR_BG[] = {0x00,0x00,0x00,0x00};
-
-// Thresholds, should move to a config file
-const int lowerBattLimit = 30;
-const int upperBattLimit = 50;
-
-const float lowerPerfLimit = 98.0;
-const float upperPerfLimit = 102.0;
 
 // Size 30 Text is 35 pixels tall. Size 50 is 56 pixels.
 
@@ -91,74 +95,64 @@ void updateOverlayRear(float spe, float dist, int rpow, int fpow, int cad, int h
 
 void renderFDist(float dist) {
    char temp[50];
-   sprintf(temp, "Distance to end: %1.2f M", dist / KM_TO_MI);
-   renderTextAligned(temp, 10, 715, 50, WHITE, GREY_BG,'l','b');
+   
+   // Convert km travelled to miles remaining
+   dist = 5.0 - (dist / KM_TO_MI);
+   
+   sprintf(temp, "DIST: %1.2f", dist);
+   renderTextAligned(temp, 10, 45, 30, WHITE, GREY_BG,'l','t');
 }
 
 void renderFBrakeTemp(float temperature) {
    if (temperature < 60.0) return; // Do not render when under 60
    
    char temp[50];
-   sprintf(temp, "BRAKE TEMP: %3.2f*C", temperature);
-   renderTextAligned(temp, 10, 715, 50, RED, GREY_BG,'l','b');
+   sprintf(temp, "BRAKE: %3.0f", temperature);
+   renderTextAligned(temp, 10, 715, 30, RED, GREY_BG,'l','b');
 }
 
 void renderFBatteryPercentage(int battPer) {
-   char temp[50];
-   sprintf(temp, "Battery: %3d%%", battPer);
+   if (battPer > lowerBattLimit) return; // Do not render over lower limit
    
-   if (battPer < lowerBattLimit) renderTextAligned(temp, 1270, 10, 30, RED, GREY_BG, 'r', 't');
-   else if (battPer > upperBattLimit) renderTextAligned(temp, 1270, 10, 30, GREEN, GREY_BG, 'r', 't');
-   else renderTextAligned(temp, 1270, 10, 30, YELLOW, GREY_BG, 'r', 't');
+   char temp[50];
+   sprintf(temp, "BATT: %3d", battPer);
+   
+   char *colourToUse = colourByValue(battPer, lowerBattLimit, upperBattLimit, RED, YELLOW, GREEN);
+   
+   renderTextAligned(temp, 1270, 715, 30, colourToUse, GREY_BG, 'r', 'b');
 }
 
 void renderFSpeed(float speed) {
    char temp[50];
-   sprintf(temp, "Speed: %5.2f MPH", speed/KM_TO_MI);
-   renderTextAligned(temp, 10, 715, 50, WHITE, GREY_BG,'l','b');
+   sprintf(temp, "SPD: %4.1f", speed/KM_TO_MI);
+   renderTextAligned(temp, 10, 10, 30, WHITE, GREY_BG,'l','t');
 }
-
 
 void renderFPerfPercentage(float perfPer) {
    char temp[50];
-   sprintf(temp, "Performance: %3.1f%%", perfPer);
+   sprintf(temp, "PERF: %5.1f", perfPer);
 
-   if (perfPer < lowerPerfLimit) renderTextAligned(temp, 10, 710, 30, RED, GREY_BG, 'l', 'b');
-   else if (perfPer > upperPerfLimit) renderTextAligned(temp, 10, 710, 30, GREEN, GREY_BG, 'l', 'b');
-   else renderTextAligned(temp, 10, 654, 30, YELLOW, GREY_BG, 'l', 'b');
+   char *colourToUse = colourByValue(perfPer, lowerPerfLimit, upperPerfLimit, RED, YELLOW, GREEN);
+
+   renderTextAligned(temp, 10, 80, 30, colourToUse, GREY_BG, 'l', 't');
 }
 
 void renderFCadence(int cadence){
    char temp[30];
-   sprintf(temp, "%3d", cadence);
-   
-   const int bottom = 640;
-   renderTextAligned("                     ", 1270, bottom, 30, WHITE, GREY_BG, 'r', 'b');
-   renderTextAligned("RPM", 1195, bottom, 30, WHITE, GREY_BG, 'l', 'b');
-   renderTextAligned(temp, 1185, bottom, 30, WHITE, GREY_BG, 'r', 'b');
-   renderTextAligned("Cadence:", 1100, bottom, 30, WHITE, GREY_BG, 'r', 'b');
+   sprintf(temp, "CAD: %3d", cadence);
+   renderTextAligned(temp, 1270, 45, 30, WHITE, GREY_BG, 'r', 't');
 }
 
 void renderFPower(int power){
    char temp[30];
-   sprintf(temp, "     %3d", power);
-   
-   const int bottom = 675;
-   renderTextAligned("                     ", 1270, bottom, 30, WHITE, GREY_BG, 'r', 'b');
-   renderTextAligned("W", 1195, bottom, 30, WHITE, GREY_BG, 'l', 'b');
-   renderTextAligned(temp, 1185, bottom, 30, WHITE, GREY_BG, 'r', 'b');
-   renderTextAligned("Power:", 1100, bottom, 30, WHITE, GREY_BG, 'r', 'b');
+   sprintf(temp, "PWR: %3d", power);
+   renderTextAligned(temp, 1270, 10, 30, WHITE, GREY_BG, 'r', 't');
 }
 
 void renderFHR(int heartRate){
    char temp[30];
-   sprintf(temp, "%3d", heartRate);
-   
-   const int bottom = 710;
-   renderTextAligned("                     ", 1270, bottom, 30, WHITE, GREY_BG, 'r', 'b');
-   renderTextAligned("BPM", 1195, bottom, 30, WHITE, GREY_BG, 'l', 'b');
-   renderTextAligned(temp, 1185, bottom, 30, WHITE, GREY_BG, 'r', 'b');
-   renderTextAligned("HR:", 1100, bottom, 30, WHITE, GREY_BG, 'r', 'b');
+   sprintf(temp, "HR: %3d", heartRate);
+   renderTextAligned(temp, 1270, 80, 30, WHITE, GREY_BG, 'r', 't');
 }
 
 
@@ -175,85 +169,86 @@ void renderFHR(int heartRate){
 
 void renderRDist(float dist) {
    char temp[50];
-   sprintf(temp, "Distance to end: %1.2f M", dist / KM_TO_MI);
-   renderTextAligned(temp, 10, 715, 50, WHITE, GREY_BG,'l','b');
+   
+   // Convert km travelled to miles remaining
+   dist = 5.0 - (dist / KM_TO_MI);
+   
+   sprintf(temp, "DIST: %1.2f", dist);
+   renderTextAligned(temp, 10, 65, 50, WHITE, GREY_BG,'l','t');
 }
 
 void renderRBrakeTemp(float ftemp, float rtemp) {
 
    char temp[50];
-   sprintf(temp, "BRAKE TEMP: %3.2f/%3.2f *C (F/R)", ftemp, rtemp);
-   renderTextAligned(temp, 10, 715, 50, RED, GREY_BG,'l','b');
+   sprintf(temp, "BRAKE: %3.0f/%3.0f (R/F)", rtemp, ftemp);
+   
+   char *colourToUse = colourByValue(rtemp, lowerBrakeLimit, upperBrakeLimit, GREEN, YELLOW, RED);
+      
+   renderTextAligned(temp, 10, 155, 30, colourToUse, GREY_BG,'l','t');
 }
 
 void renderRBatteryPercentage(int battPer) {
    char temp[50];
-   sprintf(temp, "Battery: %3d%%", battPer);
+   sprintf(temp, "BATT: %3d", battPer);
    
-   if (battPer < lowerBattLimit) renderTextAligned(temp, 1270, 10, 30, RED, GREY_BG, 'r', 't');
-   else if (battPer > upperBattLimit) renderTextAligned(temp, 1270, 10, 30, GREEN, GREY_BG, 'r', 't');
-   else renderTextAligned(temp, 1270, 10, 30, YELLOW, GREY_BG, 'r', 't');
+   char *colourToUse = colourByValue(battPer, lowerBattLimit, upperBattLimit, RED, YELLOW, GREEN);
+   
+   renderTextAligned(temp, 10, 190, 30, colourToUse, GREY_BG, 'l', 't');
 }
 
 void renderRSpeed(float speed) {
    char temp[50];
-   sprintf(temp, "Speed: %5.2f MPH", speed/KM_TO_MI);
-   renderTextAligned(temp, 10, 715, 50, WHITE, GREY_BG,'l','b');
+   sprintf(temp, "SPD: %4.1f", speed/KM_TO_MI);
+   renderTextAligned(temp, 10, 10, 50, WHITE, GREY_BG,'l','t');
 }
-
 
 void renderRPerfPercentage(float perfPer) {
    char temp[50];
-   sprintf(temp, "Performance: %3.1f%%", perfPer);
+   sprintf(temp, "PERF: %5.1f", perfPer);
 
-   if (perfPer < lowerPerfLimit) renderTextAligned(temp, 10, 710, 30, RED, GREY_BG, 'l', 'b');
-   else if (perfPer > upperPerfLimit) renderTextAligned(temp, 10, 710, 30, GREEN, GREY_BG, 'l', 'b');
-   else renderTextAligned(temp, 10, 654, 30, YELLOW, GREY_BG, 'l', 'b');
+   char *colourToUse = colourByValue(perfPer, lowerPerfLimit, upperPerfLimit, RED, YELLOW, GREEN);
+
+   renderTextAligned(temp, 10, 120, 30, colourToUse, GREY_BG, 'l', 't');
 }
 
 void renderRCadence(int cadence){
    char temp[30];
-   sprintf(temp, "%3d", cadence);
-   
-   const int bottom = 640;
-   renderTextAligned("                     ", 1270, bottom, 30, WHITE, GREY_BG, 'r', 'b');
-   renderTextAligned("RPM", 1195, bottom, 30, WHITE, GREY_BG, 'l', 'b');
-   renderTextAligned(temp, 1185, bottom, 30, WHITE, GREY_BG, 'r', 'b');
-   renderTextAligned("Cadence:", 1100, bottom, 30, WHITE, GREY_BG, 'r', 'b');
+   sprintf(temp, "CAD: %3d", cadence);
+   renderTextAligned(temp, 1270, 65, 30, WHITE, GREY_BG, 'r', 't');
 }
 
 void renderRPower(int fpower, int rpower){
    char temp[30];
-   sprintf(temp, " %3d/%3d", rpower, (fpower + rpower));
-   
-   const int bottom = 675;
-   renderTextAligned("                     ", 1270, bottom, 30, WHITE, GREY_BG, 'r', 'b');
-   renderTextAligned("W", 1195, bottom, 30, WHITE, GREY_BG, 'l', 'b');
-   renderTextAligned(temp, 1185, bottom, 30, WHITE, GREY_BG, 'r', 'b');
-   renderTextAligned("Power:", 1100, bottom, 30, WHITE, GREY_BG, 'r', 'b');
+   sprintf(temp, "PWR: %3d/%3d", rpower, (fpower + rpower));
+   renderTextAligned(temp, 1270, 10, 50, WHITE, GREY_BG, 'r', 't');
 }
 
 void renderRHR(int heartRate){
    char temp[30];
-   sprintf(temp, "%3d", heartRate);
-   
-   const int bottom = 710;
-   renderTextAligned("                     ", 1270, bottom, 30, WHITE, GREY_BG, 'r', 'b');
-   renderTextAligned("BPM", 1195, bottom, 30, WHITE, GREY_BG, 'l', 'b');
-   renderTextAligned(temp, 1185, bottom, 30, WHITE, GREY_BG, 'r', 'b');
-   renderTextAligned("HR:", 1100, bottom, 30, WHITE, GREY_BG, 'r', 'b');
+   sprintf(temp, "HR: %3d", heartRate);
+   renderTextAligned(temp, 1270, 100, 30, WHITE, GREY_BG, 'r', 't');
 }
 
 void renderRCO2(int CO2) {
    char temp[50];
-   sprintf(temp, "CO2: %4d ppm", CO2);
-   renderTextAligned(temp, 10, 715, 50, WHITE, GREY_BG,'l','b');
+   sprintf(temp, "CO2: %4d", CO2);
+   renderTextAligned(temp, 1270, 135, 30, WHITE, GREY_BG,'r','t');
 }
 
 
 
 
 
+char *colourByValue(float value, float lower, float upper, char low[], char mid[], char high[]) {
+   // Returns a colour based on how the value compares to two limits
+   char *resultColour;
+   
+   if (value < lower) resultColour = &low[0];
+   else if (value > upper) resultColour = &high[0];
+   else resultColour = &mid[0];
+   
+   return resultColour;
+}
 
 
 void startOverlay(bool cameraOn) {

@@ -60,14 +60,15 @@ int main(int argc, char *argv[]) {
 
    
    // Reguritate configuration
-   printf("Parsed configuration:\n");
-   if (isFront == true) printf("Role: FRONT\n");
-   else printf("Role: REAR\n");
-   printf("Camera running: %d\n", enableCamera);
-   printf("Collecting ANT data: %d\n", collectANT);
-   printf("Communicate over serial: %d\n", useSerial);
-   printf("Logging: %d\n", enableLogging);
-   printf("Number of frames: %d\n\n", numberFrames);
+   printf("\nParsed configuration:\n");
+   if (isFront == true) printf("\tRole: FRONT\n");
+   else printf("\tRole: REAR\n");
+   printf("\tCamera running: %d\n", enableCamera);
+   printf("\tCollecting ANT data: %d\n", collectANT);
+   printf("\tCommunicate over serial: %d\n", useSerial);
+   printf("\tLogging: %d\n", enableLogging);
+   if (numberFrames > 0) printf("\tNumber of frames: %d\n\n", numberFrames);
+   else printf("\tNo limit to number of frames.\n\n");
    
    // Local variables
    int frontCadence = 0, rearCadence = 0; 
@@ -101,7 +102,8 @@ int main(int argc, char *argv[]) {
       printf("Expecting ANT data to be piped in.\n\n");
       fcntl(0, F_SETFL, O_NONBLOCK); // Set stdin (0) to be non-blocking
    }
-   else printf("NOT USING ANT DATA. DISPLAYING RANDOM ANT DATA!\n\n");
+   else if (useSerial == true) printf("Not collecting ANT data locally, requesting ANT data over serial.\n\n");
+   else printf("NOT USING ANY ANT DATA. DISPLAYING RANDOM ANT DATA!\n\n");
    
    // Start logging
    if (enableLogging == true) startLogging();
@@ -150,14 +152,27 @@ int main(int argc, char *argv[]) {
          
          distance = rotations * CIRCUMFERENCE;
          
-         startTrial(); requestDataFloat(serialLine, 't', &temperature); endTrialIgnore("temperature", 40);
-         startTrial(); requestDataFloat(serialLine, 'h', &humidity); endTrialIgnore("humidity", 40);
+         //startTrial(); requestDataFloat(serialLine, 't', &temperature); endTrialIgnore("temperature", 40);
+         //startTrial(); requestDataFloat(serialLine, 'h', &humidity); endTrialIgnore("humidity", 40);
          startTrial(); requestDataInt(serialLine, 'i', &frontBattery); endTrialIgnore("front battery", 40);
          startTrial(); requestDataInt(serialLine, 'j', &rearBattery); endTrialIgnore("rear battery", 40);
          
-         startTrial(); requestDataFloat(serialLine, 'w', &frontBrakeTemp); endTrialIgnore("front brake temperature", 40);
-         startTrial(); requestDataFloat(serialLine, 'x', &rearBrakeTemp); endTrialIgnore("rear brake temperature", 40);
-         startTrial(); requestDataInt(serialLine, 'k', &ppmCO2); endTrialIgnore("CO2", 40);
+         //startTrial(); requestDataFloat(serialLine, 'w', &frontBrakeTemp); endTrialIgnore("front brake temperature", 40);
+         //startTrial(); requestDataFloat(serialLine, 'x', &rearBrakeTemp); endTrialIgnore("rear brake temperature", 40);
+         //startTrial(); requestDataInt(serialLine, 'k', &ppmCO2); endTrialIgnore("CO2", 40);
+      }
+      else {
+         // Placeholder data for when not collecting anything over serial
+         rearBattery = 25;
+         frontBattery = 25;
+         speed = 120.6;
+         distance = 7;
+         temperature = 0.0;
+         humidity = 0.0;
+         performanceFactor = 101.2;
+         frontBrakeTemp = 200.0;
+         rearBrakeTemp = 200.0;
+         ppmCO2 = 1550;
       }
 
       
