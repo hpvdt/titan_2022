@@ -1,20 +1,48 @@
 #include "logging.h"
 
+//#define USE_TIME_FOR_FILE_NAME // Use only if connected to internet or NTC installed
+
 FILE * logFile;
-char fileLocation[60];
-struct timespec logStart, logCurrent;  // Realtime marks
+char fileLocation[70];
+
+struct timespec logStart, logCurrent;  // Realtime marks for keeping track of ride time
 
 void startLogging() {
+	
+	char filename[40]; // Used for making file NAME, not recording LOCATION!
+
+#ifdef USE_TIME_FOR_FILE_NAME
+	// Base the file name on the present time
 	// Timers used to get start time
 	time_t timer;
-	struct tm* tm_info;
 	timer = time(NULL);
+	struct tm* tm_info;
+	
 	tm_info = localtime(&timer);
 	
-	
-	char filename[40];
 	strftime(filename, 40, "bikedata-%y%m%d-%H%M%S.csv", tm_info);
 	
+#else
+	// Without accurate time, just index a number on the file
+	// Based on the number of files (logs) present in the log folder
+
+	// File counting code from:
+	// https://stackoverflow.com/questions/1121383/counting-the-number-of-files-in-a-directory-using-c
+	int fileCount = 0;
+	DIR * dirp;
+	struct dirent * entry;
+
+	dirp = opendir("./bikelogs/");
+	while ((entry = readdir(dirp)) != NULL) {
+		  if (entry->d_type == DT_REG) { // If the entry is a regular file
+		       fileCount++;
+		  }
+	}
+	closedir(dirp);
+	
+	sprintf(filename, "bikedata-%03d.csv", fileCount);
+#endif
+
 	printf("Log file name \'%s\' under ./bikelogs/ directory with vision code.\n", filename);
 	sprintf(fileLocation, "./bikelogs/%s", filename);
 	printf("If this seg faults soon, then check for a \"bikelogs\" directory and create it if missing.\n");
