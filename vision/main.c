@@ -33,7 +33,7 @@ int main(int argc, char *argv[]) {
       case 2:
          // Go through setup string
          do {
-            switch (argv[2][characterToRead]) {
+            switch (argv[1][characterToRead]) {
                case 'l':
                   enableLogging = true;
                   break;
@@ -53,7 +53,7 @@ int main(int argc, char *argv[]) {
                   isFront = true;
                   break;
             }
-         } while (argv[2][characterToRead++] != '\0'); 
+         } while (argv[1][characterToRead++] != '\0'); 
          break;
    }
    
