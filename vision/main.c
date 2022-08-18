@@ -4,42 +4,60 @@ int numberFrames = -1; // Number of frames to render for testing (-1 for infinit
 const float CIRCUMFERENCE = 2.104;
 
 // Serial configuration
-bool useSerial = true; // Use serial or not
+bool useSerial = false; // Use serial or not
 int serialLine = -1;
 
-bool collectANT = true; 	// Use ANT data from USB?
-bool enableLogging = true; // Logging configuration
-bool enableCamera = true;  // Camera
-bool isFront = true;       // Is front or not
+bool collectANT = false; 	   // Use ANT data from USB?
+bool enableLogging = false;   // Logging configuration
+bool enableCamera = false;    // Camera
+bool isFront = true;          // Is front or not
 
 int main(int argc, char *argv[]) {
    printf("\n\n! TITAN 2022 HUD !\n");
    
    // Start by reading in arguements
-   printf("\n\nExpected arguements when called in order: role camera ant serial logging frames\n");
-   printf("Specify role as 'front' or 'rear', others as 'on' or 'off', frames as -1 for infinty otherwise the number wanted.\n");
-   printf("If not specified, assumed on and front\n\n");
+   printf("\n\nExpected arguements when called in order: 'setup string' 'number of frames'\n");
+   printf("\tSpecify role with 'f' or 'r' (assumed to be front if not specified)\
+         \n\tEnable camera with 'c'\n\tEnable logging with 'l'\
+         \n\tEnable ANT collection with 'a'\n\tEnable serial coms with 's'\
+         \n\n\tFrames as -1 for infinty, otherwise the number wanted.\
+         \n\tE.g. 'bike.bin fc 10' sets system for front operation with camera for 10 frames\n");
    
    // Read in configuration using a run through switch based on arguement count
    // Note: arguement 0 is the call to run the program itself e.g. "./bike.bin"
+   int characterToRead = 0;
    switch (argc) {
-      case 7:
-         numberFrames = atoi(argv[6]);
-      case 6:
-         if (strcmp(argv[5], "off") == 0) enableLogging = false;
-      case 5:
-         if (strcmp(argv[4], "off") == 0) useSerial = false;
-      case 4:
-         if (strcmp(argv[3], "off") == 0) collectANT = false;
       case 3:
-         if (strcmp(argv[2], "off") == 0) enableCamera = false;
+         // Get frame count
+         numberFrames = atoi(argv[2]);
       case 2:
-         if (strcmp(argv[1], "rear") == 0) {
-            isFront = false;
-            collectANT = false; // Rear unit should not have ANT stick
-         }
+         // Go through setup string
+         do {
+            switch (argv[2][characterToRead]) {
+               case 'l':
+                  enableLogging = true;
+                  break;
+               case 's':
+                  useSerial = true;
+                  break;
+               case 'a':
+                  collectANT = true;
+                  break;
+               case 'c':
+                  enableCamera = true;
+                  break;
+               case 'r':
+                  isFront = false;
+                  break;
+               case 'f':
+                  isFront = true;
+                  break;
+            }
+         } while (argv[2][characterToRead++] != '\0'); 
          break;
    }
+   
+
    
    // Reguritate configuration
    printf("Parsed configuration:\n");
