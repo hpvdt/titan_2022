@@ -14,6 +14,7 @@
 
 extern const int numANTDataFields;
 
-bool getANTData(int *dataOut, int serialLn);
+bool getANTDataPipedIn(int *dataOut, int serialLn); // Gets ANT data from stdin
+bool getANTDataSerial(int *dataOut, int serialLn); // Get ANT data over serial
 
 #endif

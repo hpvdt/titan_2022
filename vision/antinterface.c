@@ -8,7 +8,7 @@ const int numANTDataFields = 6;
 
 char ANTBuffer[antBufferLength];
 
-bool getANTData(int *dataOut, int serialLn) {
+bool getANTDataPipedIn(int *dataOut, int serialLn) {
 	// Check if there is data available or stdin isn't broken
 	if (fgets(ANTBuffer, antBufferLength, stdin) != NULL) {
 		
@@ -30,7 +30,6 @@ bool getANTData(int *dataOut, int serialLn) {
 		// Data is always set in a set length
 		for (int i = 0; i < numANTDataFields; i++) {
 
-			// TODO: Make a loop based on dataFieldWidth?
 			char tempBuffer[dataFieldWidth];
 			tempBuffer[0] = ANTBuffer[(i * dataFieldWidth)];
 			tempBuffer[1] = ANTBuffer[(i * dataFieldWidth) + 1];
@@ -57,4 +56,40 @@ bool getANTData(int *dataOut, int serialLn) {
 #endif
 		return(-1);
 	}
+}
+
+bool getANTDataSerial(int *dataOut, int serialLn){
+	
+	// Check for a valid serial line before requesting
+	if (serialLn == -1) {
+#ifdef ANT_DEBUG_MESSAGES
+		printf("No serial line to request ANT data from.\n");
+#endif
+		return false; 
+	}
+	
+	char ANTBuffer[50];
+	requestData(serialLn, 'g', ANTBuffer);
+	
+	
+#ifdef ANT_DEBUG_MESSAGES
+	printf("Recieved ANT data: '%s'\n", ANTBuffer);
+#endif
+	
+	// Go through recieved string to split it at commas (message should never exceed 24)
+	char tempBuffer[6][4];	// Used to store each ANT field temporarily as strings
+	
+	sscanf(ANTBuffer, "%[^,],%[^,],%[^,],%[^,],%[^,],%[^,]", tempBuffer[0], tempBuffer[1], tempBuffer[2], tempBuffer[3], tempBuffer[4], tempBuffer[5]);
+	// '%[^,]' acts like '%s' but it reads until a comma is detected ("read anything excluding ',')
+	// This is why I still have commas in the search string, so they are skipped over before the next search
+	
+	// Convert strings to integers
+	for (int i = 0; i < 6; i++) dataOut[i] = atoi(tempBuffer[i]);
+	
+#ifdef ANT_DEBUG_MESSAGES
+	printf("Parsed ANT data:\n");
+	for (int i = 0; i < 6; i++) printf("\t%03d\n", dataOut[i]);
+#endif
+	
+	return true;
 }

@@ -70,16 +70,16 @@ int main(int argc, char *argv[]) {
    printf("Number of frames: %d\n\n", numberFrames);
    
    // Local variables
-   int cadence = 0; 
-   int power = 0;
-   int heartRate = 0;
+   int frontCadence = 0, rearCadence = 0; 
+   int frontPower = 0, rearPower = 0;
+   int frontHeartRate = 0, rearHeartRate = 0;
+   int ANTData[] = {0,0,0,0,0,0};
    int rearBattery = 0, frontBattery = 0;
    int rotations = 0;
    float speed = 0.0;
    float distance = 0.0;
    float temperature = 0.0;
    float humidity = 0.0;
-   int ANTData[] = {0,0,0,0,0,0};
    float performanceFactor = 0.0;
    float frontBrakeTemp = 200.0, rearBrakeTemp = 200.0;
    int ppmCO2 = 0;
@@ -109,7 +109,7 @@ int main(int argc, char *argv[]) {
    
    
    
-   sleep(5); // Pause to show config before potentially running camera
+   sleep(1); // Pause to show config before potentially running camera
    
    // Timing the entire process
    struct timespec tSystemStart,tSystemEnd;
@@ -123,51 +123,25 @@ int main(int argc, char *argv[]) {
    do {
       
       // ANT data
-      if (collectANT == true) { // Is meant to collect data locally
-         getANTData(ANTData, serialLine);
-         
-         // Record relevant local data
-         if (isFront == true) {
-            heartRate = ANTData[0];
-            cadence = ANTData[1];
-            power = ANTData[2];
-         }
-         else {
-            heartRate = ANTData[3];
-            cadence = ANTData[4];
-            power = ANTData[5];
-         }
-         
-      }
-      else if (useSerial == true) { // Not collecting ANT data locally, but can use serial to request it
-         
-         // Record all to ANT data for logging on either station
-         requestDataInt(serialLine, 'a', &ANTData[0]); 
-         requestDataInt(serialLine, 'c', &ANTData[1]);
-         requestDataInt(serialLine, 'e', &ANTData[2]);
-         requestDataInt(serialLine, 'b', &ANTData[3]); 
-         requestDataInt(serialLine, 'd', &ANTData[4]);
-         requestDataInt(serialLine, 'f', &ANTData[5]);
-         // TODO: Change this to use the call for all ANT data 'g'
-         
-         // Record relevant local data
-         if (isFront == true) {
-            heartRate = ANTData[0];
-            cadence = ANTData[1];
-            power = ANTData[2];
-         }
-         else {
-            heartRate = ANTData[3];
-            cadence = ANTData[4];
-            power = ANTData[5];
-         }
-      }   
+      if (collectANT == true) getANTDataPipedIn(ANTData, serialLine);      // It is meant to collect data locally
+      else if (useSerial == true) getANTDataSerial(ANTData, serialLine);   // Not collecting ANT data locally, but can use serial to request it
       else { // Cant' collect nor request ANT data, use random numbers
-         heartRate = 60;
-         cadence = 60;
-         power = 120;
+         ANTData[0] = 60;
+         ANTData[1] = 60;
+         ANTData[2] = 120;
+         ANTData[3] = 60;
+         ANTData[4] = 60;
+         ANTData[5] = 120;
       }
       
+      // Copy to nicer named variables
+      frontHeartRate = ANTData[0];
+      frontCadence = ANTData[1];
+      frontPower = ANTData[2];
+      rearHeartRate = ANTData[3];
+      rearCadence = ANTData[4];
+      rearPower = ANTData[5];
+
       
       // Get bike data
       if (useSerial == true) { // Collect bike data from STM32 over serial      
@@ -190,25 +164,25 @@ int main(int argc, char *argv[]) {
       // Overlays
       if (isFront == true) { // Front overlay
          startTrial();
-         updateOverlayFront(speed, distance, power, cadence, heartRate, performanceFactor, frontBrakeTemp, frontBattery);
+         updateOverlayFront(speed, distance, frontPower, frontCadence, frontHeartRate, performanceFactor, frontBrakeTemp, frontBattery);
          endTrialIgnore("front overlay", 100);
       }
       else { // Rear overlay
          startTrial();
-         updateOverlayRear(speed, distance, power, ANTData[2], cadence, heartRate, frontBrakeTemp, rearBrakeTemp, rearBattery, performanceFactor, ppmCO2);
+         updateOverlayRear(speed, distance, rearPower, frontPower, rearCadence, rearHeartRate, frontBrakeTemp, rearBrakeTemp, rearBattery, performanceFactor, ppmCO2);
          endTrialIgnore("rear overlay", 100);
       }
       
       
       // Logging
-      if (enableLogging == true) updateLog(speed, distance, ANTData[0], ANTData[5], 
-                                             ANTData[1], ANTData[4], ANTData[0], ANTData[3], 
+      if (enableLogging == true) updateLog(speed, distance, frontPower, rearPower, 
+                                             frontCadence, rearCadence, frontHeartRate, rearHeartRate, 
                                              temperature, humidity, frontBattery, rearBattery,
                                              frontBrakeTemp, rearBrakeTemp, ppmCO2, performanceFactor);
       
       // Count down number of frames if there was a limit stated
       if (numberFrames > 0) framesRemaining--;
-   } while (framesRemaining > 0);
+   } while (framesRemaining != 0);
    
    // Overal time
    titanProcessClock = clock() - titanProcessClock; // Get run time
