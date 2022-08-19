@@ -15,6 +15,7 @@ void processData (const char line) {
 
      h - Humidity (R.H.%)
      t - Temperature (C * 2 + 50)
+     k - CO2 (ppm)
 
      s - Speed (km/h)
      q - Distance (number of rotations)
@@ -26,6 +27,9 @@ void processData (const char line) {
      p - GPS distance (km)
      u - Starting longitude
      v - Starting latitude
+
+     w - Front brake temperature (C)
+     x - Rear brake temperature (C)
 
      y - Testing byte
      z - Testing byte
