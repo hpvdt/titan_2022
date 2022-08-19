@@ -1,5 +1,4 @@
-#include <TinyGPS.h> // GPS data parsing library by Mikal Hart
-#include "DHT.h" // Used for temperature and humidity (Adafruit DHT library)
+#include "sensor_functions.h"
 
 #include "telemetry.h"
 
@@ -157,9 +156,9 @@ void loop() {
 #endif
 
   // Telemetry Check
-  if(recievedMessage) {
+  if(recievedRadioData) {
     radioRecieved();
-    recievedMessage = false;
+    recievedRadioData = false;
     processData('t');
 #ifdef ALLOW_DEBUG_SERIAL
   if (debugMode) {

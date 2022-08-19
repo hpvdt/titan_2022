@@ -1,7 +1,7 @@
 #include "telemetry.h"
 
 void radioSetup() {
-  
+
     // Start radio system
   radio.begin();
 
@@ -12,7 +12,7 @@ void radioSetup() {
       DEBUGSERIAL.println("!!! nRF24L01 NOT DETECTED !!!");
     }
 #endif
-    recievedMessage = false; // Ensure this is false
+    recievedRadioData = false; // Ensure this is false
     return;
   }
 
@@ -43,7 +43,7 @@ void radioSetup() {
 }
 
 void checkRadio() {
-  recievedMessage = true;
+  recievedRadioData = true;
 }
 
 void radioRecieved() {
