@@ -1,3 +1,6 @@
+#ifndef TITAN_SENSORS_HEADER
+#define TITAN_SENSORS_HEADER
+
 #include <Adafruit_MLX90614.h>
 #include "DHT.h" // Used for temperature and humidity (Adafruit DHT library)
 #include <TinyGPS.h>
@@ -23,3 +26,5 @@ unsigned long brakePeriod = 1000;
 
 Adafruit_MLX90614 frontBrake = Adafruit_MLX90614();
 Adafruit_MLX90614 rearBrake = Adafruit_MLX90614();
+
+#endif

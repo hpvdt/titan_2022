@@ -202,8 +202,7 @@ void loop() {
 
   /////////////////////////////////////////
   // GPS code
-  if (gpsSerial.available()) {
-    GPSCheck();
-  }
+  GPSCheck();
+  
   delayMicroseconds(500); // Regular delay
 }
