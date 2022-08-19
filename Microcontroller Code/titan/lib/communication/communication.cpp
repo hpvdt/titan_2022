@@ -30,47 +30,75 @@ int FPower = 10;            // Power (W)
 int RPower = 10;
 
 void setupCommunication() {
-    // Start each serial line
-    frontSerial.begin(rpiBaud);
-    rearSerial.begin(rpiBaud);
-    gpsSerial.begin(gpsBaud);
+  // Start each serial line
+  frontSerial.begin(rpiBaud);
+  rearSerial.begin(rpiBaud);
+  gpsSerial.begin(gpsBaud);
+
+#ifdef ALLOW_DEBUG_SERIAL
+  // Debug timeout
+  const int timeout = 2000; // Time out for debugger to be started if debugging
+  unsigned long endTime = millis() + timeout; // End time for scanning
+
+  if (debugMode) {
+    // Set up debugging mode (USB connection)
+    DEBUGSERIAL.begin(debugBaud);
+
+    while (!DEBUGSERIAL) {
+      delay(100); // wait for serial port to connect. Needed for native USB
+
+      if (millis() > endTime) {
+        // Once timeout has been reached
+        debugMode = false; // Disable debugging
+        break; // Exit loop
+      }
+    }
+
+    if (debugMode) {
+      DEBUGSERIAL.println(F("DEBUGGING MODE")); // Print debug statement if no timeout
+    }
+  }
+#endif
+
+  // Radio Setup
+  radioSetup();
 }
 
 void processData (const char line) {
   /* Gets in a value for which line to process, then processes it.
-     Requests characters are lowercase, setting is uppercase
+  Requests characters are lowercase, setting is uppercase
 
-     a - Heart rate (front) (BPM)
-     b - Heart rate (rear) (BPM)
-     c - Cadence (front) (RPM)
-     d - Cadence (rear) (RPM)
-     e - Power (front) (W)
-     f - Power (rear) (W)
-     g - All ANT data (delimited, in order a-f)
+  a - Heart rate (front) (BPM)
+  b - Heart rate (rear) (BPM)
+  c - Cadence (front) (RPM)
+  d - Cadence (rear) (RPM)
+  e - Power (front) (W)
+  f - Power (rear) (W)
+  g - All ANT data (delimited, in order a-f)
 
-     i - Front battery %
-     j - Rear battery %
+  i - Front battery %
+  j - Rear battery %
 
-     h - Humidity (R.H.%)
-     t - Temperature (C * 2 + 50)
-     k - CO2 (ppm)
+  h - Humidity (R.H.%)
+  t - Temperature (C * 2 + 50)
+  k - CO2 (ppm)
 
-     s - Speed (km/h)
-     q - Distance (number of rotations)
+  s - Speed (km/h)
+  q - Distance (number of rotations)
 
-     l - Latitude (degrees)
-     m - Longitude (degrees)
-     n - Altitude (m)
-     o - GPS speed (km/h)
-     p - GPS distance (km)
-     u - Starting longitude
-     v - Starting latitude
+  l - Latitude (degrees)
+  m - Longitude (degrees)
+  n - Altitude (m)
+  o - GPS speed (km/h)
+  p - GPS distance (km)
+  u - Starting longitude
+  v - Starting latitude
 
-     w - Front brake temperature (C)
-     x - Rear brake temperature (C)
+  w - Front brake temperature (C)
+  x - Rear brake temperature (C)
 
-     y - Testing byte
-     z - Testing byte
+  y - Testing byte
+  z - Testing byte
   */
   char frameType = 0; // character to store data frame type
 

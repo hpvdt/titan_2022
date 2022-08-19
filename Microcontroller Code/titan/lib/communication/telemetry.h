@@ -4,6 +4,7 @@
 #include <Arduino.h>
 #include <SPI.h>
 #include "RF24.h"
+#include "communication.h"
 
 extern RF24 radio; // CE, CS
 extern volatile bool recievedRadioData;           // Used to flag if an interupt flag was thrown
