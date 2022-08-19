@@ -34,7 +34,7 @@ void radioSetup() {
     radio.openReadingPipe(1, pipes[1]);
     radio.stopListening();
   }
-  radio.printDetails();                   // Dump the configuration of the rf unit for debugging
+  //radio.printDetails();                   // Dump the configuration of the rf unit for debugging
   radio.maskIRQ(1, 1, 0);                 // Only toggles interrupt (falling edge/LOW) when recieving data
 
   // Interrupts on recieving a message

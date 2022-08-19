@@ -74,12 +74,12 @@ const unsigned long batteryPeriod = 2000; // Battery check period (every few sec
 unsigned long batteryTime = 0;  // Stores time for next battery check
 
 // Wheel monitoring parameters
-const byte numberTicks = 21; // Number of ticks per complete rotation of wheel
+const byte numberTicks = 6; // Number of ticks per complete rotation of wheel
 volatile byte currentTick = 0; // Stores which tick we are on
-volatile byte previousTick = numberTicks; // Stores what tick we were previously on
+volatile byte previousTick = 1; // Stores what tick we were previously on
 
 const float periodToKMH = 7545600.0; //7495200.0; on TITAN // Divide this by period in microseconds to get speed in km/h
-// periodToKM is determined by multiplying circumference in meters by 3.6 x 10^6
+// periodToKMH is determined by multiplying circumference in meters by 3.6 x 10^6
 volatile unsigned long lastPass[numberTicks]; // Stores the last trigger time for each tick
 const unsigned long debounce = 4000; // Debounce period in us. Prevents there being repeated measurements from flickering
 
