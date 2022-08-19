@@ -212,6 +212,19 @@ void processData (const char line) {
       startLat = readInput(line).toFloat();
       break;
       
+    case 'w': // Front Brake Temperature
+      returnMessage = String(frontBrakeTemp, 4); // Latitude to 3 decimal places
+      break;
+    case 'W':
+      frontBrakeTemp = readInput(line).toFloat();
+      break;
+    case 'x': // Rear Brake Temperature
+      returnMessage = String(rearBrakeTemp, 4); // Longitude to 3 decimal places
+      break;
+    case 'X':
+      rearBrakeTemp = readInput(line).toFloat();
+      break;
+      
     case 'y':
       returnMessage = char(testY); // Test return
       break;

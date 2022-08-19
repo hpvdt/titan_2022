@@ -130,6 +130,7 @@ void setup() {
 
   // Sensor setup
   dht.begin(); // Starts digital humidity and temperature sensor
+  setupBrakeThermometers();
 
   for (byte i = 0; i < numberTicks; i++) {
     lastPass[i] = 0; // Reset all encoder tick values
@@ -173,6 +174,13 @@ void loop() {
     temperature = 50 + dht.readTemperature() * 2; // Temperature reading
 
     dhtTime = millis() + dhtPeriod; // Sets next measurement time
+  }
+
+  // Brake Temperature Check
+  if (millis() > brakeTime) {
+    getBrakeTemps();
+    
+    brakeTime = millis() + brakePeriod;
   }
 
   // Periodic battery check

@@ -79,5 +79,32 @@ void encoderDetect () {
     }
     else currentTick++;
   }
-  
+}
+
+
+inline void setupBrakeThermometers() {
+  if (frontBrake.begin(frontBrakeAdd)) {
+#ifdef ALLOW_DEBUG_SERIAL
+    if (debugMode) {
+      DEBUGSERIAL.print("Error connecting to FRONT brake sensor at address: ");
+      DEBUGSERIAL.println(frontBrakeAdd);
+    }
+#endif
+  }
+  if (rearBrake.begin(rearBrakeAdd)) {
+#ifdef ALLOW_DEBUG_SERIAL
+    if (debugMode) {
+      DEBUGSERIAL.print("Error connecting to REAR brake sensor at address: ");
+      DEBUGSERIAL.println(rearBrakeAdd);
+    }
+#endif
+  }
+
+  frontBrake.writeEmissivity(frontEmissivity);
+  rearBrake.writeEmissivity(rearEmissivity);
+}
+
+void getBrakeTemps() {
+  frontBrakeTemp = frontBrake.readObjectTempC();
+  rearBrakeTemp = rearBrake.readObjectTempC();
 }
