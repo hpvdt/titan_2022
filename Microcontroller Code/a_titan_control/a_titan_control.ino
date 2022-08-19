@@ -131,6 +131,7 @@ void setup() {
   // Sensor setup
   dht.begin(); // Starts digital humidity and temperature sensor
   setupBrakeThermometers();
+  setupCO2();
 
   for (byte i = 0; i < numberTicks; i++) {
     lastPass[i] = 0; // Reset all encoder tick values

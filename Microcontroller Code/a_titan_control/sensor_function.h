@@ -2,6 +2,12 @@
 #include "DHT.h" // Used for temperature and humidity (Adafruit DHT library)
 #include <TinyGPS.h>
 
+const byte CO2Pin = PB8;
+volatile unsigned long lastCO2Falling = 0;
+volatile int CO2ppm = 0; 
+const int CO2Span = 5000;                     // Span in ppm of CO2 of sensor
+
+
 const byte frontBrakeAdd = 0x01;
 const byte rearBrakeAdd = 0x02;
 

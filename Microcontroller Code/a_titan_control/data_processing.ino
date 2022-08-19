@@ -141,7 +141,13 @@ void processData (const char line) {
     case 'J':
       RBatt = (readInput(line)).toInt();
       break;
-
+      
+    case 'k': // CO2
+      returnMessage = String(CO2ppm); // Distance
+      break;
+    case 'K':
+      CO2ppm = readInput(line).toInt();
+      break;
     case 'h': // Humidity
       returnMessage = char(humidity);
       break;
