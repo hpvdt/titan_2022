@@ -103,11 +103,11 @@ void setup() {
   rearSerial.begin(rpiBaud);
   gpsSerial.begin(gpsBaud);
 
+#ifdef ALLOW_DEBUG_SERIAL
   // Debug timeout
   const int timeout = 2000; // Time out for debugger to be started if debugging
   unsigned long endTime = millis() + timeout; // End time for scanning
 
-#ifdef ALLOW_DEBUG_SERIAL
   if (debugMode) {
     // Set up debugging mode (USB connection)
     DEBUGSERIAL.begin(debugBaud);
