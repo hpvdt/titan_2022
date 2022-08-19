@@ -105,13 +105,14 @@ int main(int argc, char *argv[]) {
    else if (useSerial == true) printf("Not collecting ANT data locally, requesting ANT data over serial.\n\n");
    else printf("NOT USING ANY ANT DATA. DISPLAYING RANDOM ANT DATA!\n\n");
    
+   // Start RaceSim
+   setupRaceSim();
+   
    // Start logging
    if (enableLogging == true) startLogging();
    else printf("NOT LOGGING DATA!\n\n");
-   
-   
-   
-   sleep(1); // Pause to show config before potentially running camera
+      
+   sleep(3); // Pause to show config before potentially running camera
    
    // Timing the entire process
    struct timespec tSystemStart,tSystemEnd;
@@ -174,6 +175,9 @@ int main(int argc, char *argv[]) {
          rearBrakeTemp = 200.0;
          ppmCO2 = 1550;
       }
+      
+      // Performance factor
+      performanceFactor = compareToSimulation(speed, distance, (frontPower + rearPower));
 
       
       // Overlays

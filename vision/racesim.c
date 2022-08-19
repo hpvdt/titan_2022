@@ -32,6 +32,7 @@ float Crr(float xp);
 float PFcn(float dist);
 float Re(float xp);
 float slopePolynomial(float distance);
+bool raceSimHasBeenSetup = false; // Keeps track of if variables have been set up
 
 // Bike Mass and geometry parameters
 float Rf;
@@ -101,9 +102,6 @@ float PFcn(float dist) {
     if (dist < sprint_start) return p_runup;
     else return p_sprint;
 }
-
-
-bool raceSimHasBeenSetup = false; // Keeps track of if variables have been set up
 
 float slopePolynomial(float distance) {
     distance = distance / 1000.0; // Reduce differences in orders to keep things accurate
@@ -211,5 +209,65 @@ void RaceSimV3_WHPSC_complete(float initialSpeed, bool recordSimulation) {
     const float tEnd = step * stepDuration;
     const float xpEnd = currX[1];
     
+    printf("\nRaceSim Results:\n\tTime: %.2f\n\tEnd Speed (m/s | km/h | mph): %.2f | %.2f | %.2f", tEnd, xpEnd, xpEnd * 3.6, xpEnd * 2.2369);
+    
     return;
 }
+
+float compareToSimulation (float speed, float position, float power) {
+    // Use 'static' to carry data between calls without resorting to a global scope
+    static float prevSpeed = 0;
+    static float prevPosition = 0;
+    static float prevPower = 0;
+    struct timespec previousTime, currentTime;  // Realtime marks
+
+    float performanceFactor = 100.0; // Default to nominal
+
+    // Check if it is first call
+    if ((prevSpeed = 0) && (prevPosition = 0) && (prevPower = 0)) {
+        // Record data and return with nominal (100%)
+        prevSpeed = speed;
+        prevPosition = position;
+        prevPower = power;
+        clock_gettime(CLOCK_MONOTONIC, &previousTime); // Record time
+
+        return 100.0;
+    }
+
+    // Get time difference from last call in seconds
+    clock_gettime(CLOCK_MONOTONIC, &currentTime); // Get end time
+    float deltaTime = ((currentTime.tv_sec - previousTime.tv_sec)) + ((currentTime.tv_nsec - previousTime.tv_nsec) / 1000000000);
+    
+    // Find expected speed for present extrapolated from previous call
+    // Copied from simulation 
+    
+    // figure out passive power loss
+    float Paero = -0.5*rho*pow(prevSpeed,3)*CdA_Fcn(Re(prevSpeed));
+    float Prolling = -Crr(prevSpeed)*M*sqrt(g*g)*prevSpeed;
+    float Pslope = -slopePolynomial(prevPosition)*prevSpeed*W;
+    float Ppassive = Pslope + Prolling + Paero;
+
+    // Compute estimated speed
+    float acceleration = ((Ppassive + prevPower*eta)/prevSpeed)/MI;
+    float estimatedSpeed = prevSpeed + acceleration * deltaTime;
+    
+    performanceFactor = 100.0 * (speed / estimatedSpeed);
+
+    // Record parameters for next iteration
+    prevSpeed = speed;
+    prevPosition = position;
+    prevPower = power;
+    clock_gettime(CLOCK_MONOTONIC, &previousTime); // Record time
+
+    return performanceFactor;
+}
+ 
+/*   
+int main() {
+    // Test file with 
+    setupRaceSim();
+    RaceSimV3_WHPSC_complete(2.7, true);
+    return 0;
+}
+*/
+    

@@ -20,5 +20,6 @@
 
 #include "timetrial.h"
 #include "logging.h"
+#include "racesim.h"
 
 #endif
