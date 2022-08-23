@@ -6,15 +6,19 @@ float rearBrakeTemp = 0;    // Rear brake temperature
 Adafruit_MLX90614 frontBrake = Adafruit_MLX90614();
 Adafruit_MLX90614 rearBrake = Adafruit_MLX90614();
 
-const byte frontBrakeAdd = 0x01;
-const byte rearBrakeAdd = 0x02;
+const byte frontBrakeAdd = 0x02;
+const byte rearBrakeAdd = 0x01;
 const float frontEmissivity = 1.0;
 const float rearEmissivity = 1.0;
 const unsigned long brakePeriod = 1000;
 
+bool frontBrakeMissing, rearBrakeMissing;
 
 void setupBrakeThermometers() {
-  if (frontBrake.begin(frontBrakeAdd)) {
+
+  frontBrakeMissing = frontBrake.begin(frontBrakeAdd);
+  rearBrakeMissing = rearBrake.begin(frontBrakeAdd);
+  if (frontBrakeMissing) {
 #ifdef ALLOW_DEBUG_SERIAL
     if (debugMode) {
       DEBUGSERIAL.print("Error connecting to FRONT brake sensor at address: ");
@@ -22,7 +26,11 @@ void setupBrakeThermometers() {
     }
 #endif
   }
-  if (rearBrake.begin(rearBrakeAdd)) {
+  else {
+    // If connected
+    frontBrake.writeEmissivity(frontEmissivity);
+  }
+  if (rearBrakeMissing) {
 #ifdef ALLOW_DEBUG_SERIAL
     if (debugMode) {
       DEBUGSERIAL.print("Error connecting to REAR brake sensor at address: ");
@@ -30,14 +38,16 @@ void setupBrakeThermometers() {
     }
 #endif
   }
-
-  frontBrake.writeEmissivity(frontEmissivity);
-  rearBrake.writeEmissivity(rearEmissivity);
+  else {
+    // If connected
+    rearBrake.writeEmissivity(rearEmissivity);
+  }
 }
 
 void getBrakeTemps() {
-  frontBrakeTemp = frontBrake.readObjectTempC();
-  rearBrakeTemp = rearBrake.readObjectTempC();
+  // Only try to read sensors not present
+  if (!frontBrakeMissing) frontBrakeTemp = frontBrake.readObjectTempC();
+  if (!rearBrakeMissing) rearBrakeTemp = rearBrake.readObjectTempC();
 }
 
 void checkBrakeTemps() {
