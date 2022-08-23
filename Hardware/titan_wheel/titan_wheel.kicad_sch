@@ -1214,7 +1214,8 @@
     (effects (font (size 2.54 2.54) (thickness 0.508) bold) (justify left bottom))
     (uuid a84e3279-97fc-496e-860d-5c4834571326)
   )
-  (text "LED is set to light up \nwhen spoke is detected" (at 229.87 81.915 0)
+  (text "LED is set to turn off\nwhen spoke is detected.\n(On when nothing detected)"
+    (at 229.235 84.455 0)
     (effects (font (size 1.27 1.27) italic) (justify left bottom))
     (uuid b5b88fb9-fe02-4073-afd2-02721958423a)
   )
