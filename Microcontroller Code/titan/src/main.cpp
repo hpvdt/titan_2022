@@ -33,11 +33,6 @@ void loop() {
     radioRecieved();
     recievedRadioData = false;
     processData('t');
-#ifdef ALLOW_DEBUG_SERIAL
-  if (debugMode) {
-    DEBUGSERIAL.println("Sent back message on telemetry");
-  }
-#endif
   }
 
   // Periodic checks of different sensors
