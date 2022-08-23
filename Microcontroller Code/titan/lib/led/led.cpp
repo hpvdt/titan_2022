@@ -6,8 +6,12 @@ const byte ledPins[] = {PA8, PB15, PB14};
 void setupLEDs() {
     for (byte i = 0; i < ledCount; i++) {
         pinMode(ledPins[i], OUTPUT);
+        // Cycle through LEDs to ensure they work
+        digitalWrite(ledPins[i], HIGH);
+        delay(500);
         digitalWrite(ledPins[i], LOW);
     }
+
 }
 
 void ledOn(byte index) {
@@ -44,6 +48,7 @@ void heartBeat() {
     static int increment = 1;
     static byte duty = 0;
 
+    // Check if it is time to adjust duty
     if (callsSinceLastChange == numberCallsperiod) {
         callsSinceLastChange = 0;
 
@@ -54,4 +59,5 @@ void heartBeat() {
         if (duty == 0) increment = 1;
         if (duty == 255) increment = -1;
     }
+    else callsSinceLastChange++;  
 }
