@@ -4,6 +4,7 @@
 #include <Arduino.h>
 #include <Adafruit_MLX90614.h>
 #include "communication.h"
+#include <Wire.h>
 
 // Brake temperatures
 extern float frontBrakeTemp;
