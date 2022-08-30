@@ -11,9 +11,11 @@ const unsigned long batteryPeriod = 2000; // Battery check period (every few sec
 // Factor by which to divide ADC reading (4095 at max, 3.3 ref)
 // Also need to voltage account for voltage division
 // Also need record each STM32's '3.3V' rail actual voltage
-const float readingToV = 1241.2121; // Given by 4096 over measured voltage
-const float fFactor = 4.3739; // Resistor voltage division factor
-const float rFactor = 4.3087;
+const float readingToV = 1241.2121; // Given by 4096 over reference voltage (3.3V)
+
+// Resistor voltage division factor
+const float fFactor = 6.24880; // 6.24880 for board 1, 6.23402 for board 2
+const float rFactor = 6.24240; // 6.24240 for board 1, 6.22913 for board 2
 
 /* Convert voltage to % according to battery properties
 
