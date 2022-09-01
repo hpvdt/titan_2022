@@ -11,8 +11,8 @@ Adafruit_MLX90614 rearBrake = Adafruit_MLX90614();
 
 const byte frontBrakeAdd = 0x02;
 const byte rearBrakeAdd = 0x01;
-const float frontEmissivity = 0.95; // 0.6
-const float rearEmissivity = 0.95; // 0.6
+const float frontEmissivity = 0.6; // 0.6 for stainless steel used for brake disks
+const float rearEmissivity = 0.6;
 const unsigned long brakePeriod = 1000;
 
 bool frontBrakeMissing, rearBrakeMissing;
