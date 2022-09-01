@@ -210,7 +210,7 @@ int main(int argc, char *argv[]) {
       
       // Count down number of frames if there was a limit stated
       if (numberFrames > 0) framesRemaining--;
-   } while (framesRemaining != 0);
+   } while ((framesRemaining != 0) || (numberFrames == -1));
    
    // Overal time
    titanProcessClock = clock() - titanProcessClock; // Get run time
