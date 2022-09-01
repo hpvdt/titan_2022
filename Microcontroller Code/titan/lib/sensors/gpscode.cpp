@@ -31,6 +31,6 @@ void GPSCheck() {
     altitudeGPS = gps.f_altitude();
     speedGPS = gps.f_speed_kmph();
     // Get the distance in KM from current to start point
-    distanceGPS = (latitude == TinyGPS::GPS_INVALID_F_ANGLE ? 1000 : (unsigned long)TinyGPS::distance_between(latitude, longitude, startLat, startLong) / 1000);
+    distanceGPS = (latitude == TinyGPS::GPS_INVALID_F_ANGLE ? 1000 : (unsigned long)TinyGPS::distance_between(latitude, longitude, startLat, startLong) / 1000.0);
   }
 }
