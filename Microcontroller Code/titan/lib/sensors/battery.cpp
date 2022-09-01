@@ -8,10 +8,8 @@ const byte RBPin = PA1;   // Rear battery pin (ADC)
 
 const unsigned long batteryPeriod = 2000; // Battery check period (every few seconds)
 
-// Factor by which to divide ADC reading (4095 at max, 3.3 ref)
-// Also need to voltage account for voltage division
-// Also need record each STM32's '3.3V' rail actual voltage
-const float readingToV = 1241.2121; // Given by 4096 over reference voltage (3.3V)
+// Factor by which to divide ADC reading
+const float readingToV = 4096.0 / 3.3; // Steps per volt
 
 // Resistor voltage division factor
 const float fFactor = 6.24880; // 6.24880 for board 1, 6.23402 for board 2
@@ -34,6 +32,8 @@ const byte level[] = {100, 99, 90, 70, 40, 30, 20, 17, 14, 9, 0}; // Percentages
 const float voltage[] = {10.2, 10.05, 9.975, 9.9, 9.825, 9.75, 9.675, 9.6, 9.375, 9, 7.5}; // Voltages
 
 void setupBattery() {
+  analogReadResolution(12); // Set ADC resolution to full 12 bits on STM32
+
   pinMode(FBPin, INPUT_ANALOG); // Battery pins
   pinMode(RBPin, INPUT_ANALOG);
 }
@@ -47,12 +47,12 @@ byte batteryLevel (char line) {
     case 'f':
       reading = float(analogRead(FBPin));
       reading /= readingToV;
-      reading *= fFactor;
+      reading *= fFactor * 1.077567307;
       break;
     case 'r':
       reading = float(analogRead(FBPin));
       reading /= readingToV;
-      reading *= rFactor;
+      reading *= rFactor * 1.077567307;
       break;
   }
 
