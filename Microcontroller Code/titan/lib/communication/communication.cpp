@@ -14,8 +14,8 @@ const long rpiBaud = 38400;  // Baudrate used with rpis
 const long gpsBaud = 9600;    // Baudrate used with GPS
 
 HardwareSerial frontSerial(PA10, PA9); //RX, TX
-HardwareSerial rearSerial(PA3, PA2);
-HardwareSerial gpsSerial(PB11, PB10);
+HardwareSerial gpsSerial(PA3, PA2);
+HardwareSerial rearSerial(PB11, PB10);
 
 // Communication specific variables
 byte testY = 0;             // Used solely for echo tests
