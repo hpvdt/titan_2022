@@ -22,4 +22,6 @@
 #include "logging.h"
 #include "racesim.h"
 
+#include "printColours.h"
+
 #endif

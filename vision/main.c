@@ -13,7 +13,7 @@ bool enableCamera = false;    // Camera
 bool isFront = true;          // Is front or not
 
 int main(int argc, char *argv[]) {
-   printf("\n\n! TITAN 2022 HUD !\n");
+   printf(ANSI_COLOUR_BLUE "\n==================\n! TITAN 2022 HUD !\n==================" ANSI_COLOUR_RESET);
    
    // Start by reading in arguements
    printf("\n\nExpected arguements when called in order: 'setup string' 'number of frames'\n");
@@ -60,15 +60,15 @@ int main(int argc, char *argv[]) {
 
    
    // Reguritate configuration
-   printf("\nParsed configuration:\n");
+   printf("\nParsed configuration:\n" ANSI_COLOUR_YELLOW);
    if (isFront == true) printf("\tRole: FRONT\n");
    else printf("\tRole: REAR\n");
    printf("\tCamera running: %d\n", enableCamera);
    printf("\tCollecting ANT data: %d\n", collectANT);
    printf("\tCommunicate over serial: %d\n", useSerial);
    printf("\tLogging: %d\n", enableLogging);
-   if (numberFrames > 0) printf("\tNumber of frames: %d\n\n", numberFrames);
-   else printf("\tNo limit to number of frames.\n\n");
+   if (numberFrames > 0) printf("\tNumber of frames: %d\n\n" ANSI_COLOUR_RESET, numberFrames);
+   else printf("\tNo limit to number of frames.\n\n" ANSI_COLOUR_RESET);
    
    // Local variables
    int frontCadence = 0, rearCadence = 0; 
@@ -89,30 +89,39 @@ int main(int argc, char *argv[]) {
    if (useSerial == true) {
       serialLine = openLine("/dev/serial0");
       
-      if (serialLine != -1) printf("Successfully opened serial line!\n\n");
+      if (serialLine != -1) printf(ANSI_COLOUR_GREEN "Successfully opened serial line!\n" ANSI_COLOUR_RESET);
       else {
-         printf("FAILED TO OPEN SERIAL LINE!\nReverting to non-serial behavior.\n\n");
+         printf(ANSI_COLOUR_RED "FAILED TO OPEN SERIAL LINE!\nReverting to non-serial behavior.\n" ANSI_COLOUR_RESET);
          useSerial = false;
       }
    }
-   else printf("NOT USING SERIAL DATA.\n\n");
+   else printf(ANSI_COLOUR_RED "NOT USING SERIAL DATA.\n" ANSI_COLOUR_RESET);
    
    // Inform if ANT data is expected, and set up stdin accordingly
    if (collectANT == true) {
-      printf("Expecting ANT data to be piped in.\n\n");
+      printf("Expecting ANT data to be piped in.\n");
       fcntl(0, F_SETFL, O_NONBLOCK); // Set stdin (0) to be non-blocking
    }
-   else if (useSerial == true) printf("Not collecting ANT data locally, requesting ANT data over serial.\n\n");
-   else printf("NOT USING ANY ANT DATA. DISPLAYING RANDOM ANT DATA!\n\n");
+   else if (useSerial == true) printf(ANSI_COLOUR_GREEN "Not collecting ANT data locally, requesting ANT data over serial.\n" ANSI_COLOUR_RESET);
+   else printf(ANSI_COLOUR_RED "NOT USING ANY ANT DATA. DISPLAYING RANDOM ANT DATA!\n" ANSI_COLOUR_RESET);
    
    // Start RaceSim
    setupRaceSim();
    
    // Start logging
    if (enableLogging == true) startLogging();
-   else printf("NOT LOGGING DATA!\n\n");
+   else printf(ANSI_COLOUR_YELLOW "NOT LOGGING DATA!\n" ANSI_COLOUR_RESET);
+   
+   // Print camera status
+   if (enableCamera == true) printf(ANSI_COLOUR_RESET "Camera will be launched shortly!\n" ANSI_COLOUR_RESET);
+   else printf(ANSI_COLOUR_RED "Camera not configured to start.\n" ANSI_COLOUR_RESET);
       
    sleep(3); // Pause to show config before potentially running camera
+   
+   printf("\n=========================================================\n");
+   printf("RUNNING MAIN LOOP");
+   printf("\n=========================================================\n\n");
+   
    
    // Timing the entire process
    struct timespec tSystemStart,tSystemEnd;
@@ -210,8 +219,8 @@ int main(int argc, char *argv[]) {
    
    float overallDelta = (tSystemEnd.tv_sec - tSystemStart.tv_sec) + ((tSystemEnd.tv_nsec - tSystemStart.tv_nsec) / 1000000000.0);
    
-   printf("\nIt took %2.3f processor seconds, %.3f realtime seconds for %d frames.\n", secondsElapsed, overallDelta, numberFrames);
-   printf("An average of %.3f realtime seconds for each frame (%.2f fps).\n", overallDelta / numberFrames, numberFrames / overallDelta);
+   printf(ANSI_COLOUR_MAGENTA "\nIt took %2.3f processor seconds, %.3f realtime seconds for %d frames.\n" ANSI_COLOUR_RESET, secondsElapsed, overallDelta, numberFrames);
+   printf(ANSI_COLOUR_MAGENTA "An average of %.3f realtime seconds for each frame (%.2f fps).\n" ANSI_COLOUR_RESET, overallDelta / numberFrames, numberFrames / overallDelta);
    
    closeOverlay();
    
