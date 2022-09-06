@@ -1,4 +1,5 @@
 #include "main.h"
+#define gpsAvg 50 
 
 int numberFrames = -1; // Number of frames to render for testing (-1 for infinite)
 const float CIRCUMFERENCE = 2.104;
@@ -84,6 +85,7 @@ int main(int argc, char *argv[]) {
    float performanceFactor = 0.0;
    float frontBrakeTemp = 200.0, rearBrakeTemp = 200.0;
    int ppmCO2 = 0;
+   float gpsSpeed = 0.0;
    
    // Open serial line
    if (useSerial == true) {
@@ -132,6 +134,11 @@ int main(int argc, char *argv[]) {
    
    // Main HUD loop
    int framesRemaining = numberFrames;
+   int powerFrameCounter = 0; 
+   int frontPowerSum = 0;
+   int rearPowerSum = 0;  
+   int prevFrontPower = 0;
+   int prevRearPower = 0; 
    do {
       
       // ANT data
@@ -162,14 +169,16 @@ int main(int argc, char *argv[]) {
          
          distance = rotations * CIRCUMFERENCE;
          
-         //startTrial(); requestDataFloat(serialLine, 't', &temperature); endTrialIgnore("temperature", 40);
-         //startTrial(); requestDataFloat(serialLine, 'h', &humidity); endTrialIgnore("humidity", 40);
+         startTrial(); requestDataFloat(serialLine, 't', &temperature); endTrialIgnore("temperature", 40);
+         startTrial(); requestDataFloat(serialLine, 'h', &humidity); endTrialIgnore("humidity", 40);
          startTrial(); requestDataInt(serialLine, 'i', &frontBattery); endTrialIgnore("front battery", 40);
          startTrial(); requestDataInt(serialLine, 'j', &rearBattery); endTrialIgnore("rear battery", 40);
          
-         //startTrial(); requestDataFloat(serialLine, 'w', &frontBrakeTemp); endTrialIgnore("front brake temperature", 40);
-         //startTrial(); requestDataFloat(serialLine, 'x', &rearBrakeTemp); endTrialIgnore("rear brake temperature", 40);
-         //startTrial(); requestDataInt(serialLine, 'k', &ppmCO2); endTrialIgnore("CO2", 40);
+         startTrial(); requestDataFloat(serialLine, 'w', &frontBrakeTemp); endTrialIgnore("front brake temperature", 40);
+         startTrial(); requestDataFloat(serialLine, 'x', &rearBrakeTemp); endTrialIgnore("rear brake temperature", 40);
+         startTrial(); requestDataInt(serialLine, 'k', &ppmCO2); endTrialIgnore("CO2", 40);
+
+         startTrial(); requestDataFloat(serialLine, 'o', &gpsSpeed); endTrialIgnore("GPS SPeed", 40);
       }
       else {
          // Placeholder data for when not collecting anything over serial
@@ -183,8 +192,29 @@ int main(int argc, char *argv[]) {
          frontBrakeTemp = 200.0;
          rearBrakeTemp = 200.0;
          ppmCO2 = 1550;
+         gpsSpeed = 120.6;
       }
       
+      // Get average power over gpsAvg frames 
+      // 10 frames/second, power sensor polls 1 times/second 
+      if (powerFrameCounter < gpsAvg){
+         frontPowerSum += frontPower;
+         rearPowerSum += rearPower;  
+         frontPower = prevFrontPower;
+         rearPower = prevRearPower;
+         powerFrameCounter ++; 
+      }
+      else if (powerFrameCounter == gpsAvg){
+         powerFrameCounter = 0;
+         frontPower = frontPowerSum / gpsAvg;
+         frontPowerSum = 0;
+         rearPower = rearPowerSum / gpsAvg;
+         rearPowerSum = 0;
+      }
+      else {
+         printf("you done screw up on the power loop.");
+      }
+
       // Performance factor
       performanceFactor = compareToSimulation(speed, distance, (frontPower + rearPower));
 
@@ -192,12 +222,12 @@ int main(int argc, char *argv[]) {
       // Overlays
       if (isFront == true) { // Front overlay
          startTrial();
-         updateOverlayFront(speed, distance, frontPower, frontCadence, frontHeartRate, performanceFactor, frontBrakeTemp, frontBattery);
+         updateOverlayFront(speed, distance, frontPower, frontCadence, frontHeartRate, performanceFactor, frontBrakeTemp, frontBattery, gpsSpeed);
          endTrialIgnore("front overlay", 100);
       }
       else { // Rear overlay
          startTrial();
-         updateOverlayRear(speed, distance, rearPower, frontPower, rearCadence, rearHeartRate, frontBrakeTemp, rearBrakeTemp, rearBattery, performanceFactor, ppmCO2);
+         updateOverlayRear(speed, distance, rearPower, frontPower, rearCadence, rearHeartRate, frontBrakeTemp, rearBrakeTemp, rearBattery, performanceFactor, ppmCO2, gpsSpeed);
          endTrialIgnore("rear overlay", 100);
       }
       
@@ -206,7 +236,7 @@ int main(int argc, char *argv[]) {
       if (enableLogging == true) updateLog(speed, distance, frontPower, rearPower, 
                                              frontCadence, rearCadence, frontHeartRate, rearHeartRate, 
                                              temperature, humidity, frontBattery, rearBattery,
-                                             frontBrakeTemp, rearBrakeTemp, ppmCO2, performanceFactor);
+                                             frontBrakeTemp, rearBrakeTemp, ppmCO2, performanceFactor, gpsSpeed);
       
       // Count down number of frames if there was a limit stated
       if (numberFrames > 0) framesRemaining--;

@@ -110,12 +110,14 @@ void requestData(int line, char type, char* data) {
 	printf("Recieved %s, (length of %d).\n", data, rxLength);
 #endif
 }
+
 void requestDataInt(int line, char type, int* data){
 	char temp[10]; // Temporary string
 	requestData(line, type, temp);
 	
 	sscanf(temp, "%d", data); // Scans recieved message for integer
 }
+
 void requestDataFloat(int line, char type, float* data){
 	char temp[10]; // Temporary string
 	requestData(line, type, temp);

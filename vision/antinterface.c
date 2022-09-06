@@ -6,7 +6,7 @@ const int dataFieldWidth = 4; // Include delimiter!
 const int numANTDataFields = 6;
 #define antBufferLength 60
 
-char ANTBuffer[antBufferLength];
+char ANTBuffer[antBufferLength]; 
 
 bool getANTDataPipedIn(int *dataOut, int serialLn) {
 	// Check if there is data available or stdin isn't broken

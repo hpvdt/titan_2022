@@ -56,7 +56,7 @@ char CLEAR_BG[] = {0x00,0x00,0x00,0x00};
 
 // Size 30 Text is 35 pixels tall. Size 50 is 56 pixels.
 
-void updateOverlayFront(float spe, float dist, int pow, int cad, int hr, float perf, float fbrake, int batt) {
+void updateOverlayFront(float spe, float dist, int pow, int cad, int hr, float perf, float fbrake, int batt, float gpsSpeed) {
    graphics_resource_fill(overlayImg, 0, 0, widthOverlay, heightOverlay, GRAPHICS_RGBA32(0,0,0,0x00));
       
    renderFSpeed(spe);
@@ -67,11 +67,12 @@ void updateOverlayFront(float spe, float dist, int pow, int cad, int hr, float p
    renderFHR(hr);
    renderFDist(dist);
    renderFBrakeTemp(fbrake);
+   renderGpsSPeed(gpsSpeed)
         
    graphics_update_displayed_resource(overlayImg, 0, 0, 0, 0);
 }
 
-void updateOverlayRear(float spe, float dist, int rpow, int fpow, int cad, int hr, float fbrake, float rbrake, int batt, float perf, int CO2) {
+void updateOverlayRear(float spe, float dist, int rpow, int fpow, int cad, int hr, float fbrake, float rbrake, int batt, float perf, int CO2, float gpsSpeed) {
    graphics_resource_fill(overlayImg, 0, 0, widthOverlay, heightOverlay, GRAPHICS_RGBA32(0,0,0,0x00));
       
    renderRSpeed(spe);
@@ -124,7 +125,7 @@ void renderFBatteryPercentage(int battPer) {
 
 void renderFSpeed(float speed) {
    char temp[50];
-   sprintf(temp, "SPD: %4.1f", speed/KM_TO_MI);
+   sprintf(temp, "SPD/GSPD: %4.1f / %4.1f", speed/KM_TO_MI, gpsSpeed/KM_TO_MI);
    renderTextAligned(temp, 10, 10, 30, WHITE, GREY_BG,'l','t');
 }
 
@@ -198,7 +199,7 @@ void renderRBatteryPercentage(int battPer) {
 
 void renderRSpeed(float speed) {
    char temp[50];
-   sprintf(temp, "SPD: %4.1f", speed/KM_TO_MI);
+   sprintf(temp, "SPD/GSPD: %4.1f / %4.1f", speed/KM_TO_MI, gpsSpeed/KM_TO_MI);
    renderTextAligned(temp, 10, 10, 50, WHITE, GREY_BG,'l','t');
 }
 

@@ -54,7 +54,7 @@ void startLogging() {
 	clock_gettime(CLOCK_MONOTONIC, &logStart); // Mark start time
 }
 
-void updateLog(float spd, float dist, int fpwr, int rpwr, int fcad, int rcad, int fhr, int rhr, float temperature, float hum, float fbat, float rbat, float fbrk, float rbrk, int CO2, float perf) {
+void updateLog(float spd, float dist, int fpwr, int rpwr, int fcad, int rcad, int fhr, int rhr, float temperature, float hum, float fbat, float rbat, float fbrk, float rbrk, int CO2, float perf, float gpsSpd) {
 	// Get elapsed time down to milliseconds 
 	clock_gettime(CLOCK_MONOTONIC, &logCurrent);
 	u_int64_t timeElapsedMS = ((logCurrent.tv_sec - logStart.tv_sec) * 1000) + ((logCurrent.tv_nsec - logStart.tv_nsec) / 1000000);
@@ -62,9 +62,9 @@ void updateLog(float spd, float dist, int fpwr, int rpwr, int fcad, int rcad, in
 	
 	// Open and append data
 	logFile = fopen(fileLocation, "a"); // Append
-	fprintf(logFile, "%.3f,%.3f,%.3f,%d,%d,%d,%d,%d,%d,%d,%.1f,%.1f,%.f,%.f,%.f,%.f,%d,%.1f\n",
+	fprintf(logFile, "%.3f,%.3f,%.3f,%d,%d,%d,%d,%d,%d,%d,%.1f,%.1f,%.f,%.f,%.f,%.f,%d,%.1f,%.3f\n",
 				timeElapsed, spd, dist, fpwr, rpwr, fpwr + rpwr, fcad, 
 				rcad, fhr, rhr, temperature, hum, fbat, rbat, fbrk, 
-				rbrk, CO2, perf);
+				rbrk, CO2, perf, gpsSpd);
 	fclose(logFile);
 }
