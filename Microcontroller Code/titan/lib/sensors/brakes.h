@@ -2,13 +2,10 @@
 #define TITAN_BRAKES_HEADER
 
 #include <Arduino.h>
-#include <Adafruit_MLX90614.h>
-#include "communication.h"
-#include <Wire.h>
 
 // Brake temperatures
-extern float frontBrakeTemp;
-extern float rearBrakeTemp;
+extern float frontBrakeTemp;    // Front brake temperature (deg C)
+extern float rearBrakeTemp;     // Rear brake temperature (deg C)
 
 void setupBrakeThermometers();
 void checkBrakeTemps();

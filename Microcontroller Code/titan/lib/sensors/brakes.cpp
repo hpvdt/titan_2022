@@ -1,10 +1,14 @@
 #include "brakes.h"
+#include <Adafruit_MLX90614.h>
+#include "communication.h"
+#include <Wire.h>
+#include "led.h"
 
 //            SDA  SCL
 TwoWire brakeI2C(PB7, PB6);
 
-float frontBrakeTemp = 0;   // Front brake temperature
-float rearBrakeTemp = 0;    // Rear brake temperature
+float frontBrakeTemp = 0;   // Front brake temperature (deg C)
+float rearBrakeTemp = 0;    // Rear brake temperature (deg C)
 
 Adafruit_MLX90614 frontBrake = Adafruit_MLX90614();
 Adafruit_MLX90614 rearBrake = Adafruit_MLX90614();
@@ -30,6 +34,13 @@ void setupBrakeThermometers() {
       DEBUGSERIAL.println(frontBrakeAdd);
     }
 #endif
+
+    // Light up LEDs to let it be known
+    // LED 2 off as it blinks twice
+    ledOff(1);
+    ledOff(2);
+    blinkLEDBlocking(3, 1000, 2);
+    delay(2000);
   }
   else {
     // If connected
@@ -43,6 +54,13 @@ void setupBrakeThermometers() {
       DEBUGSERIAL.println(rearBrakeAdd);
     }
 #endif
+
+    // Light up LEDs to let it be known
+    // LED 2 on as it blinks twice
+    ledOff(1);
+    ledOn(2);
+    blinkLEDBlocking(3, 1000, 2);
+    delay(2000);
   }
   else {
     // If connected
