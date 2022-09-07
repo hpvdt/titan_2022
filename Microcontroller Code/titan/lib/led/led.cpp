@@ -24,18 +24,26 @@ void ledOff(byte index) {
     digitalWrite(ledPins[index - 1], LOW);
 }
 
-void invertLED(byte index) {
+void ledInvert(byte index) {
     if (index > ledCount) return; // Too big
 
     // Read and invert
     digitalWrite(ledPins[index - 1], !digitalRead(ledPins[index - 1]));
 }
 
+void ledSet(byte index, bool state) {
+    if (index > ledCount) return; // Too big
+
+    // Read and invert
+    if (state == true) ledOn(index);
+    else ledOff(index);
+}
+
 void blinkLEDBlocking(byte index, int period, int times) {
     if (index > ledCount) return; // Too big
 
     for (int i = 0; i < (times * 2); i++) {
-        invertLED(index);
+        ledInvert(index);
         delay(period / 2);
     }
 }
