@@ -40,7 +40,6 @@ void loop() {
   checkBrakeTemps();
   checkBatteries();
   checkEncoderTimeout();
-  CO2Check(); // Used since CO2 interrupts don't work
   GPSCheck();
 
   heartBeat(); // Used to visualize load

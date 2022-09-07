@@ -6,6 +6,5 @@
 extern volatile int CO2ppm;  // CO2 level in ppm
 
 void setupCO2();
-void CO2Check(); // Use if interrupts fail to monitor CO2 levels
 
 #endif
