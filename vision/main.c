@@ -2,7 +2,7 @@
 #define gpsAvg 50 
 
 int numberFrames = -1; // Number of frames to render for testing (-1 for infinite)
-const float CIRCUMFERENCE = 2.104;
+const float CIRCUMFERENCE = 2.104 /1000; //km
 
 // Serial configuration
 bool useSerial = false; // Use serial or not
