@@ -16,7 +16,7 @@ void renderTextAligned(char text[], int x, int y, int size, char foreground[], c
 char *colourByValue(float value, float lower, float upper, char low[], char mid[], char high[]);
 
 void renderRBatteryPercentage(int battPer);
-void renderRSpeed(float speed);
+void renderRSpeed(float speed, float gpsSpeed);
 void renderRPerfPercentage(float perfPer);
 void renderRDist(float dist);
 void renderRBrakeTemp(float ftemp, float rtemp);
@@ -26,7 +26,7 @@ void renderRHR(int heartRate);
 void renderRCO2(int CO2);
 
 void renderFBatteryPercentage(int battPer);
-void renderFSpeed(float speed);
+void renderFSpeed(float speed, float gpsSpeed);
 void renderFPerfPercentage(float perfPer);
 void renderFDist(float dist);
 void renderFBrakeTemp(float temperature);
@@ -59,7 +59,7 @@ char CLEAR_BG[] = {0x00,0x00,0x00,0x00};
 void updateOverlayFront(float spe, float dist, int pow, int cad, int hr, float perf, float fbrake, int batt, float gpsSpeed) {
    graphics_resource_fill(overlayImg, 0, 0, widthOverlay, heightOverlay, GRAPHICS_RGBA32(0,0,0,0x00));
       
-   renderFSpeed(spe);
+   renderFSpeed(spe, gpsSpeed);
    renderFPerfPercentage(perf);
    renderFCadence(cad);
    renderFBatteryPercentage(batt);
@@ -67,7 +67,6 @@ void updateOverlayFront(float spe, float dist, int pow, int cad, int hr, float p
    renderFHR(hr);
    renderFDist(dist);
    renderFBrakeTemp(fbrake);
-   renderGpsSPeed(gpsSpeed)
         
    graphics_update_displayed_resource(overlayImg, 0, 0, 0, 0);
 }
@@ -75,7 +74,7 @@ void updateOverlayFront(float spe, float dist, int pow, int cad, int hr, float p
 void updateOverlayRear(float spe, float dist, int rpow, int fpow, int cad, int hr, float fbrake, float rbrake, int batt, float perf, int CO2, float gpsSpeed) {
    graphics_resource_fill(overlayImg, 0, 0, widthOverlay, heightOverlay, GRAPHICS_RGBA32(0,0,0,0x00));
       
-   renderRSpeed(spe);
+   renderRSpeed(spe, gpsSpeed);
    renderRPerfPercentage(perf);
    renderRCadence(cad);
    renderRBatteryPercentage(batt);
@@ -123,7 +122,7 @@ void renderFBatteryPercentage(int battPer) {
    renderTextAligned(temp, 1270, 715, 30, colourToUse, GREY_BG, 'r', 'b');
 }
 
-void renderFSpeed(float speed) {
+void renderFSpeed(float speed, float gpsSpeed) {
    char temp[50];
    sprintf(temp, "SPD/GSPD: %4.1f / %4.1f", speed/KM_TO_MI, gpsSpeed/KM_TO_MI);
    renderTextAligned(temp, 10, 10, 30, WHITE, GREY_BG,'l','t');
@@ -197,7 +196,7 @@ void renderRBatteryPercentage(int battPer) {
    renderTextAligned(temp, 10, 190, 30, colourToUse, GREY_BG, 'l', 't');
 }
 
-void renderRSpeed(float speed) {
+void renderRSpeed(float speed, float gpsSpeed) {
    char temp[50];
    sprintf(temp, "SPD/GSPD: %4.1f / %4.1f", speed/KM_TO_MI, gpsSpeed/KM_TO_MI);
    renderTextAligned(temp, 10, 10, 50, WHITE, GREY_BG,'l','t');

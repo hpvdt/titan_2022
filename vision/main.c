@@ -2,7 +2,7 @@
 #define gpsAvg 50 
 
 int numberFrames = -1; // Number of frames to render for testing (-1 for infinite)
-const float CIRCUMFERENCE = 2.104 /1000; //km
+const float CIRCUMFERENCE = 2.104;
 
 // Serial configuration
 bool useSerial = false; // Use serial or not
@@ -167,7 +167,7 @@ int main(int argc, char *argv[]) {
          startTrial(); requestDataFloat(serialLine, 's', &speed);  endTrialIgnore("speed", 40);
          startTrial(); requestDataInt(serialLine, 'q', &rotations); endTrialIgnore("rotations", 40);
          
-         distance = rotations * CIRCUMFERENCE;
+         distance = rotations * CIRCUMFERENCE / 1000.0;
          
          startTrial(); requestDataFloat(serialLine, 't', &temperature); endTrialIgnore("temperature", 40);
          startTrial(); requestDataFloat(serialLine, 'h', &humidity); endTrialIgnore("humidity", 40);

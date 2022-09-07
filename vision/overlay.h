@@ -14,8 +14,8 @@
 
 #include "revision.h"
 
-void updateOverlayFront(float spe, float dist, int pow, int cad, int hr, float perf, float fbrake, int batt);
-void updateOverlayRear(float spe, float dist, int rpow, int fpow, int cad, int hr, float fbrake, float rbrake, int batt, float perf, int CO2);
+void updateOverlayFront(float spe, float dist, int pow, int cad, int hr, float perf, float fbrake, int batt, float gpsSpeed);
+void updateOverlayRear(float spe, float dist, int rpow, int fpow, int cad, int hr, float fbrake, float rbrake, int batt, float perf, int CO2, float gpsSpeed);
 
 void startOverlay(bool cameraOn);
 
