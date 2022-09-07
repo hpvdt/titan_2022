@@ -8,6 +8,5 @@ extern int RBatt;            // Rear battery %
 
 void setupBattery();
 void checkBatteries();
-byte batteryLevel (char line);
 
 #endif

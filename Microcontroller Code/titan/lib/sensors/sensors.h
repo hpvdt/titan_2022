@@ -11,8 +11,8 @@
 #include "co2.h"
 #include "brakes.h"
 
-extern byte humidity;          // Humidity
-extern byte temperature;      // Temperature
+extern byte humidity;       // Humidity (RH% * 2)
+extern byte temperature;    // Temperature ((degC * 2) + 50)
 
 void setupSensors();
 void checkHDT();
