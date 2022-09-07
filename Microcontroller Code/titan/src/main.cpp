@@ -7,7 +7,6 @@ void setup() {
 
   setupCommunication(); // Must be first for potential begging
   setupSensors();
-
   setupLEDs();
   ledOn(2); // Turn on LED 2 for all operation
 }
@@ -41,8 +40,10 @@ void loop() {
   checkBrakeTemps();
   checkBatteries();
   checkEncoderTimeout();
+  CO2Check(); // Used since CO2 interrupts don't work
   GPSCheck();
 
   heartBeat(); // Used to visualize load
   delayMicroseconds(500); // Regular delay
 }
+
