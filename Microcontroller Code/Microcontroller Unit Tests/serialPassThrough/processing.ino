@@ -1,26 +1,23 @@
+
+
 void processData (const char line) {
   // Similar to the fuction on the bike but altered to suit the pass through nature of this program
 
   /* Gets in a value for which line to process, then processes it.
      Requests characters are lowercase, setting is uppercase
-
      a - Heart rate (front) (BPM)
      b - Heart rate (rear) (BPM)
      c - Cadence (front) (RPM)
      d - Cadence (rear) (RPM)
      e - Power (front) (W)
      f - Power (rear) (W)
-
      i - Front battery %
      j - Rear battery %
      k - Backup system battery %
-
      h - Humidity (R.H.%)
      t - Temperature (C * 2 + 50)
-
      s - Speed (km/h)
      q - Distance (number of rotations)
-
      l - Latitude (degrees)
      m - Longitude (degrees)
      n - Altitude (m)
@@ -28,7 +25,6 @@ void processData (const char line) {
      p - GPS distance (km)
      u - Starting longitude
      v - Starting latitude
-
      y - Testing byte
      z - Testing byte
   */
@@ -60,7 +56,7 @@ void processData (const char line) {
   String returnMessage = ""; // Stores return message
   bool request; // Used to store if the message is a request (need a respose sent back on the same line)
 
-  if ((frameType >= 'a') && (frameType <= 'z')) {
+  if ((frameType >= 'a') && (frameType <= '}')) {
 
     // Request type
     // The data will be stored to "returnMessage"
@@ -94,21 +90,63 @@ void processData (const char line) {
       // Need to send request twice since the result will be in the acknoledge packet that follows
       // a request, so the first one is sent to prepare a response. The second request collects it.
       radioSend(String(frameType));
-      delay(10);
+      
       radioSend(String(frameType));
-      delay(10);
-  
+
       // Read in the data
       if (recievedRadioData) {
         recievedRadioData = false; // Reset flag
+
+        if (radioMessage[0] == '[') {
+          // Bulk transfer
+
+          memcpy(&dataLoad, radioMessage, sizeof(dataLoad));
+
+          if (debugMode) {
+            Serial.println("");
+            Serial.println(dataLoad.messageType);
+            Serial.println(dataLoad.messageLength);
+            Serial.println("Speeds:");
+            Serial.println(dataLoad.speedEncoder);
+            Serial.println(dataLoad.speedGPS);
+            Serial.println("Dist:");
+            Serial.println(dataLoad.rotations);
+            Serial.println(dataLoad.distGPS);
+            Serial.println("Brake Temps:");
+            Serial.println(dataLoad.frontBrakeT);
+            Serial.println(dataLoad.rearBrakeT);
+            Serial.println("Batteries:");
+            Serial.println(dataLoad.fBatt);
+            Serial.println(dataLoad.rBatt);
+            Serial.println("Atmosphere:");
+            Serial.println(dataLoad.humid);
+            Serial.println(dataLoad.temp);
+            Serial.println(dataLoad.CO2);
+            Serial.println("ANT:");
+            Serial.println(dataLoad.fhr);
+            Serial.println(dataLoad.rhr);
+            Serial.println(dataLoad.fcad);
+            Serial.println(dataLoad.rcad);
+            Serial.println(dataLoad.fpwr);
+            Serial.println(dataLoad.rpwr);
+          }
+
+          char * messingAround = (char *)&dataLoad;
+          for (byte i = 0; i < sizeof(dataLoad); i++) {
+              Serial.write(messingAround[i]);
+          }
+          return;
+        }
+
+        
         
         // Not the radio message will be prefixed with the length character
         returnMessage = radioMessage;
-        returnMessage.remove(0, 1); // Remove length char
+        returnMessage.remove(0, 2); // Remove type and length char
       }
     }
   } 
-  else if ((frameType >= 'A') && (frameType <= 'Z')) {
+  else if ((frameType >= 'A') && (frameType <= ']')) {
     // Sending data
     // Send the type char along with the data associated
     request = false;
@@ -131,13 +169,13 @@ void processData (const char line) {
 
   // Sends return if request
   if (request) {
-    //returnMessage != ""
-    sendMessage(returnMessage, line);
+    if (returnMessage.length() == 0) return;
+    sendMessage(frameType - 32, returnMessage, line);
   }
   if (debugMode) Serial.println("DONE PROCESSING");
 }
 
-void sendMessage (String message, const char outputLine) {
+void sendMessage (char messageType, String message, const char outputLine) {
   // Gets length byte and puts it at the front of message
   char lengthChar = message.length() + 31;
 

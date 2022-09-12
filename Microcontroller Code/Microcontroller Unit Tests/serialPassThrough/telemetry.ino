@@ -42,10 +42,6 @@ void setupRadio() {
   attachInterrupt(digitalPinToInterrupt(radioInteruptPin), radioRecieved, FALLING); // Set flagging interrupt
 }
 
-void checkRadio () {
-  recievedRadioData = true; // Set flag that something was recieved
-}
-
 void radioRecieved() {
   recievedRadioData = true;
   memset(radioMessage, 0, sizeof(radioMessage)); // Clear buffer
