@@ -1,9 +1,11 @@
 #include "telemetry.h"
 
-RF24 radio(PB1, PB0);
-char radioMessage[32]; // Buffer for message (nRF24 messages are limited to 32 bytes each)
-
+const byte RFCEpin = PB1;
+const byte RFCSpin = PB0;
 const byte RFInterruptPin = PA4; // IRQ pin
+
+RF24 radio(RFCEpin, RFCSpin); // CE, CS
+char radioMessage[32]; // Buffer for message (nRF24 messages are limited to 32 bytes each)
 
 // Topology
 const uint64_t pipes[2] = { 0x1122334471LL, 0x112233447CLL };  // Radio pipe addresses for the 2 nodes to communicate.
@@ -11,11 +13,33 @@ volatile bool recievedRadioData = false;           // Used to flag if an interup
 const bool recieverRole = true;                  // The role of the current running sketch
 byte pipeNumber; // Stores the origin of the message (used in reciever mode)
 
+struct bulkDataStruct {
+  char messageType;
+  char messageLength;
+  uint16_t distGPS;
+  uint32_t speedEncoder;
+  uint32_t speedGPS;
+  uint16_t rotations;
+  uint16_t frontBrakeT;
+  uint16_t rearBrakeT;
+  uint8_t fBatt;
+  uint8_t rBatt;
+  uint8_t humid;
+  uint8_t temp;
+  uint16_t CO2;
+  uint8_t fhr;
+  uint8_t rhr;
+  uint8_t fcad;
+  uint8_t rcad;
+  uint16_t fpwr;
+  uint16_t rpwr;
+};
+
 
 void radioSetup() {
 
     // Start radio system
-  radio.begin(); // CE, CS
+  radio.begin();
 
   // Check for chip, alert user and don't bother setting up if missing
   if (radio.isChipConnected() == false) {
@@ -51,19 +75,46 @@ void radioSetup() {
 
   // Interrupts on recieving a message
   pinMode(RFInterruptPin, INPUT_PULLUP);
-  attachInterrupt(digitalPinToInterrupt(RFInterruptPin), checkRadio, FALLING); // Set flagging interrupt
-}
-
-void checkRadio() {
-  recievedRadioData = true;
+  attachInterrupt(digitalPinToInterrupt(RFInterruptPin), radioRecieved, FALLING); // Set flagging interrupt
 }
 
 void radioRecieved() {
+  recievedRadioData = true;
+
   // Start by getting where the message is from
   radio.available(&pipeNumber); // Get pipe the message was recieved on in the event a reply is needed
 
   // Read the message. Reads both messages and acknoledgements. 
   radio.read(&radioMessage, radio.getDynamicPayloadSize());
+
+  if (radioMessage[0] == '{') {
+    bulkDataStruct dataLoad;
+    dataLoad.messageType = '[';
+    dataLoad.messageLength = sizeof(dataLoad) - 2 + 31;
+    dataLoad.distGPS = distanceGPS * 1000;
+    dataLoad.speedEncoder = 1000 * speedKm;
+    dataLoad.speedGPS = 1000 * speedGPS;
+    dataLoad.rotations = rotationCount;
+    dataLoad.frontBrakeT = frontBrakeTemp * 100;
+    dataLoad.rearBrakeT = rearBrakeTemp * 100;
+    dataLoad.fBatt = FBatt;
+    dataLoad.rBatt = RBatt;
+    dataLoad.humid = humidity;
+    dataLoad.temp = temperature;
+    dataLoad.CO2 = CO2ppm;
+    dataLoad.fhr = FHR;
+    dataLoad.rhr = RHR;
+    dataLoad.fcad = FCadence;
+    dataLoad.rcad = RCadence;
+    dataLoad.fpwr = FPower;
+    dataLoad.rpwr = RPower;
+
+    radio.writeAckPayload(pipeNumber, &dataLoad, sizeof(dataLoad));
+    recievedRadioData = false; // Handled, so no need to deal with in main loop
+  }
+
+  sizeof(float);
+
 
 #ifdef ALLOW_DEBUG_SERIAL
   if (debugMode) {

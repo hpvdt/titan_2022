@@ -317,11 +317,12 @@ void processData (const char line) {
 
   // Sends message if required (non empty)
   if (returnMessage != "") {
-    sendMessage(returnMessage, line);
+    // frameType - 32 is to return with the data set type
+    sendMessage(frameType - 32, returnMessage, line);
   }
 }
 
-void sendMessage (String message, const char outputLine) {
+void sendMessage (char messageType, String message, const char outputLine) {
   // Gets length byte and puts it at the front of message
   char lengthChar = message.length() + 31;
 
@@ -338,7 +339,7 @@ void sendMessage (String message, const char outputLine) {
 
     // Telemetry
     case 't':
-      radioSend(String(String(lengthChar) + message));
+      radioSend(String(String(messageType) + String(lengthChar) + message));
       break;
 #ifdef ALLOW_DEBUG_SERIAL
     case 'd':
