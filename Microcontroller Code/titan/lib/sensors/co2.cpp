@@ -22,7 +22,7 @@ void CO2change() {
     // CO2 = ppm span * (Th - 2ms) / (Th + Tl - 4ms)
 
     unsigned long timeHigh = lastCO2Falling - lastCO2Rising;
-    unsigned long timeLow = currentTime - lastCO2Rising;
+    unsigned long timeLow = currentTime - lastCO2Falling;
 
     CO2ppm = CO2Span * (timeHigh - 2);
     CO2ppm = CO2ppm / (timeHigh + timeLow - 4);
