@@ -4,10 +4,9 @@
 #include "led.h"
 
 void setup() {
-
+  setupLEDs();
   setupCommunication(); // Must be first for potential begging
   setupSensors();
-  setupLEDs();
   ledOn(2); // Turn on LED 2 for all operation
 }
 

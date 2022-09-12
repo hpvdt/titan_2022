@@ -39,7 +39,8 @@ void setupBrakeThermometers() {
     // LED 2 off as it blinks twice
     ledOff(1);
     ledOff(2);
-    blinkLEDBlocking(3, 1000, 2);
+    blinkLEDBlocking(3, 500, 2);
+    ledOn(3); // Leave error on to inform users error has occured
     delay(2000);
   }
   else {
@@ -59,7 +60,8 @@ void setupBrakeThermometers() {
     // LED 2 on as it blinks twice
     ledOff(1);
     ledOn(2);
-    blinkLEDBlocking(3, 1000, 2);
+    blinkLEDBlocking(3, 500, 2);
+    ledOn(3); // Leave error on to inform users error has occured
     delay(2000);
   }
   else {

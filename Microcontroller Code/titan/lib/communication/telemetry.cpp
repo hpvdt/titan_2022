@@ -1,4 +1,5 @@
 #include "telemetry.h"
+#include "led.h"
 
 const byte RFCEpin = PB1;
 const byte RFCSpin = PB0;
@@ -49,6 +50,14 @@ void radioSetup() {
     }
 #endif
     recievedRadioData = false; // Ensure this is false
+
+    // LED alert
+    ledOff(1);
+    ledOff(2);
+    blinkLEDBlocking(3, 500, 4);
+    ledOn(3); // Leave error on to inform users error has occured
+    delay(2000);
+
     return;
   }
 
