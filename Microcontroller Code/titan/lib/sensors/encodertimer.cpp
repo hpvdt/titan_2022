@@ -16,7 +16,7 @@
 
 const PinName encoderPin = PB_9;
 
-volatile float speedKm = 0.0; // Speed (km/h)
+volatile float speedEncoder = 0.0; // Speed (km/h) from encoder
 volatile unsigned int rotationCount = 0; // Number of complete wheel roations
 
 const byte numberTicks = 6; // Number of ticks per complete rotation of wheel
@@ -53,7 +53,7 @@ void inputCapture_IT_callback() {
   rolloverCompareCount = 0;
 
   // Convert to speed
-  speedKm = frequencyMeasured * freqToKMH;
+  speedEncoder = frequencyMeasured * freqToKMH;
 
   // Count rotations
   currentTick++;
@@ -67,7 +67,7 @@ void inputCapture_IT_callback() {
 void rollover_IT_callback() {
   rolloverCompareCount++;
 
-  if (rolloverCompareCount > 1) speedKm = 0;
+  if (rolloverCompareCount > 1) speedEncoder = 0;
 }
 
 void setupEncoder() {

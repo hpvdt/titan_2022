@@ -232,10 +232,10 @@ void processData (const char line) {
       break;
 
     case 's': // Speed
-      returnMessage = String(speedKm, 3); // Speed to 3 decimal places
+      returnMessage = String(speedEncoder, 3); // Speed to 3 decimal places
       break;
     case 'S':
-      speedKm = readInput(line).toFloat();
+      speedEncoder = readInput(line).toFloat();
       break;
     case 'q': // Distance
       returnMessage = String(rotationCount); // Distance

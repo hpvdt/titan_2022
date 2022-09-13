@@ -2,7 +2,7 @@
 
 const byte encoderPin = PB9;   // Encoder interrupt pin
 
-volatile float speedKm = 0.0; // Speed (km/h)
+volatile float speedEncoder = 0.0; // Speed (km/h) from encoder
 volatile unsigned int rotationCount = 0; // Number of complete wheel roations
 
 const byte numberTicks = 6; // Number of ticks per complete rotation of wheel
@@ -32,7 +32,7 @@ void encoderDetect() {
   if (triggerTime > (lastPass[previousTick] + debounce)) {
     // Checks if we have passed the debounce period from the last measurement
 
-    speedKm = periodToKMH / (triggerTime - lastPass[currentTick]); // Gets speed from period
+    speedEncoder = periodToKMH / (triggerTime - lastPass[currentTick]); // Gets speed from period
     
     lastPass[currentTick] = triggerTime; // Update trigger time for next run
 
@@ -54,9 +54,9 @@ void checkEncoderTimeout() {
   static float previousSpeed = 0; // Stores speed for comparison
 
   if (millis() > wheelTime) {
-    if (speedKm == previousSpeed) speedKm = 0; // Reset speed if no change
+    if (speedEncoder == previousSpeed) speedEncoder = 0; // Reset speed if no change
 
-    previousSpeed = speedKm; // Updates speed
+    previousSpeed = speedEncoder; // Updates speed
     wheelTime = millis() + wheelTimeout; // Sets next check
   }
 }

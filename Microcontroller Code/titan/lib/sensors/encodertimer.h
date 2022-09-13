@@ -7,7 +7,7 @@
 
 #include <Arduino.h>
 
-extern volatile float speedKm; // Speed (km/h)
+extern volatile float speedEncoder; // Speed (km/h) from encoder
 extern volatile unsigned int rotationCount; // Number of complete wheel roations
 
 

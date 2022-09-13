@@ -101,7 +101,7 @@ void radioRecieved() {
     dataLoad.messageType = '[';
     dataLoad.messageLength = sizeof(dataLoad) - 2 + 31;
     dataLoad.distGPS = distanceGPS * 1000;
-    dataLoad.speedEncoder = 1000 * speedKm;
+    dataLoad.speedEncoder = 1000 * speedEncoder;
     dataLoad.speedGPS = 1000 * speedGPS;
     dataLoad.rotations = rotationCount;
     dataLoad.frontBrakeT = frontBrakeTemp * 100;
