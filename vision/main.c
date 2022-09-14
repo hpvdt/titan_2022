@@ -142,9 +142,10 @@ int main(int argc, char *argv[]) {
    do {
       
       // ANT data
+      printf("Grabbing ANT data\n");
       if (collectANT == true) getANTDataPipedIn(ANTData, serialLine);      // It is meant to collect data locally
-      else if (useSerial == true) getANTDataSerial(ANTData, serialLine);   // Not collecting ANT data locally, but can use serial to request it
-      else { // Cant' collect nor request ANT data, use random numbers
+      else if (useSerial == false) { 
+         // Cant' collect nor request ANT data, use random numbers
          ANTData[0] = 60;
          ANTData[1] = 60;
          ANTData[2] = 120;
@@ -164,21 +165,69 @@ int main(int argc, char *argv[]) {
       
       // Get bike data
       if (useSerial == true) { // Collect bike data from STM32 over serial      
-         startTrial(); requestDataFloat(serialLine, 's', &speed);  endTrialIgnore("speed", 40);
-         startTrial(); requestDataInt(serialLine, 'q', &rotations); endTrialIgnore("rotations", 40);
+         printf("Grabbing serial data\n");
          
-         distance = rotations * CIRCUMFERENCE / 1000.0;
+         char bulkBuffer[32];
+         startTrial(); requestData(serialLine, '{', &bulkBuffer[1]); 
          
-         startTrial(); requestDataFloat(serialLine, 't', &temperature); endTrialIgnore("temperature", 40);
-         startTrial(); requestDataFloat(serialLine, 'h', &humidity); endTrialIgnore("humidity", 40);
-         startTrial(); requestDataInt(serialLine, 'i', &frontBattery); endTrialIgnore("front battery", 40);
-         startTrial(); requestDataInt(serialLine, 'j', &rearBattery); endTrialIgnore("rear battery", 40);
+         struct bulkDataStruct {
+            char messageType;
+            char messageLength;
+            uint16_t distGPS;
+            uint32_t speedEncoder;
+            uint32_t speedGPS;
+            uint16_t rotations;
+            uint16_t frontBrakeT;
+            uint16_t rearBrakeT;
+            uint8_t fBatt;
+            uint8_t rBatt;
+            uint8_t humid;
+            uint8_t temp;
+            uint16_t CO2;
+            uint8_t fhr;
+            uint8_t rhr;
+            uint8_t fcad;
+            uint8_t rcad;
+            uint16_t fpwr;
+            uint16_t rpwr;
+         } dataLoad;
          
-         startTrial(); requestDataFloat(serialLine, 'w', &frontBrakeTemp); endTrialIgnore("front brake temperature", 40);
-         startTrial(); requestDataFloat(serialLine, 'x', &rearBrakeTemp); endTrialIgnore("rear brake temperature", 40);
-         startTrial(); requestDataInt(serialLine, 'k', &ppmCO2); endTrialIgnore("CO2", 40);
+         memcpy(&dataLoad, bulkBuffer, sizeof(dataLoad));
+         dataLoad.messageType = '[';
+         
+         distance = dataLoad.distGPS / 1000.0;
+         speed = dataLoad.speedEncoder / 1000.0;
+         gpsSpeed = dataLoad.speedGPS / 1000.0;
+         rotations = dataLoad.rotations;
+         frontBrakeTemp = dataLoad.frontBrakeT / 100.0;
+         rearBrakeTemp =dataLoad.rearBrakeT / 100.0;
+         frontBattery = dataLoad.fBatt;
+         rearBattery = dataLoad.rBatt;
+         humidity = dataLoad.humid / 2.0;
+         temperature = (dataLoad.temp - 50.0) / 2.0;
+         ppmCO2 = dataLoad.CO2;
+         frontHeartRate = dataLoad.fhr;
+         rearHeartRate = dataLoad.rhr;
+         frontCadence = dataLoad.fcad;
+         rearCadence = dataLoad.rcad;
+         frontPower = dataLoad.fpwr;
+         rearPower = dataLoad.rpwr;
 
-         startTrial(); requestDataFloat(serialLine, 'o', &gpsSpeed); endTrialIgnore("GPS SPeed", 40);
+         endTrialIgnore("Bulk transfer", 30);
+
+         distanceWheel = rotations * CIRCUMFERENCE / 1000.0;
+         
+         /*
+         printf("Message type: %c, length char %c\n", dataLoad.messageType, dataLoad.messageLength);
+         printf("\tSpeeds: %.3f / %.3f\n", speedWheel, speedGPS);
+         printf("\tDist: %.3f / %.3f\n", distanceWheel, distanceGPS);
+         printf("\tBrake Temps: %.2f / %.2f\n", frontBrakeTemp, rearBrakeTemp);
+         printf("\tBatteries: %d / %d\n", frontBattery, rearBattery);
+         printf("\tAtmosphere: %.1f degC, %.1f %%RH, %d ppmCO2\n", temperature, humidity, ppmCO2);
+         printf("\tANT front: HR %d | CAD %d | PWR %d\n", frontHeartRate, frontCadence, frontPower);
+         printf("\tANT rear: HR %d | CAD %d | PWR %d\n", rearHeartRate, rearCadence, rearPower);
+         */
+         
       }
       else {
          // Placeholder data for when not collecting anything over serial
@@ -195,6 +244,7 @@ int main(int argc, char *argv[]) {
          gpsSpeed = 120.6;
       }
       
+      printf("Averaging power\n");
       // Get average power over gpsAvg frames 
       // 10 frames/second, power sensor polls 1 times/second 
       if (powerFrameCounter < gpsAvg){
@@ -214,12 +264,15 @@ int main(int argc, char *argv[]) {
       else {
          printf("you done screw up on the power loop.");
       }
-
+      
+      
+      printf("Performance factor\n");
       // Performance factor
       performanceFactor = compareToSimulation(speed, distance, (frontPower + rearPower));
 
       
       // Overlays
+      printf("Making overlay\n");
       if (isFront == true) { // Front overlay
          startTrial();
          updateOverlayFront(speed, distance, frontPower, frontCadence, frontHeartRate, performanceFactor, frontBrakeTemp, frontBattery, gpsSpeed);
@@ -233,10 +286,13 @@ int main(int argc, char *argv[]) {
       
       
       // Logging
-      if (enableLogging == true) updateLog(speed, distance, frontPower, rearPower, 
+      if (enableLogging == true) {
+         printf("Logging\n");
+         updateLog(speed, distance, frontPower, rearPower, 
                                              frontCadence, rearCadence, frontHeartRate, rearHeartRate, 
                                              temperature, humidity, frontBattery, rearBattery,
                                              frontBrakeTemp, rearBrakeTemp, ppmCO2, performanceFactor, gpsSpeed);
+      }
       
       // Count down number of frames if there was a limit stated
       if (numberFrames > 0) framesRemaining--;

@@ -12,6 +12,6 @@ extern char radioMessage[32]; // Buffer for message (nRF24 messages are limited 
 
 extern void radioSetup();
 extern void radioRecieved();
-extern void radioSend(String outputMessage);
+extern void radioSend(const char* outputMessage, byte messageLen);
 
 #endif

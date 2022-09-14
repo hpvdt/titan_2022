@@ -42,7 +42,8 @@ extern int RPower;
 // Communication functions
 void setupCommunication();
 void processData (const char line);
-void sendMessage (char messageType, String message, const char outputLine);
+void sendMessageString (String message, const char outputLine);
+void sendMessageArbitrary (byte* message, const byte payloadLength, const char outputLine);
 String readInput (char inputLine);
 
 #endif

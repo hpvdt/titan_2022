@@ -14,29 +14,6 @@ volatile bool recievedRadioData = false;           // Used to flag if an interup
 const bool recieverRole = true;                  // The role of the current running sketch
 byte pipeNumber; // Stores the origin of the message (used in reciever mode)
 
-struct bulkDataStruct {
-  char messageType;
-  char messageLength;
-  uint16_t distGPS;
-  uint32_t speedEncoder;
-  uint32_t speedGPS;
-  uint16_t rotations;
-  uint16_t frontBrakeT;
-  uint16_t rearBrakeT;
-  uint8_t fBatt;
-  uint8_t rBatt;
-  uint8_t humid;
-  uint8_t temp;
-  uint16_t CO2;
-  uint8_t fhr;
-  uint8_t rhr;
-  uint8_t fcad;
-  uint8_t rcad;
-  uint16_t fpwr;
-  uint16_t rpwr;
-};
-
-
 void radioSetup() {
 
     // Start radio system
@@ -96,35 +73,6 @@ void radioRecieved() {
   // Read the message. Reads both messages and acknoledgements. 
   radio.read(&radioMessage, radio.getDynamicPayloadSize());
 
-  if (radioMessage[0] == '{') {
-    bulkDataStruct dataLoad;
-    dataLoad.messageType = '[';
-    dataLoad.messageLength = sizeof(dataLoad) - 2 + 31;
-    dataLoad.distGPS = distanceGPS * 1000;
-    dataLoad.speedEncoder = 1000 * speedEncoder;
-    dataLoad.speedGPS = 1000 * speedGPS;
-    dataLoad.rotations = rotationCount;
-    dataLoad.frontBrakeT = frontBrakeTemp * 100;
-    dataLoad.rearBrakeT = rearBrakeTemp * 100;
-    dataLoad.fBatt = FBatt;
-    dataLoad.rBatt = RBatt;
-    dataLoad.humid = humidity;
-    dataLoad.temp = temperature;
-    dataLoad.CO2 = CO2ppm;
-    dataLoad.fhr = FHR;
-    dataLoad.rhr = RHR;
-    dataLoad.fcad = FCadence;
-    dataLoad.rcad = RCadence;
-    dataLoad.fpwr = FPower;
-    dataLoad.rpwr = RPower;
-
-    radio.writeAckPayload(pipeNumber, &dataLoad, sizeof(dataLoad));
-    recievedRadioData = false; // Handled, so no need to deal with in main loop
-  }
-
-  sizeof(float);
-
-
 #ifdef ALLOW_DEBUG_SERIAL
   if (debugMode) {
     DEBUGSERIAL.print("Recieved on nRF24: ");
@@ -133,8 +81,7 @@ void radioRecieved() {
 #endif
 }
 
-void radioSend(String outputMessage) {
-  byte messageLen = outputMessage.length();
+void radioSend(const char* outputMessage, byte messageLen) {
 
 #ifdef ALLOW_DEBUG_SERIAL
   if (debugMode) {
@@ -147,10 +94,10 @@ void radioSend(String outputMessage) {
   if (recieverRole == true) {
     // Reciever
     // Uses the pointer to the text as a character array
-    radio.writeAckPayload(pipeNumber, outputMessage.c_str(), messageLen);
+    radio.writeAckPayload(pipeNumber, outputMessage, messageLen);
   }
   else {
     // Sender
-    radio.write(&outputMessage, outputMessage.length());
+    radio.write(&outputMessage, messageLen);
   }
 }

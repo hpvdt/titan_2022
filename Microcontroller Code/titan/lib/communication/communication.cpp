@@ -10,7 +10,7 @@ const long debugBaud = 38400;  // Baudrate for debugging line
 // DEBUGGING MODE
 bool debugMode = true;      // In debug mode or not (copies all messages to debug serial line
 
-const long rpiBaud = 38400;  // Baudrate used with rpis
+const long rpiBaud = 115200;  // Baudrate used with rpis
 const long gpsBaud = 9600;    // Baudrate used with GPS
 
 HardwareSerial frontSerial(PA10, PA9); //RX, TX
@@ -28,6 +28,29 @@ int FCadence = 10;          // Cadence (RPM)
 int RCadence = 10;
 int FPower = 10;            // Power (W)
 int RPower = 10;
+
+struct bulkDataStruct {
+  char messageType;
+  char messageLength;
+  uint16_t distGPS;
+  uint32_t speedEncoder;
+  uint32_t speedGPS;
+  uint16_t rotations;
+  uint16_t frontBrakeT;
+  uint16_t rearBrakeT;
+  uint8_t fBatt;
+  uint8_t rBatt;
+  uint8_t humid;
+  uint8_t temp;
+  uint16_t CO2;
+  uint8_t fhr;
+  uint8_t rhr;
+  uint8_t fcad;
+  uint8_t rcad;
+  uint16_t fpwr;
+  uint16_t rpwr;
+};
+
 
 void setupCommunication() {
   // Start each serial line
@@ -313,16 +336,40 @@ void processData (const char line) {
     case 'Z':
       testZ = byte(readInput(line)[0]); // Test input
       break;
+
+    case '{':
+      bulkDataStruct dataLoad;
+      dataLoad.messageType = '[';
+      dataLoad.messageLength = sizeof(dataLoad) - 2 + 31;
+      dataLoad.distGPS = distanceGPS * 1000;
+      dataLoad.speedEncoder = 1000 * speedEncoder;
+      dataLoad.speedGPS = 1000 * speedGPS;
+      dataLoad.rotations = rotationCount;
+      dataLoad.frontBrakeT = frontBrakeTemp * 100;
+      dataLoad.rearBrakeT = rearBrakeTemp * 100;
+      dataLoad.fBatt = FBatt;
+      dataLoad.rBatt = RBatt;
+      dataLoad.humid = humidity;
+      dataLoad.temp = temperature;
+      dataLoad.CO2 = CO2ppm;
+      dataLoad.fhr = FHR;
+      dataLoad.rhr = RHR;
+      dataLoad.fcad = FCadence;
+      dataLoad.rcad = RCadence;
+      dataLoad.fpwr = FPower;
+      dataLoad.rpwr = RPower;
+
+      sendMessageArbitrary((byte *) &dataLoad, sizeof(dataLoad), line);
+      break;
   }
 
   // Sends message if required (non empty)
   if (returnMessage != "") {
-    // frameType - 32 is to return with the data set type
-    sendMessage(frameType - 32, returnMessage, line);
+    sendMessageString(returnMessage, line);
   }
 }
 
-void sendMessage (char messageType, String message, const char outputLine) {
+void sendMessageString (String message, const char outputLine) {
   // Gets length byte and puts it at the front of message
   char lengthChar = message.length() + 31;
 
@@ -339,7 +386,7 @@ void sendMessage (char messageType, String message, const char outputLine) {
 
     // Telemetry
     case 't':
-      radioSend(String(String(messageType) + String(lengthChar) + message));
+      radioSend(String(String(lengthChar) + message).c_str(), lengthChar - 30);
       break;
 #ifdef ALLOW_DEBUG_SERIAL
     case 'd':
@@ -359,6 +406,42 @@ void sendMessage (char messageType, String message, const char outputLine) {
     DEBUGSERIAL.println(outputLine);
   }
 #endif
+}
+
+
+void sendMessageArbitrary (byte* message, const byte payloadLength, const char outputLine) {
+  
+  // Sends response to appropriate line
+  switch (outputLine) {
+    case 'f':
+      for (byte i = 0; i < payloadLength; i++) frontSerial.write(message[i]);
+      break;
+    case 'r':
+      for (byte i = 0; i < payloadLength; i++) rearSerial.write(message[i]);
+      break;
+
+    // Telemetry
+    case 't':
+      radioSend((const char *) message, payloadLength);
+      break;
+#ifdef ALLOW_DEBUG_SERIAL
+    case 'd':
+      for (byte i = 0; i < payloadLength; i++) DEBUGSERIAL.write(message[i]);
+      break;
+#endif
+  }
+
+#ifdef ALLOW_DEBUG_SERIAL
+  if (debugMode) {
+    DEBUGSERIAL.print(F("Sent : "));
+    DEBUGSERIAL.print(message.length());
+    DEBUGSERIAL.print(F(" - "));
+    DEBUGSERIAL.print(message);
+    DEBUGSERIAL.print(F(" on line "));
+    DEBUGSERIAL.println(outputLine);
+  }
+#endif
+
 }
 
 String readInput (char inputLine) {
