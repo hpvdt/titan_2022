@@ -78,14 +78,14 @@ int main(int argc, char *argv[]) {
    int ANTData[] = {0,0,0,0,0,0};
    int rearBattery = 0, frontBattery = 0;
    int rotations = 0;
-   float speed = 0.0;
-   float distance = 0.0;
+   float speedWheel = 0.0;
+   float distanceWheel = 0.0, distanceGPS = 0.0;
    float temperature = 0.0;
    float humidity = 0.0;
    float performanceFactor = 0.0;
    float frontBrakeTemp = 200.0, rearBrakeTemp = 200.0;
    int ppmCO2 = 0;
-   float gpsSpeed = 0.0;
+   float speedGPS = 0.0;
    
    // Open serial line
    if (useSerial == true) {
@@ -195,9 +195,9 @@ int main(int argc, char *argv[]) {
          memcpy(&dataLoad, bulkBuffer, sizeof(dataLoad));
          dataLoad.messageType = '[';
          
-         distance = dataLoad.distGPS / 1000.0;
-         speed = dataLoad.speedEncoder / 1000.0;
-         gpsSpeed = dataLoad.speedGPS / 1000.0;
+         distanceGPS = dataLoad.distGPS / 1000.0;
+         speedWheel = dataLoad.speedEncoder / 1000.0;
+         speedGPS = dataLoad.speedGPS / 1000.0;
          rotations = dataLoad.rotations;
          frontBrakeTemp = dataLoad.frontBrakeT / 100.0;
          rearBrakeTemp =dataLoad.rearBrakeT / 100.0;
@@ -233,15 +233,16 @@ int main(int argc, char *argv[]) {
          // Placeholder data for when not collecting anything over serial
          rearBattery = 25;
          frontBattery = 25;
-         speed = 120.6;
-         distance = 7;
+         speedWheel = 120.6;
+         distanceWheel = 7;
          temperature = 0.0;
          humidity = 0.0;
          performanceFactor = 101.2;
          frontBrakeTemp = 200.0;
          rearBrakeTemp = 200.0;
          ppmCO2 = 1550;
-         gpsSpeed = 120.6;
+         speedGPS = 120.6;
+         distanceGPS = 6.92;
       }
       
       printf("Averaging power\n");
@@ -268,19 +269,19 @@ int main(int argc, char *argv[]) {
       
       printf("Performance factor\n");
       // Performance factor
-      performanceFactor = compareToSimulation(speed, distance, (frontPower + rearPower));
+      performanceFactor = compareToSimulation(speedWheel, distanceWheel, (frontPower + rearPower));
 
       
       // Overlays
       printf("Making overlay\n");
       if (isFront == true) { // Front overlay
          startTrial();
-         updateOverlayFront(speed, distance, frontPower, frontCadence, frontHeartRate, performanceFactor, frontBrakeTemp, frontBattery, gpsSpeed);
+         updateOverlayFront(speedWheel, distanceWheel, frontPower, frontCadence, frontHeartRate, performanceFactor, frontBrakeTemp, frontBattery, speedGPS);
          endTrialIgnore("front overlay", 100);
       }
       else { // Rear overlay
          startTrial();
-         updateOverlayRear(speed, distance, rearPower, frontPower, rearCadence, rearHeartRate, frontBrakeTemp, rearBrakeTemp, rearBattery, performanceFactor, ppmCO2, gpsSpeed);
+         updateOverlayRear(speedWheel, distanceWheel, rearPower, frontPower, rearCadence, rearHeartRate, frontBrakeTemp, rearBrakeTemp, rearBattery, performanceFactor, ppmCO2, speedGPS);
          endTrialIgnore("rear overlay", 100);
       }
       
@@ -288,10 +289,11 @@ int main(int argc, char *argv[]) {
       // Logging
       if (enableLogging == true) {
          printf("Logging\n");
-         updateLog(speed, distance, frontPower, rearPower, 
-                                             frontCadence, rearCadence, frontHeartRate, rearHeartRate, 
-                                             temperature, humidity, frontBattery, rearBattery,
-                                             frontBrakeTemp, rearBrakeTemp, ppmCO2, performanceFactor, gpsSpeed);
+         updateLog(speedWheel, distanceWheel, frontPower, rearPower, 
+                  frontCadence, rearCadence, frontHeartRate, rearHeartRate, 
+                  temperature, humidity, frontBattery, rearBattery,
+                  frontBrakeTemp, rearBrakeTemp, ppmCO2, performanceFactor,
+                  speedGPS, distanceGPS);
       }
       
       // Count down number of frames if there was a limit stated
