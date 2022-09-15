@@ -1,5 +1,5 @@
 #include "main.h"
-const int powerAvgFrames = 50;
+#define powerAvgFrames 50 // Needs to be #define for array sizes
 
 int numberFrames = -1; // Number of frames to render for testing (-1 for infinite)
 const float CIRCUMFERENCE = 2.104;
@@ -134,11 +134,6 @@ int main(int argc, char *argv[]) {
    
    // Main HUD loop
    int framesRemaining = numberFrames;
-   int powerFrameCounter = 0; 
-   int frontPowerSum = 0;
-   int rearPowerSum = 0;  
-   int prevFrontPower = 0;
-   int prevRearPower = 0; 
    do {
       
       // ANT data
@@ -248,21 +243,30 @@ int main(int argc, char *argv[]) {
       printf("Averaging power\n");
       // Get average power over powerAvgFrames frames 
       // 10 frames/second, power sensor polls 1 times/second 
-      if (powerFrameCounter < powerAvgFrames){
-         frontPowerSum += frontPower;
-         rearPowerSum += rearPower;  
-         frontPower = prevFrontPower;
-         rearPower = prevRearPower;
-         powerFrameCounter ++; 
-      }
-      else if (powerFrameCounter == powerAvgFrames){
-         powerFrameCounter = 0;
-         frontPower = frontPowerSum / powerAvgFrames;
-         frontPowerSum = 0;
-         rearPower = rearPowerSum / powerAvgFrames;
-         rearPowerSum = 0;
-         prevFrontPower = frontPower;
-         prevRearPower = rearPower;
+      // This does a continuous (rolling) average instead of a periodic average
+      if (true) {
+         static int frontPowerValues[powerAvgFrames], rearPowerValues[powerAvgFrames];
+         static int currentPowerFrame = 0;
+         
+         // Add current power to rolling buffer
+         frontPowerValues[currentPowerFrame] = frontPower;
+         rearPowerValues[currentPowerFrame] = rearPower;
+         
+         // Determine average value for each buffer and save it
+         long frontPowerTotal = 0;
+         long rearPowerTotal = 0;
+         
+         for (int i = 0; i < powerAvgFrames; i++) {
+            frontPowerTotal = frontPowerTotal + frontPowerValues[i];
+            rearPowerTotal = rearPowerTotal + rearPowerValues[i];
+         }
+         
+         frontPower = frontPowerTotal / powerAvgFrames;
+         rearPower = rearPowerTotal / powerAvgFrames;
+         
+         // Increment and loop current frame index
+         currentPowerFrame++;
+         currentPowerFrame = currentPowerFrame % powerAvgFrames;
       }
       else {
          printf("you done screw up on the power loop.");
