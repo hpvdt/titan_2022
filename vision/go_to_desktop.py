@@ -25,12 +25,12 @@ try:
     GPIO.wait_for_edge(gpio_pin_number, GPIO.FALLING)
     #Use falling edge detection to see if pin is pulled 
     #low to avoid repeated polling
-    os.system("sudo pkill bike")
-    os.system("startx")
-    os.system("sudo pkill python")
-    #Send command to kill bike system and go to desktop
+    os.system("sudo pkill bike; sudo pkill python")
+    #Send command to kill bike system
+    # Need to use "startx" ourselves
 except:
     pass
 
 GPIO.cleanup()
 #Revert all GPIO pins to their normal states (i.e. input = safe)
+Footer
