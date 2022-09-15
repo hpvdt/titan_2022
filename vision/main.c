@@ -1,5 +1,5 @@
 #include "main.h"
-#define gpsAvg 50 
+const int powerAvgFrames = 50;
 
 int numberFrames = -1; // Number of frames to render for testing (-1 for infinite)
 const float CIRCUMFERENCE = 2.104;
@@ -246,21 +246,23 @@ int main(int argc, char *argv[]) {
       }
       
       printf("Averaging power\n");
-      // Get average power over gpsAvg frames 
+      // Get average power over powerAvgFrames frames 
       // 10 frames/second, power sensor polls 1 times/second 
-      if (powerFrameCounter < gpsAvg){
+      if (powerFrameCounter < powerAvgFrames){
          frontPowerSum += frontPower;
          rearPowerSum += rearPower;  
          frontPower = prevFrontPower;
          rearPower = prevRearPower;
          powerFrameCounter ++; 
       }
-      else if (powerFrameCounter == gpsAvg){
+      else if (powerFrameCounter == powerAvgFrames){
          powerFrameCounter = 0;
-         frontPower = frontPowerSum / gpsAvg;
+         frontPower = frontPowerSum / powerAvgFrames;
          frontPowerSum = 0;
-         rearPower = rearPowerSum / gpsAvg;
+         rearPower = rearPowerSum / powerAvgFrames;
          rearPowerSum = 0;
+         prevFrontPower = frontPower;
+         prevRearPower = rearPower;
       }
       else {
          printf("you done screw up on the power loop.");
