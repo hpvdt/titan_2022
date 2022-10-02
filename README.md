@@ -26,25 +26,9 @@ This is the collection of code prepared for the microcontroller on TITAN. It con
 
 TITAN was initially coded entirely within the Arduino IDE, however we migrated to using VS Code and PlatformIO to help make development easier and also make use of debugging features absent in the original Arduino IDE.
 
-### STM32 Code
-All code for the STM32 is written in C/C++ using the PlatformIO addon for VS Code. It primarily collects data and providig it on request over a serial (UART) line to the connected RPis. It also has telemetry capabilities using an nRF24L01 module and GPS capabilities using an "Ultimate GPS Module" (MTK3339). Data collected:
-* Optical encoder for wheel
-  * Speed
-  * Distance travelled
-* Temperature and humidity of external air using a DHT22 module
-* Battery levels
-* GPS data using MTK3339 module
-  * Position coordinates
-  * Speed (as a backup to encoder)
-* Biometric information for riders supplied by RPi with ANT+ module *(explained later)*
-  * Heart rate (BPM)
-  * Power output (W)
-  * Cadence (RPM)
-* Brake disk temperatures using MLX90614 sensors
-
 ## Raspberry Pi Code
 These are responsible for putting video on the displays for the riders to see, overlaid with information about TITAN. One of the RPi's has an ANT+ USB module used to collect data from the heart rate monitor and power pedals each rider has and feed it to the STM32 to pass onto the other RPi. 
 
 **The program for running the video feed is run as a seperate process to the overlay**, this way if there is a hardware malfunction for the overlay (e.g. the STM32 freezes) then the video feed is uniterrupted for the riders.
 
-The code for vision is split between Python and C. The video related code is written in Python, as well as a few other scripts for operation. The overlay code is written in C using the chipset driver library unique to the RPi 3 hardware to draw the overlay so it cannot be used on RPi models other then the 3B or 3B+ (an must be compiled specifically for each model).
+The code for vision is split between Python and C. The video related code is written in Python, as well as a few other scripts for operation. The overlay code is written in C using the chipset driver library unique to the RPi 3 hardware to draw the overlay so it cannot be used on RPi models other then the 3B or 3B+ (and must be compiled specifically for each model).
