@@ -39,7 +39,7 @@ void radioSetup() {
   }
 
   // Set up radio if present
-  radio.setPALevel(RF24_PA_MIN);          // Low power, raise if a decoupling capacitor is added
+  radio.setPALevel(RF24_PA_MAX);          // TODO: Verify power stability, lower if needed
   radio.setDataRate(RF24_250KBPS);
   radio.setAutoAck(1);                    // Ensure autoACK is disabled
   radio.enableAckPayload();               // Allow optional ack payloads
