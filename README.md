@@ -1,10 +1,10 @@
 # TITAN Video System
 
-This is the code and hardware that is used to drive the electronics aboard TITAN for the "drive-by-video" system.
+This is the code and hardware that is used to drive the electronics aboard TITAN for the "drive-by-video" system used for the World Human Powered Speed Challenge 2022.
 
-This code is spread across two types of devices, an STM32 microcontroller (STM32F103C8 is used in current models) and Raspberry Pis (RPi) Model 3B+'s. Each rider has an RPi for a total of two units, while there is only one STM32 for the vehicle. The STM32 is primarily responsible for collecting vehicle data and passing it to the RPis when requested. The RPis are responsible for displaying the video feed from the RPi Cameras used (hence why each rider needs their own) with an overlay of data collected inside the vehicle.
+This code is spread across two types of devices, an STM32 microcontroller (STM32F103C8 is used in current models) and Raspberry Pis (RPi) Model 3B+'s. Each rider has an RPi for a total of two units, while there is only one STM32 for the vehicle. The STM32 is primarily responsible for collecting vehicle data and passing it to the RPis when requested. The RPis are responsible for displaying the video feed from the RPi Cameras used (hence why each rider needs their own) with an overlay of data collected inside the vehicle. This overlay is tailored to each rider.
 
-*Note: there is a third RPi system for video but it is completely independant of the others to serve as a spare front-facing video feed, with no informational overlay. It is a simple analog camera connected directly to a screen.*
+There is an additional redundant video system for the front rider based on analog video to minimize potential failure points. This system was entirely off the shelf except for the power regulator, and was entirely disconnected from the remainder of TITAN's electronics to prevent any failure cascade affecting it.
 
 ## Folders
 
@@ -18,7 +18,9 @@ Folder | Purpose
 
 ## Hardware
 
-The hardware for TITAN was all designed in [KiCad](https://www.kicad.org/) there are all three boards designed for TITAN with a `readme.md` explaining their purposes.
+The hardware for TITAN was all designed in [KiCad](https://www.kicad.org/) there are all three boards designed for TITAN with a `readme.md` explaining their purposes. Below is a block diagram of the TITAN system.
+
+![TITAN Block Diagram](titan-diagram.png)
 
 ## Microcontroller Code
 
