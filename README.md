@@ -2,6 +2,11 @@
 
 This is the code and hardware that is used to drive the electronics aboard TITAN for the "drive-by-video" system used for the World Human Powered Speed Challenge 2022.
 
+>[!NOTE]
+> This repository is meant to a snapshot of the system used for the 2022 system for TITAN, and was archived in November 2023. It was only unarchived to add a written summary of [operating instructions](./OPERATION.md) should it need to be reused. However no changes to the system itself have happened since 2023.
+>
+> For information on the the newest system in 2026 please go to that one's [separate repository](https://github.com/savob/titan_2026).
+
 This code is spread across two types of devices, an STM32 microcontroller (STM32F103C8 is used in current models) and Raspberry Pis (RPi) Model 3B+'s. Each rider has an RPi for a total of two units, while there is only one STM32 for the vehicle. The STM32 is primarily responsible for collecting vehicle data and passing it to the RPis when requested. The RPis are responsible for displaying the video feed from the RPi Cameras used (hence why each rider needs their own) with an overlay of data collected inside the vehicle. This overlay is tailored to each rider.
 
 There is an additional redundant video system for the front rider based on analog video to minimize potential failure points. This system was entirely off the shelf except for the power regulator, and was entirely disconnected from the remainder of TITAN's electronics to prevent any failure cascade affecting it.
@@ -29,8 +34,9 @@ This is the collection of code prepared for the microcontroller on TITAN. It con
 TITAN was initially coded entirely within the Arduino IDE, however we migrated to using VS Code and PlatformIO to help make development easier and also make use of debugging features absent in the original Arduino IDE.
 
 ## Raspberry Pi Code
-These are responsible for putting video on the displays for the riders to see, overlaid with information about TITAN. One of the RPi's has an ANT+ USB module used to collect data from the heart rate monitor and power pedals each rider has and feed it to the STM32 to pass onto the other RPi. 
 
-**The program for running the video feed is run as a seperate process to the overlay**, this way if there is a hardware malfunction for the overlay (e.g. the STM32 freezes) then the video feed is uniterrupted for the riders.
+These are responsible for putting video on the displays for the riders to see, overlaid with information about TITAN. One of the RPi's has an ANT+ USB module used to collect data from the heart rate monitor and power pedals each rider has and feed it to the STM32 to pass onto the other RPi.
+
+**The program for running the video feed is run as a separate process to the overlay**, this way if there is a hardware malfunction for the overlay (e.g. the STM32 freezes) then the video feed is uninterrupted for the riders.
 
 The code for vision is split between Python and C. The video related code is written in Python, as well as a few other scripts for operation. The overlay code is written in C using the chipset driver library unique to the RPi 3 hardware to draw the overlay so it cannot be used on RPi models other then the 3B or 3B+ (and must be compiled specifically for each model).
