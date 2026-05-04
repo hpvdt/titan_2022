@@ -8,7 +8,7 @@ _The system's life force!_
 
 The batteries TITAN 2022 was **designed for are 3S LiFePO4 batteries**, as such their working range of voltages are generally 9.0&nbsp;V to 10.8&nbsp;V with their nominal voltage being 9.9&nbsp;V. Prior to operation they should be charged fully.
 
-The exact power draw of TITAN is approximately 10&nbsp;W per RPi vision system, about half that for the analog back up system. As such a 1000&nbsp;mAh 3S LiFePO4 battery can supply a vision system for an hour of operation is is plenty for most of our 20 minute heats - but wannants changes for longer testing sessions.
+The exact power draw of TITAN is approximately 10&nbsp;W per RPi vision system, about half that for the analog back up system. As such a 1000&nbsp;mAh 3S LiFePO4 battery can supply a vision system for an hour of operation is is plenty for most of our 20 minute heats - but warrants changes for longer testing sessions.
 
 ## Assembly/Setup
 
